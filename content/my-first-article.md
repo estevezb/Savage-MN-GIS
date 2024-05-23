@@ -15,4 +15,4 @@ My goal is to deepen my own understanding in these fields and inspire others to 
 
 
 
-![alt text](image-1.png)
+![Childhood Home Image](https://ssl.cdn-redfin.com/photo/269/bigphoto/719/2995719_7.jpg)
