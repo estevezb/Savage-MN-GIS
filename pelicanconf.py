@@ -23,16 +23,16 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (
-    ("Pelican", "https://getpelican.com/"),
-    ("Python.org", "https://www.python.org/"),
-    ("Jinja2", "https://palletsprojects.com/p/jinja/"),
-    ("You can modify those links in your config file", "#"),
+    ("NOAA Stprm Prediction Center", "https://www.spc.noaa.gov/"),
+    ("Active Weather Hazards", "https://www.weather.gov/"),
+    ("My Github Page", "https://github.com/estevezb"),
+    #("You can modify those links in your config file", "#"),
 )
 
 # Social widget
 SOCIAL = (
-    ("You can add links in your config file", "#"),
-    ("Another social link", "#"),
+    ("https://x.com/bestevez100", "#"),
+    #("Another social link", "#"),
 )
 
 DEFAULT_PAGINATION = 5
