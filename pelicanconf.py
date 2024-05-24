@@ -48,7 +48,7 @@ MENUITEMS = (
     ('Tornado Analysis', '/category/tornado-analysis.html'),
 )
 # Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = False
+RELATIVE_URLS = True
 
 JINJA_ENVIRONMENT = {
     'extensions': ['jinja2.ext.i18n'],
