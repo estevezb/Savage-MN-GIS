@@ -17,9 +17,9 @@ CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 DELETE_OUTPUT_DIRECTORY = True
 
 MENUITEMS = (
-    ('About Me', '/Fly-in-the-Ointment/pages/about-me.html'),
-    ('Python Examples', '/Fly-in-the-Ointment/category/python-examples.html'),
-    ('Tornado Analysis', '/Fly-in-the-Ointment/category/tornado-analysis.html'),
+    ('About Me', 'Fly-in-the-Ointment/pages/about-me.html'),
+    ('Python Examples', 'Fly-in-the-Ointment/category/python-examples.html'),
+    ('Tornado Analysis', 'Fly-in-the-Ointment/category/tornado-analysis.html'),
 )
 
 # Following items are often useful when publishing
