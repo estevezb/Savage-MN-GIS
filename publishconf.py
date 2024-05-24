@@ -16,6 +16,12 @@ CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 
 DELETE_OUTPUT_DIRECTORY = True
 
+MENUITEMS = (
+    ('About Me', SITEURL + '/pages/about-me.html'),
+    ('Python Examples', SITEURL + '/category/python-examples.html'),
+    ('Tornado Analysis', SITEURL + '/category/tornado-analysis.html'),
+)
+
 # Following items are often useful when publishing
 
 # DISQUS_SITENAME = ""
