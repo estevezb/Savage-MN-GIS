@@ -33,7 +33,7 @@ LINKS = (
 
 # Social widget
 SOCIAL = (
-    ("https://x.com/bestevez100", "#"),
+    ("Twitter/X", "https://x.com/bestevez100"),
     #("Another social link", "#"),
 )
 
