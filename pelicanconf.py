@@ -40,7 +40,7 @@ SOCIAL = (
 DEFAULT_PAGINATION = 5
 
 DISPLAY_PAGES_ON_MENU = False
-DISPLAY_CATEGORIES_ON_MENU = True
+DISPLAY_CATEGORIES_ON_MENU = False
 
 MENUITEMS = (
     ('About Me', '/pages/about-me.html'),
