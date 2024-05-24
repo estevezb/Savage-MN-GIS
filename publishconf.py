@@ -9,18 +9,13 @@ from pelicanconf import *
 
 # If your site is available via HTTPS, make sure SITEURL begins with https://
 SITEURL = "https://estevezb.github.io/Fly-in-the-Ointment"
-RELATIVE_URLS = True
+RELATIVE_URLS = False
 
 FEED_ALL_ATOM = "feeds/all.atom.xml"
 CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 
 DELETE_OUTPUT_DIRECTORY = True
 
-MENUITEMS = (
-    ('About Me', 'pages/about-me.html'),
-    ('Python Examples', 'category/python-examples.html'),
-    ('Tornado Analysis', 'category/tornado-analysis.html'),
-)
 
 # Following items are often useful when publishing
 
