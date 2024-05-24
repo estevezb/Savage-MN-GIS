@@ -2,7 +2,7 @@ from pelican import signals
 
 AUTHOR = 'Brian Estevez'
 SITENAME = 'Fly in the Ointment'
-SITEURL = 'https://estevezb.github.io/Fly-in-the-Ointment/'
+SITEURL = '/'
 
 ARTICLE_URL= 'articles/{slug}.html'
 ARTICLE_SAVE_AS = 'articles/{slug}.html'
