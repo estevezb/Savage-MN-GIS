@@ -2,7 +2,7 @@ from pelican import signals
 
 AUTHOR = 'Brian Estevez'
 SITENAME = 'Fly in the Ointment'
-SITEURL = '/'
+SITEURL = 'https://estevezb.github.io/Fly-in-the-Ointment/'
 
 ARTICLE_URL= 'articles/{slug}.html'
 ARTICLE_SAVE_AS = 'articles/{slug}.html'
@@ -43,9 +43,9 @@ DISPLAY_PAGES_ON_MENU = False
 DISPLAY_CATEGORIES_ON_MENU = False
 
 MENUITEMS = (
-    ('About Me', 'pages/my-first-article.html'),
-    ('Python Examples', 'python-examples.html'),
-    ('Tornado Analysis', 'tornado-analysis.html'),
+    ('About Me', '/pages/about-me.html'),
+    ('Python Examples', '/category/python-examples.html'),
+    ('Tornado Analysis', '/category/tornado-analysis.html'),
 )
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = False
