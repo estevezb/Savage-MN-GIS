@@ -19,4 +19,4 @@ The Python programming language is a very popular and human understandable compu
 
 I view the Python programming language as a *magical paint brush* 🎨🖌. This site is a place to share works where I experiment with and discuss digital creations made with Python, focusing on data analysis, geographic information systems, drones, and severe weather, specifically tornadoes. 
 
-![Python as Creative Self Expression Image](https://github.com/estevezb/Fly-in-the-Ointment/blob/main/content/pages/Python_Creative_Self_Expression.jpg)
+![Python as Creative Self Expression Image](https://github.com/estevezb/Fly-in-the-Ointment/blob/main/content/pages/Python_Creative_Self_Expression.jpg?raw=true)
