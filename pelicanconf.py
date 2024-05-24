@@ -43,9 +43,9 @@ DISPLAY_PAGES_ON_MENU = False
 DISPLAY_CATEGORIES_ON_MENU = False
 
 MENUITEMS = (
-    ('About Me', 'pages/about-me.html'),
-    ('Python Examples', 'category/python-examples.html'),
-    ('Tornado Analysis', 'category/tornado-analysis.html'),
+    ('About Me', 'pages/my-first-article.html'),
+    ('Python Examples', 'python-examples.html'),
+    ('Tornado Analysis', 'tornado-analysis.html'),
 )
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = False
