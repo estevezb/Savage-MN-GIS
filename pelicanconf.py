@@ -1,7 +1,7 @@
 from pelican import signals
 
 AUTHOR = 'Brian Estevez'
-SITENAME = 'Fly in the Ointment'
+SITENAME = 'Py and Sky Labs'
 SITEURL = '/'
 
 ARTICLE_URL= 'articles/{slug}.html'
