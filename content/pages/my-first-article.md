@@ -12,9 +12,7 @@ Python Programming brings me joy.
 
 **What is Python programming?**
 
-Python is a popular human-readable computer programming language. Python programming is the practice of developing programs that control computer software.
-
-Python has a large built-in library that includes methods for working with files, the Internet, and operating system interfaces. Its code structure or syntax and dynamic typing make it an excellent tool for rapid application development. 
+Python is a popular computer programming language. Python programming is the practice of developing programs that control computer software.
 
 The Python programming language is a *magic paint brush* 🎨. This site is a place to share and discuss digital creations made with Python, focusing on data analysis, geographic information systems, drones, and severe weather, specifically tornadoes. 
 

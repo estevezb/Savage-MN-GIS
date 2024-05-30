@@ -4,34 +4,40 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>Py and Sky Labs</title>
-        <link rel="stylesheet" href="./theme/css/main.css" />
+        <title>Introduction to Python and Pandas</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <meta name="description" content="   01_Introduction to Python and pandas¶       A. New to Jupyter notebooks and python?¶ This is a jupyter notebook file It is a format used by..." />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="./">Py and Sky Labs</a></h1>
+                <h1><a href="../">Py and Sky Labs</a></h1>
                 <nav><ul>
-                    <li><a href="./pages/about-me.html">About Me</a></li>
-                    <li><a href="./category/python-examples.html">Python Examples</a></li>
-                    <li><a href="./category/tornado-analysis.html">Tornado Analysis</a></li>
+                    <li><a href="../pages/about-me.html">About Me</a></li>
+                    <li class="active"><a href="../category/python-examples.html">Python Examples</a></li>
+                    <li><a href="../category/tornado-analysis.html">Tornado Analysis</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="../articles/python-examples2.html" rel="bookmark"
+           title="Permalink to Introduction to Python and Pandas">Introduction to Python and Pandas</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="./articles/python-examples.html">Introduction to Python and Pandas</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-05-29T00:00:00-05:00">
                 Published: Wed 29 May 2024
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="./author/brian-estevez.html">Brian Estevez</a>
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
-<p>In <a href="./category/python-examples.html">Python Examples</a>.</p>
-<p>tags: <a href="./tag/python.html">Python</a> <a href="./tag/data-analysis.html">Data Analysis</a> </p>
-</footer><!-- /.post-info --><style type="text/css">/*!
+<p>In <a href="../category/python-examples.html">Python Examples</a>.</p>
+<p>tags: <a href="../tag/python.html">Python</a> </p>
+</footer><!-- /.post-info -->      <style type="text/css">/*!
 *
 * IPython notebook
 *
@@ -1320,7 +1326,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="B.-Load-your-packages"><strong>B.</strong> Load your packages<a class="anchor-link" href="#B.-Load-your-packages">&#182;</a></h2>
+<h1 id="A.-Load-your-packages"><strong>A.</strong> Load your packages<a class="anchor-link" href="#A.-Load-your-packages">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -1340,7 +1346,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="C.-Read-in-the-data"><strong>C.</strong> Read in the data<a class="anchor-link" href="#C.-Read-in-the-data">&#182;</a></h2>
+<h1 id="B.-Read-in-the-data"><strong>B.</strong> Read in the data<a class="anchor-link" href="#B.-Read-in-the-data">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -2235,7 +2241,7 @@ memory usage: 15.2+ MB
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="D.-Check-for-missing-data"><strong>D.</strong> Check for missing data<a class="anchor-link" href="#D.-Check-for-missing-data">&#182;</a></h2>
+<h1 id="C.-Check-for-missing-data"><strong>C.</strong> Check for missing data<a class="anchor-link" href="#C.-Check-for-missing-data">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -2443,7 +2449,7 @@ memory usage: 15.2+ MB
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="E.-Process-the-data"><strong>E.</strong> Process the data<a class="anchor-link" href="#E.-Process-the-data">&#182;</a></h2>
+<h1 id="D.-Process-the-data"><strong>D.</strong> Process the data<a class="anchor-link" href="#D.-Process-the-data">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -2847,6 +2853,371 @@ memory usage: 15.2+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tor_data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[63]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>om</th>
+      <th>yr</th>
+      <th>mo</th>
+      <th>dy</th>
+      <th>time</th>
+      <th>tz</th>
+      <th>st</th>
+      <th>stf</th>
+      <th>stn</th>
+      <th>mag</th>
+      <th>...</th>
+      <th>len</th>
+      <th>wid</th>
+      <th>ns</th>
+      <th>sn</th>
+      <th>sg</th>
+      <th>f1</th>
+      <th>f2</th>
+      <th>f3</th>
+      <th>f4</th>
+      <th>fc</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1950-10-01</th>
+      <td>192</td>
+      <td>1950</td>
+      <td>10</td>
+      <td>1</td>
+      <td>21:00:00</td>
+      <td>3</td>
+      <td>OK</td>
+      <td>40</td>
+      <td>23</td>
+      <td>1</td>
+      <td>...</td>
+      <td>15.80</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>25</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-10-09</th>
+      <td>193</td>
+      <td>1950</td>
+      <td>10</td>
+      <td>9</td>
+      <td>2:15:00</td>
+      <td>3</td>
+      <td>NC</td>
+      <td>37</td>
+      <td>9</td>
+      <td>3</td>
+      <td>...</td>
+      <td>2.00</td>
+      <td>880</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>47</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-11-20</th>
+      <td>195</td>
+      <td>1950</td>
+      <td>11</td>
+      <td>20</td>
+      <td>2:20:00</td>
+      <td>3</td>
+      <td>KY</td>
+      <td>21</td>
+      <td>1</td>
+      <td>2</td>
+      <td>...</td>
+      <td>0.10</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>177</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-11-20</th>
+      <td>196</td>
+      <td>1950</td>
+      <td>11</td>
+      <td>20</td>
+      <td>4:00:00</td>
+      <td>3</td>
+      <td>KY</td>
+      <td>21</td>
+      <td>2</td>
+      <td>1</td>
+      <td>...</td>
+      <td>0.10</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>209</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-11-20</th>
+      <td>197</td>
+      <td>1950</td>
+      <td>11</td>
+      <td>20</td>
+      <td>7:30:00</td>
+      <td>3</td>
+      <td>MS</td>
+      <td>28</td>
+      <td>14</td>
+      <td>1</td>
+      <td>...</td>
+      <td>2.00</td>
+      <td>37</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>101</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2022-09-28</th>
+      <td>621922</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>28</td>
+      <td>13:32:00</td>
+      <td>3</td>
+      <td>FL</td>
+      <td>12</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>3.00</td>
+      <td>100</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-30</th>
+      <td>621923</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>30</td>
+      <td>10:25:00</td>
+      <td>3</td>
+      <td>NC</td>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.74</td>
+      <td>20</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-30</th>
+      <td>621924</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>30</td>
+      <td>13:22:00</td>
+      <td>3</td>
+      <td>NC</td>
+      <td>37</td>
+      <td>0</td>
+      <td>-9</td>
+      <td>...</td>
+      <td>0.70</td>
+      <td>12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>13</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-04</th>
+      <td>621900</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>15:44:00</td>
+      <td>3</td>
+      <td>OH</td>
+      <td>39</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.07</td>
+      <td>15</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>99</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-09</th>
+      <td>621901</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>9</td>
+      <td>23:21:00</td>
+      <td>3</td>
+      <td>SC</td>
+      <td>45</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0.68</td>
+      <td>125</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>68701 rows × 28 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2861,10 +3232,466 @@ memory usage: 15.2+ MB
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tor_data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[86]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>om</th>
+      <th>yr</th>
+      <th>mo</th>
+      <th>dy</th>
+      <th>time</th>
+      <th>tz</th>
+      <th>st</th>
+      <th>stf</th>
+      <th>stn</th>
+      <th>mag</th>
+      <th>inj</th>
+      <th>fat</th>
+      <th>loss</th>
+      <th>closs</th>
+      <th>slat</th>
+      <th>slon</th>
+      <th>elat</th>
+      <th>elon</th>
+      <th>len</th>
+      <th>wid</th>
+      <th>ns</th>
+      <th>sn</th>
+      <th>sg</th>
+      <th>f1</th>
+      <th>f2</th>
+      <th>f3</th>
+      <th>f4</th>
+      <th>fc</th>
+    </tr>
+    <tr>
+      <th>date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1950-10-01</th>
+      <td>192</td>
+      <td>1950</td>
+      <td>10</td>
+      <td>1</td>
+      <td>21:00:00</td>
+      <td>3</td>
+      <td>OK</td>
+      <td>40</td>
+      <td>23</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>36.7300</td>
+      <td>-102.5200</td>
+      <td>36.8800</td>
+      <td>-102.3000</td>
+      <td>15.80</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>25</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-10-09</th>
+      <td>193</td>
+      <td>1950</td>
+      <td>10</td>
+      <td>9</td>
+      <td>2:15:00</td>
+      <td>3</td>
+      <td>NC</td>
+      <td>37</td>
+      <td>9</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>5.0</td>
+      <td>0.0</td>
+      <td>34.1700</td>
+      <td>-78.6000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>2.00</td>
+      <td>880</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>47</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-11-20</th>
+      <td>195</td>
+      <td>1950</td>
+      <td>11</td>
+      <td>20</td>
+      <td>2:20:00</td>
+      <td>3</td>
+      <td>KY</td>
+      <td>21</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5.0</td>
+      <td>0.0</td>
+      <td>37.3700</td>
+      <td>-87.2000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.10</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>177</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-11-20</th>
+      <td>196</td>
+      <td>1950</td>
+      <td>11</td>
+      <td>20</td>
+      <td>4:00:00</td>
+      <td>3</td>
+      <td>KY</td>
+      <td>21</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5.0</td>
+      <td>0.0</td>
+      <td>38.2000</td>
+      <td>-84.5000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.10</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>209</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1950-11-20</th>
+      <td>197</td>
+      <td>1950</td>
+      <td>11</td>
+      <td>20</td>
+      <td>7:30:00</td>
+      <td>3</td>
+      <td>MS</td>
+      <td>28</td>
+      <td>14</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>32.4200</td>
+      <td>-89.1300</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>2.00</td>
+      <td>37</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>101</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2022-09-28</th>
+      <td>621922</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>28</td>
+      <td>13:32:00</td>
+      <td>3</td>
+      <td>FL</td>
+      <td>12</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>28.0830</td>
+      <td>-80.8669</td>
+      <td>28.1249</td>
+      <td>-80.8841</td>
+      <td>3.00</td>
+      <td>100</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-30</th>
+      <td>621923</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>30</td>
+      <td>10:25:00</td>
+      <td>3</td>
+      <td>NC</td>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>33.9128</td>
+      <td>-78.2882</td>
+      <td>33.9132</td>
+      <td>-78.3011</td>
+      <td>0.74</td>
+      <td>20</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-30</th>
+      <td>621924</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>30</td>
+      <td>13:22:00</td>
+      <td>3</td>
+      <td>NC</td>
+      <td>37</td>
+      <td>0</td>
+      <td>-9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>35.3242</td>
+      <td>-76.7076</td>
+      <td>35.3325</td>
+      <td>-76.7147</td>
+      <td>0.70</td>
+      <td>12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>13</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-04</th>
+      <td>621900</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>4</td>
+      <td>15:44:00</td>
+      <td>3</td>
+      <td>OH</td>
+      <td>39</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>12000.0</td>
+      <td>0.0</td>
+      <td>41.0210</td>
+      <td>-80.6559</td>
+      <td>41.0220</td>
+      <td>-80.6555</td>
+      <td>0.07</td>
+      <td>15</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>99</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2022-09-09</th>
+      <td>621901</td>
+      <td>2022</td>
+      <td>9</td>
+      <td>9</td>
+      <td>23:21:00</td>
+      <td>3</td>
+      <td>SC</td>
+      <td>45</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>32.8750</td>
+      <td>-79.7514</td>
+      <td>32.8846</td>
+      <td>-79.7537</td>
+      <td>0.68</td>
+      <td>125</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>68701 rows × 28 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="F.-Get-quick-structural-and-statistical-summaries-of-the-data"><strong>F.</strong> Get quick structural and statistical summaries of the data<a class="anchor-link" href="#F.-Get-quick-structural-and-statistical-summaries-of-the-data">&#182;</a></h2>
+<h1 id="E.-Get-quick-structural-and-statistical-summaries-of-the-data"><strong>E.</strong> Get quick structural and statistical summaries of the data<a class="anchor-link" href="#E.-Get-quick-structural-and-statistical-summaries-of-the-data">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -3142,7 +3969,7 @@ memory usage: 15.2+ MB
 <div class="prompt input_prompt">In&nbsp;[89]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tor_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1"># add an arguement to see more rows</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tor_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -4574,7 +5401,7 @@ memory usage: 15.2+ MB
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="G.-Access-specific-subsets-of-data"><strong>G.</strong> Access specific subsets of data<a class="anchor-link" href="#G.-Access-specific-subsets-of-data">&#182;</a></h2>
+<h1 id="F.-Access-specific-subsets-of-data"><strong>F.</strong> Access specific subsets of data<a class="anchor-link" href="#F.-Access-specific-subsets-of-data">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -5957,7 +6784,7 @@ memory usage: 15.2+ MB
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="H.-Special-methods:-selecting-rows-with-.loc()">H. Special methods: selecting rows with .loc()<a class="anchor-link" href="#H.-Special-methods:-selecting-rows-with-.loc()">&#182;</a></h2><ul>
+<h2 id="special-method:-.loc()">special method: .loc()<a class="anchor-link" href="#special-method:-.loc()">&#182;</a></h2><ul>
 <li>use to select rows and columns by their name</li>
 <li>structure<ul>
 <li>DataFrame.loc[rows, columns]</li>
@@ -7282,7 +8109,7 @@ memory usage: 15.2+ MB
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="I.-Quick-preview-of-plots">I. Quick preview of plots<a class="anchor-link" href="#I.-Quick-preview-of-plots">&#182;</a></h2>
+<h3 id="Quick-preview-of-plots">Quick preview of plots<a class="anchor-link" href="#Quick-preview-of-plots">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -8105,102 +8932,11 @@ dtype: int64</pre>
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 </script>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="./articles/analysis-1.html" rel="bookmark"
-                           title="Permalink to Analysis 1">Analysis 1</a></h1>
-                </header>
+    </div><!-- /.entry-content -->
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-05-23T00:00:00-05:00">
-                Published: Thu 23 May 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="./author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="./category/tornado-analysis.html">Tornado Analysis</a>.</p>
-
-</footer><!-- /.post-info -->                <p>This is tornado analysis 1.</p>
-                <a class="readmore" href="./articles/analysis-1.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="./articles/analysis-2.html" rel="bookmark"
-                           title="Permalink to Analysis 2">Analysis 2</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-05-23T00:00:00-05:00">
-                Published: Thu 23 May 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="./author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="./category/tornado-analysis.html">Tornado Analysis</a>.</p>
-
-</footer><!-- /.post-info -->                <p>This is tornado analysis 2.</p>
-                <a class="readmore" href="./articles/analysis-2.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="./articles/example-1.html" rel="bookmark"
-                           title="Permalink to Example 1">Example 1</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-05-23T00:00:00-05:00">
-                Published: Thu 23 May 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="./author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="./category/python-examples.html">Python Examples</a>.</p>
-
-</footer><!-- /.post-info -->                <p>This is Python example 1.</p>
-                <a class="readmore" href="./articles/example-1.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="./articles/example-2.html" rel="bookmark"
-                           title="Permalink to Example 2">Example 2</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-05-23T00:00:00-05:00">
-                Published: Thu 23 May 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="./author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="./category/python-examples.html">Python Examples</a>.</p>
-
-</footer><!-- /.post-info -->                <p>This is Python example 2.</p>
-                <a class="readmore" href="./articles/example-2.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

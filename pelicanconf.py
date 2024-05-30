@@ -1,5 +1,5 @@
 from pelican import signals
-
+from pelican_jupyter import markup as nb_markup
 AUTHOR = 'Brian Estevez'
 SITENAME = 'Py and Sky Labs'
 SITEURL = '/'
@@ -11,7 +11,7 @@ PAGE_SAVE_AS= 'pages/{slug}.html'
 
 OUTPUT_PATH = 'docs/'
 PATH = "content"
-THEME = "pelican-themes/pelican-bootstrap3"
+THEME = "notmyidea"
 TIMEZONE = 'America/Chicago'
 
 DEFAULT_LANG = 'en'
@@ -54,8 +54,20 @@ JINJA_ENVIRONMENT = {
     'extensions': ['jinja2.ext.i18n'],
 }
 
+MARKUP = ("md", "ipynb")
+
 PLUGIN_PATHS = ['pelican-plugins']
-PLUGINS = ['i18n_subsites']
+PLUGINS = ['i18n_subsites', nb_markup]
+IGNORE_FILES = [".ipynb_checkpoints"]
+IPYNB_MARKUP_USE_FIRST_CELL = True
+
+
+
+
+
+
+
+
 
 I18N_TEMPLATES_LANG = 'en'
 
