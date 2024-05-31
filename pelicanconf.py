@@ -74,4 +74,4 @@ I18N_TEMPLATES_LANG = 'en'
 
 BOOTSTRAP_THEME = 'flatly'
 PYGMENTS_STYLE = 'monokai'
-FAVICON = 'images/favicon-500x500.png'
+FAVICON = 'images/favicon-48x48.png'
