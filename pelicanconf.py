@@ -68,9 +68,10 @@ IPYNB_MARKUP_USE_FIRST_CELL = True
 
 
 
+STATIC_PATHS = ['images']
 
 I18N_TEMPLATES_LANG = 'en'
 
 BOOTSTRAP_THEME = 'flatly'
 PYGMENTS_STYLE = 'monokai'
-FAVICON = 'images/favicon.ico'
+FAVICON = 'images/favicon-500x500.png'

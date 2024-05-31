@@ -6,7 +6,6 @@ Slug: home
 Authors: Py-and-Sky Labs
 Summary: Explore the exciting world of Python, drones, and technology with us!
 
-# Welcome to Py-and-Sky Labs
 
 Hello! My name is **Brian Estevez**. Welcome to Py-and-Sky Labs, where we dive into the fascinating world of **Python programming**, **data analysis**, **geographic information systems (GIS)**, and the thrilling technology of **drones**
 
