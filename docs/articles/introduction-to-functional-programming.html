@@ -6,7 +6,7 @@
         <meta name="generator" content="Pelican" />
         <title>Introduction to Functional Programming</title>
         <link rel="stylesheet" href="../theme/css/main.css" />
-        <meta name="description" content=" " />
+        <meta name="description" content="   Functional programming¶ a style of programming where your output is determined solely by your input The function does not change anything..." />
 </head>
 
 <body id="index" class="home">
@@ -1194,6 +1194,46 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
 .ansi-bold { font-weight: bold; }
 </style><body>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Functional-programming"><strong>Functional programming</strong><a class="anchor-link" href="#Functional-programming">&#182;</a></h3><ul>
+<li>a style of programming where your output is determined solely by your input</li>
+<li>The function does not change anything outside of it or depend on external data to produce the output</li>
+</ul>
+<p><strong><em>Why use Functional programming?:</em></strong></p>
+<ul>
+<li>makes your code more readable and easier to test and debug</li>
+<li>It's widely used in data analysis and other fields where computation is important</li>
+</ul>
+<p><em>4 Key concepts in functional programming:</em></p>
+<ol>
+<li><p><strong>Pure Functions</strong>: These are functions where the output is determined only by their input</p>
+<ul>
+<li>Given the same input, they will always produce the same output</li>
+<li>Have no side-effects, meaning they don't change anything -beside the function input- in the program</li>
+</ul>
+</li>
+<li><p><strong>Immutability</strong>: In functional programming, data is not changed</p>
+<ul>
+<li>Instead, new data is created from the existing data, which is easier to follow and debug</li>
+</ul>
+</li>
+<li><p><strong>First-Class Functions</strong>: In functional programming, functions are treated like any other variable</p>
+<ul>
+<li>They can be assigned to variables, stored in data structures, passed as arguments to other functions, and returned as values from other functions</li>
+</ul>
+</li>
+<li><p><strong>Higher-Order Functions</strong>: These are functions that take one or more functions as arguments, return a function as a result, or both</p>
+<ul>
+<li>This is a key part of functional programming and you'll see this concept used often</li>
+</ul>
+</li>
+</ol>
+<h3 id="Goal:-To-use-functional-programming-concepts-in-our-Python-code">Goal: To use functional programming concepts in our Python code<a class="anchor-link" href="#Goal:-To-use-functional-programming-concepts-in-our-Python-code">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[57]:</div>
@@ -1235,46 +1275,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-Functional-Programming"><strong>Introduction to Functional Programming</strong><a class="anchor-link" href="#Introduction-to-Functional-Programming">&#182;</a></h1><h3 id="Functional-programming"><strong>Functional programming</strong><a class="anchor-link" href="#Functional-programming">&#182;</a></h3><ul>
-<li>a style of programming where your output is determined solely by your input</li>
-<li>The function does not change anything outside of it or depend on external data to produce the output</li>
-</ul>
-<p><strong><em>Why use Functional programming?:</em></strong></p>
-<ul>
-<li>makes your code more readable and easier to test and debug</li>
-<li>It's widely used in data analysis and other fields where computation is important</li>
-</ul>
-<p><em>4 Key concepts in functional programming:</em></p>
-<ol>
-<li><p><strong>Pure Functions</strong>: These are functions where the output is determined only by their input</p>
-<ul>
-<li>Given the same input, they will always produce the same output</li>
-<li>Have no side-effects, meaning they don't change anything -beside the function input- in the program</li>
-</ul>
-</li>
-<li><p><strong>Immutability</strong>: In functional programming, data is not changed</p>
-<ul>
-<li>Instead, new data is created from the existing data, which is easier to follow and debug</li>
-</ul>
-</li>
-<li><p><strong>First-Class Functions</strong>: In functional programming, functions are treated like any other variable</p>
-<ul>
-<li>They can be assigned to variables, stored in data structures, passed as arguments to other functions, and returned as values from other functions</li>
-</ul>
-</li>
-<li><p><strong>Higher-Order Functions</strong>: These are functions that take one or more functions as arguments, return a function as a result, or both</p>
-<ul>
-<li>This is a key part of functional programming and you'll see this concept used often</li>
-</ul>
-</li>
-</ol>
-<h3 id="Goal:-To-use-functional-programming-concepts-in-our-Python-code">Goal: To use functional programming concepts in our Python code<a class="anchor-link" href="#Goal:-To-use-functional-programming-concepts-in-our-Python-code">&#182;</a></h3>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -2939,7 +2939,7 @@ DataFrame with high temperatures based on complex conditions:
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
 <span class="w">  </span><span class="p">.</span><span class="nc">dataTables_wrapper</span><span class="w"> </span><span class="nt">tbody</span><span class="w"> </span><span class="nt">tr</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#1E3A8A</span><span class="p">;</span><span class="w"> </span><span class="c">/* Dark Blue */</span>
+<span class="w">    </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="mh">#6495ED</span><span class="p">;</span><span class="w"> </span><span class="c">/* Cornflower Blue */</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 
@@ -2954,6 +2954,19 @@ DataFrame with high temperatures based on complex conditions:
 <span class="cm">&lt;!-- #164E63 (Dark Cyan) --&gt;</span>
 <span class="cm">&lt;!-- #4A2C2A (Dark Brown) --&gt;</span>
 <span class="cm">&lt;!-- #831843 (Dark Magenta) --&gt;</span>
+<span class="cm">&lt;!-- #1E3A8A (Dark Blue ) --&gt;</span>
+
+<span class="cm">&lt;!-- Suggested Light Colors for Light Backgrounds --&gt;</span>
+<span class="cm">&lt;!-- #AED9E0 (Light Blue) --&gt;</span>
+<span class="cm">&lt;!-- #A7F3D0 (Light Teal) --&gt;</span>
+<span class="cm">&lt;!-- #D1FAE5 (Light Green) --&gt;</span>
+<span class="cm">&lt;!-- #DDD6FE (Light Purple) --&gt;</span>
+<span class="cm">&lt;!-- #FECACA (Light Red) --&gt;</span>
+<span class="cm">&lt;!-- #E5E7EB (Light Gray) --&gt;</span>
+<span class="cm">&lt;!-- #FFEDD5 (Light Orange) --&gt;</span>
+<span class="cm">&lt;!-- #B2F5EA (Light Cyan) --&gt;</span>
+<span class="cm">&lt;!-- #FED7AA (Light Brown) --&gt;</span>
+<span class="cm">&lt;!-- #FBCFE8 (Light Magenta) --&gt;</span>
 </pre></div>
 
     </div>
