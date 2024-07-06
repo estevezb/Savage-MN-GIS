@@ -23,7 +23,7 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="./articles/maps-with-folium.html">Introduction to Folium Maps</a></h1>
+                    <h1 class="entry-title"><a href="./articles/drone-maps-with-folium.html">Real-time Drone Folium Maps</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2024-07-05T00:00:00-05:00">
                 Published: Fri 05 July 2024
@@ -1192,13 +1192,44 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="How-to-Use">How to Use<a class="anchor-link" href="#How-to-Use">&#182;</a></h2><ul>
+<li><p>Run Cell 1:</p>
+<ul>
+<li>This cell sets up the telemetry functions and initializes the CSV file.</li>
+</ul>
+</li>
+<li><p>Run Cell 2:</p>
+<ul>
+<li>This cell runs the telemetry loop. It will continuously fetch telemetry data and update the map until you interrupt the cell execution (e.g., using the stop button in Jupyter).</li>
+</ul>
+</li>
+<li><p>Run Cell 3:</p>
+<ul>
+<li>This cell displays the latest map. You can re-run this cell to refresh the map display with updated data.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Make-a-folium-map-of-drone-data">Make a folium map of drone data<a class="anchor-link" href="#Make-a-folium-map-of-drone-data">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Setup-and-Telemetry-Functions">Setup and Telemetry Functions<a class="anchor-link" href="#Setup-and-Telemetry-Functions">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
@@ -1206,80 +1237,125 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="kn">import</span> <span class="nn">folium</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
+<span class="kn">from</span> <span class="nn">dronekit</span> <span class="kn">import</span> <span class="n">connect</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
 
-<span class="c1"># Define the data as a multi-line string</span>
-<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;latitude,longitude,photo,timestamp,description</span>
-<span class="s2">45.5236,-122.6750,photo1.jpg,2024-06-25 10:00:00,Description of photo 1</span>
-<span class="s2">45.5280,-122.6650,photo2.jpg,2024-06-25 10:05:00,Description of photo 2</span>
-<span class="s2">45.5130,-122.7050,photo3.jpg,2024-06-25 10:10:00,Description of photo 3&quot;&quot;&quot;</span>
+<span class="c1"># Function to start GStreamer</span>
+<span class="k">def</span> <span class="nf">start_gstreamer</span><span class="p">():</span>
+    <span class="n">gst_command</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">r</span><span class="s2">&quot;C:\gstreamer\1.0\msvc_x86_64\bin\gst-launch-1.0.exe&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;udpsrc&quot;</span><span class="p">,</span> <span class="s2">&quot;port=5600&quot;</span><span class="p">,</span> <span class="s2">&quot;buffer-size=524288&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;application/x-rtp&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;rtpjitterbuffer&quot;</span><span class="p">,</span> <span class="s2">&quot;latency=200&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;rtph264depay&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;avdec_h264&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;videoconvert&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;autovideosink&quot;</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">gst_command</span><span class="p">)</span>
 
-<span class="c1"># Split the data into lines</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="c1"># Get the current working directory as a Path object</span>
+<span class="c1"># Start GStreamer</span>
+<span class="n">gst_process</span> <span class="o">=</span> <span class="n">start_gstreamer</span><span class="p">()</span>
+
+<span class="c1"># Connect to the drone&#39;s telemetry feed</span>
+<span class="n">vehicle</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="s1">&#39;udpin:192.168.0.144:14550&#39;</span><span class="p">,</span> <span class="n">wait_ready</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">vehicle</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">vehicle</span><span class="o">.</span><span class="n">wait_ready</span><span class="p">(</span><span class="s1">&#39;autopilot_version&#39;</span><span class="p">)</span>
+
+<span class="n">telemetry_count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Initialize the counter</span>
+
+<span class="c1"># Path for the CSV file</span>
 <span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
-
 <span class="n">subdirectory</span> <span class="o">=</span> <span class="s1">&#39;Data&#39;</span>
-<span class="c1"># Ensure the subdirectory exists</span>
 <span class="n">data_directory</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="n">subdirectory</span>
 <span class="n">data_directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># Specify the path for the new CSV file using the / operator for path concatenation</span>
 <span class="n">file_path</span> <span class="o">=</span> <span class="n">data_directory</span> <span class="o">/</span> <span class="s1">&#39;drone_photos.csv&#39;</span>
 
-<span class="c1"># Open a new CSV file in write mode</span>
+<span class="c1"># Initialize the CSV file</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-    <span class="c1"># Iterate over each line in the data</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="c1"># Split the line into fields using comma as the delimiter</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-        <span class="c1"># Write the fields to the CSV file</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;photo&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
 
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">print_telemetry</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prints the drone&#39;s telemetry data and updates the CSV file.&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">telemetry_count</span>
+    <span class="n">telemetry_count</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Increment the counter</span>
+    <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>  <span class="c1"># Get the current local time</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Telemetry Data Feed </span><span class="si">{</span><span class="n">telemetry_count</span><span class="si">}</span><span class="s1"> - Timestamp: </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Location global alt (feet): </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">alt</span> <span class="o">*</span> <span class="mf">3.281</span> <span class="k">if</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">alt</span> <span class="k">else</span> <span class="kc">None</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pitch: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">attitude</span><span class="o">.</span><span class="n">pitch</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocity: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GPS: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">gps_0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flight mode currently: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Battery level: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">battery</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">system_status</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Armed: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">armed</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Heading: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">heading</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Speed: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">groundspeed</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GPS fix: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">gps_0</span><span class="o">.</span><span class="n">fix_type</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Satellites: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">gps_0</span><span class="o">.</span><span class="n">satellites_visible</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Location global lat: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Location global lon: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Groundspeed: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">groundspeed</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Velocity: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="c1"># Save telemetry data to a CSV file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span>
+            <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span>
+            <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span>
+            <span class="s1">&#39;photo.jpg&#39;</span><span class="p">,</span>  <span class="c1"># Placeholder for photo name</span>
+            <span class="n">current_time</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;Telemetry Data Feed </span><span class="si">{</span><span class="n">telemetry_count</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="p">])</span>
 
-<span class="c1"># Create a map centered around the average coordinates</span>
-<span class="n">map_center</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_map</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the Folium map with the latest telemetry data.&quot;&quot;&quot;</span>
+    <span class="c1"># Load the updated data</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
 
-<span class="c1"># Add markers with popups for each photo</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="n">popup_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;strong&gt;Description:&lt;/strong&gt; </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;</span>
-<span class="s2">    &lt;strong&gt;Timestamp:&lt;/strong&gt; </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;</span>
-<span class="s2">    &lt;img src=&#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;photo&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; alt=&#39;Photo&#39; width=&#39;200&#39;&gt;</span>
+    <span class="c1"># Create a map centered around the average coordinates</span>
+    <span class="n">map_center</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+
+    <span class="c1"># Add markers with popups for each telemetry point</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">popup_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        &lt;strong&gt;Description:&lt;/strong&gt; </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;</span>
+<span class="s2">        &lt;strong&gt;Timestamp:&lt;/strong&gt; </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;</span>
+<span class="s2">        &lt;img src=&#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;photo&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; alt=&#39;Photo&#39; width=&#39;200&#39;&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]],</span> <span class="n">popup</span><span class="o">=</span><span class="n">popup_html</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="c1"># Save the Folium map to a string</span>
+    <span class="n">folium_map</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">_repr_html_</span><span class="p">()</span>
+
+    <span class="c1"># Load the Jinja2 template</span>
+    <span class="n">template_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;!DOCTYPE html&gt;</span>
+<span class="s2">    &lt;html lang=&quot;en&quot;&gt;</span>
+<span class="s2">    &lt;head&gt;</span>
+<span class="s2">        &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
+<span class="s2">        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span>
+<span class="s2">        &lt;title&gt;Drone Photos Map&lt;/title&gt;</span>
+<span class="s2">    &lt;/head&gt;</span>
+<span class="s2">    &lt;body&gt;</span>
+<span class="s2">        {{ folium_map | safe }}</span>
+<span class="s2">    &lt;/body&gt;</span>
+<span class="s2">    &lt;/html&gt;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]],</span> <span class="n">popup</span><span class="o">=</span><span class="n">popup_html</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 
-<span class="c1"># Save the Folium map to a string</span>
-<span class="n">folium_map</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">_repr_html_</span><span class="p">()</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">template_html</span><span class="p">)</span>
+    <span class="n">rendered_html</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">folium_map</span><span class="o">=</span><span class="n">folium_map</span><span class="p">)</span>
 
-<span class="c1"># Load the Jinja2 template</span>
-<span class="n">template_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;!DOCTYPE html&gt;</span>
-<span class="s2">&lt;html lang=&quot;en&quot;&gt;</span>
-<span class="s2">&lt;head&gt;</span>
-<span class="s2">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
-<span class="s2">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span>
-<span class="s2">    &lt;title&gt;Drone Photos Map&lt;/title&gt;</span>
-<span class="s2">&lt;/head&gt;</span>
-<span class="s2">&lt;body&gt;</span>
-<span class="s2">    {{ folium_map | safe }}</span>
-<span class="s2">&lt;/body&gt;</span>
-<span class="s2">&lt;/html&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">template_html</span><span class="p">)</span>
-<span class="n">rendered_html</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">folium_map</span><span class="o">=</span><span class="n">folium_map</span><span class="p">)</span>
-
-<span class="c1"># Save the rendered HTML to a file</span>
-<span class="n">output_path</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="s1">&#39;map.html&#39;</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rendered_html</span><span class="p">)</span>
-
-<span class="c1"># Display the map in the notebook</span>
-<span class="n">m</span>
+    <span class="c1"># Save the rendered HTML to a file</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="s1">&#39;map.html&#39;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rendered_html</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1290,18 +1366,64 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>&lt;iframe src=r"G:\My Drive\Python_projects\my_git_pages_website\Py-and-Sky-Labs\content\Geographic Analysis\map.html" width="100%" height="600px" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</p>
+<h2 id="Running-the-Telemetry-Loop">Running the Telemetry Loop<a class="anchor-link" href="#Running-the-Telemetry-Loop">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
 
+<span class="n">exit_flag</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Flag to indicate whether to exit the main loop</span>
+
+<span class="c1"># Continuously print telemetry data every 30 seconds until user interrupts</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">exit_flag</span><span class="p">:</span>
+        <span class="n">print_telemetry</span><span class="p">()</span>
+        <span class="n">update_map</span><span class="p">()</span>
+        
+        <span class="c1"># Wait for 30 seconds, but check for interruption</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">user_input</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;quit&#39;</span><span class="p">]:</span>
+                <span class="n">exit_flag</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="n">exit_flag</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="c1"># Close the vehicle connection</span>
+    <span class="n">vehicle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vehicle connection closed.&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>&lt;iframe src=r"G:\My Drive\Python_projects\my_git_pages_website\Py-and-Sky-Labs\content\Geographic Analysis\map.html" width="100%" height="600px" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</p>
+<h2 id="Display-the-Map-in-Jupyter-Notebook">Display the Map in Jupyter Notebook<a class="anchor-link" href="#Display-the-Map-in-Jupyter-Notebook">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="s1">&#39;map.html&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+</pre></div>
 
+    </div>
 </div>
 </div>
+
 </div>
  
 
@@ -1340,6 +1462,37 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="./articles/maps-with-folium.html" rel="bookmark"
+                           title="Permalink to Introduction to Folium Maps">Introduction to Folium Maps</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-07-05T00:00:00-05:00">
+                Published: Fri 05 July 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="./author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="./category/geographic-analysis.html">Geographic Analysis</a>.</p>
+<p>tags: <a href="./tag/python.html">Python</a> <a href="./tag/maps.html">Maps</a> </p>
+</footer><!-- /.post-info -->                
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Make-a-folium-map-of-drone-data">Make a folium map of drone data<a class="anchor-link" href="#Make-a-folium-map-of-drone-data">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+                <a class="readmore" href="./articles/maps-with-folium.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -1415,44 +1568,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
 </footer><!-- /.post-info -->                <p>This is Raspbery Pi Example 2</p>
                 <a class="readmore" href="./articles/raspbery-pi-example-2.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="./articles/jupyter-pandas.html" rel="bookmark"
-                           title="Permalink to Introduction to Jupyter Notebooks and Pandas">Introduction to Jupyter Notebooks and Pandas</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-05-29T00:00:00-05:00">
-                Published: Wed 29 May 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="./author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="./category/python-examples.html">Python Examples</a>.</p>
-<p>tags: <a href="./tag/python.html">Python</a> <a href="./tag/data-analysis.html">Data Analysis</a> <a href="./tag/jupyter-notebooks.html">Jupyter Notebooks</a> </p>
-</footer><!-- /.post-info -->                
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Jupyter-Notebooks"><strong>Jupyter Notebooks</strong><a class="anchor-link" href="#Jupyter-Notebooks">&#182;</a></h3><ul>
-<li>This is a jupyter notebook file (file extension is .ipynb for python notebook versus .py for standard python scripts)</li>
-<li>It is a format used by many data scientists and researchers for analysis and visualization tasks</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="1.-New-to-Jupyter-notebooks?:"><strong>1. New to Jupyter notebooks?</strong>:<a class="anchor-link" href="#1.-New-to-Jupyter-notebooks?:">&#182;</a></h2><ul>
-<li>Jupyter Notebooks are useful because (a) they are easier to work with and understand than single python script files (.py) and</li>
-                <a class="readmore" href="./articles/jupyter-pandas.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

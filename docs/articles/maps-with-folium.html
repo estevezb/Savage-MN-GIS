@@ -1204,46 +1204,22 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">folium</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">folium</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
 
-<span class="c1"># Define the data as a multi-line string</span>
-<span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;latitude,longitude,photo,timestamp,description</span>
-<span class="s2">45.5236,-122.6750,photo1.jpg,2024-06-25 10:00:00,Description of photo 1</span>
-<span class="s2">45.5280,-122.6650,photo2.jpg,2024-06-25 10:05:00,Description of photo 2</span>
-<span class="s2">45.5130,-122.7050,photo3.jpg,2024-06-25 10:10:00,Description of photo 3&quot;&quot;&quot;</span>
-
-<span class="c1"># Split the data into lines</span>
-<span class="n">lines</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="c1"># Get the current working directory as a Path object</span>
-<span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
-
-<span class="n">subdirectory</span> <span class="o">=</span> <span class="s1">&#39;Data&#39;</span>
-<span class="c1"># Ensure the subdirectory exists</span>
-<span class="n">data_directory</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="n">subdirectory</span>
-<span class="n">data_directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># Specify the path for the new CSV file using the / operator for path concatenation</span>
-<span class="n">file_path</span> <span class="o">=</span> <span class="n">data_directory</span> <span class="o">/</span> <span class="s1">&#39;drone_photos.csv&#39;</span>
-
-<span class="c1"># Open a new CSV file in write mode</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-    <span class="c1"># Iterate over each line in the data</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="c1"># Split the line into fields using comma as the delimiter</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-        <span class="c1"># Write the fields to the CSV file</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
-
-<span class="c1"># Load the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="c1"># Sample data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">40.7027809</span><span class="p">,</span> <span class="mf">44.7296478</span><span class="p">,</span> <span class="mf">45.513</span><span class="p">],</span>
+    <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">73.912115</span><span class="p">,</span> <span class="o">-</span><span class="mf">93.3436703</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.705</span><span class="p">],</span>
+    <span class="s1">&#39;photo&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;photo1.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;photo2.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;photo3.jpg&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2024-06-25 10:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-06-25 10:05:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-06-25 10:10:00&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ridgwood, New York&#39;</span><span class="p">,</span> <span class="s1">&#39;Savage, Minnesota&#39;</span><span class="p">,</span> <span class="s1">&#39;Description of photo 3&#39;</span><span class="p">]</span>
+<span class="p">})</span>
 
 <span class="c1"># Create a map centered around the average coordinates</span>
 <span class="n">map_center</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>
@@ -1256,7 +1232,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="s2">    &lt;strong&gt;Timestamp:&lt;/strong&gt; </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;</span>
 <span class="s2">    &lt;img src=&#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;photo&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; alt=&#39;Photo&#39; width=&#39;200&#39;&gt;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]],</span> <span class="n">popup</span><span class="o">=</span><span class="n">popup_html</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]],</span> <span class="n">popup</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Popup</span><span class="p">(</span><span class="n">popup_html</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">300</span><span class="p">))</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 
 <span class="c1"># Save the Folium map to a string</span>
 <span class="n">folium_map</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">_repr_html_</span><span class="p">()</span>
@@ -1280,7 +1256,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="n">rendered_html</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">folium_map</span><span class="o">=</span><span class="n">folium_map</span><span class="p">)</span>
 
 <span class="c1"># Save the rendered HTML to a file</span>
-<span class="n">output_path</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="s1">&#39;map.html&#39;</span>
+<span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;map.html&#39;</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rendered_html</span><span class="p">)</span>
 
@@ -1292,22 +1268,162 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[15]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    
+        &lt;script&gt;
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        &lt;/script&gt;
+    
+    &lt;style&gt;html, body {width: 100%;height: 100%;margin: 0;padding: 0;}&lt;/style&gt;
+    &lt;style&gt;#map {position:absolute;top:0;bottom:0;right:0;left:0;}&lt;/style&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_bb513f149885a26ff9de0449d56c3579 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+        
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_bb513f149885a26ff9de0449d56c3579&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_bb513f149885a26ff9de0449d56c3579 = L.map(
+                &quot;map_bb513f149885a26ff9de0449d56c3579&quot;,
+                {
+                    center: [43.648476233333334, -96.6535951],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b858aea86ac42dc8f3b4fdbdd358d39d = L.tileLayer(
+                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 19, &quot;maxZoom&quot;: 19, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
+            );
+        
+    
+            tile_layer_b858aea86ac42dc8f3b4fdbdd358d39d.addTo(map_bb513f149885a26ff9de0449d56c3579);
+        
+    
+            var marker_c6239c7d83f1dbaf86993746587b6a50 = L.marker(
+                [40.7027809, -73.912115],
+                {}
+            ).addTo(map_bb513f149885a26ff9de0449d56c3579);
+        
+    
+        var popup_00806c54730993d293c3474a84b896fd = L.popup({&quot;maxWidth&quot;: 300});
+
+        
+            
+                var html_777fc943a6bf23574900289508a6efb5 = $(`&lt;div id=&quot;html_777fc943a6bf23574900289508a6efb5&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;     &lt;strong&gt;Description:&lt;/strong&gt; Ridgwood, New York&lt;br&gt;     &lt;strong&gt;Timestamp:&lt;/strong&gt; 2024-06-25 10:00:00&lt;br&gt;     &lt;img src=&#x27;photo1.jpg&#x27; alt=&#x27;Photo&#x27; width=&#x27;200&#x27;&gt;     &lt;/div&gt;`)[0];
+                popup_00806c54730993d293c3474a84b896fd.setContent(html_777fc943a6bf23574900289508a6efb5);
+            
+        
+
+        marker_c6239c7d83f1dbaf86993746587b6a50.bindPopup(popup_00806c54730993d293c3474a84b896fd)
+        ;
+
+        
+    
+    
+            var marker_19491f18f166cee8fa879fa5b5dca71f = L.marker(
+                [44.7296478, -93.3436703],
+                {}
+            ).addTo(map_bb513f149885a26ff9de0449d56c3579);
+        
+    
+        var popup_08cb961b540d3e4919148b729456cf6a = L.popup({&quot;maxWidth&quot;: 300});
+
+        
+            
+                var html_6af9d7b125b430102b5e5b3c0c8d33a5 = $(`&lt;div id=&quot;html_6af9d7b125b430102b5e5b3c0c8d33a5&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;     &lt;strong&gt;Description:&lt;/strong&gt; Savage, Minnesota&lt;br&gt;     &lt;strong&gt;Timestamp:&lt;/strong&gt; 2024-06-25 10:05:00&lt;br&gt;     &lt;img src=&#x27;photo2.jpg&#x27; alt=&#x27;Photo&#x27; width=&#x27;200&#x27;&gt;     &lt;/div&gt;`)[0];
+                popup_08cb961b540d3e4919148b729456cf6a.setContent(html_6af9d7b125b430102b5e5b3c0c8d33a5);
+            
+        
+
+        marker_19491f18f166cee8fa879fa5b5dca71f.bindPopup(popup_08cb961b540d3e4919148b729456cf6a)
+        ;
+
+        
+    
+    
+            var marker_6a8b40983372b71b48e8deaea1d98b4f = L.marker(
+                [45.513, -122.705],
+                {}
+            ).addTo(map_bb513f149885a26ff9de0449d56c3579);
+        
+    
+        var popup_9b40d791d7d19dc414976bc4581f74fe = L.popup({&quot;maxWidth&quot;: 300});
+
+        
+            
+                var html_40b084c4e5faf4c4b516cf8c0f4f2bf9 = $(`&lt;div id=&quot;html_40b084c4e5faf4c4b516cf8c0f4f2bf9&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;     &lt;strong&gt;Description:&lt;/strong&gt; Description of photo 3&lt;br&gt;     &lt;strong&gt;Timestamp:&lt;/strong&gt; 2024-06-25 10:10:00&lt;br&gt;     &lt;img src=&#x27;photo3.jpg&#x27; alt=&#x27;Photo&#x27; width=&#x27;200&#x27;&gt;     &lt;/div&gt;`)[0];
+                popup_9b40d791d7d19dc414976bc4581f74fe.setContent(html_40b084c4e5faf4c4b516cf8c0f4f2bf9);
+            
+        
+
+        marker_6a8b40983372b71b48e8deaea1d98b4f.bindPopup(popup_9b40d791d7d19dc414976bc4581f74fe)
+        ;
+
+        
+    
+    
+            tile_layer_b858aea86ac42dc8f3b4fdbdd358d39d.addTo(map_bb513f149885a26ff9de0449d56c3579);
+        
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>&lt;iframe src=r"G:\My Drive\Python_projects\my_git_pages_website\Py-and-Sky-Labs\content\Geographic Analysis\map.html" width="100%" height="600px" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</p>
+
+</div>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>&lt;iframe src=r"G:\My Drive\Python_projects\my_git_pages_website\Py-and-Sky-Labs\content\Geographic Analysis\map.html" width="100%" height="600px" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</p>
 
-</div>
-</div>
 </div>
  
 
