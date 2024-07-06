@@ -14,6 +14,7 @@
                 <nav><ul>
                     <li><a href="../pages/home.html">Welcome to Py-and-Sky Labs</a></li>
                     <li><a href="../pages/about-me.html">About Me</a></li>
+                    <li><a href="../category/geographic-analysis.html">Geographic Analysis</a></li>
                     <li><a href="../category/python-examples.html">Python Examples</a></li>
                     <li><a href="../category/raspberry-pi-examples.html">Raspberry Pi Examples</a></li>
                     <li><a href="../category/tornado-analysis.html">Tornado Analysis</a></li>
@@ -1197,7 +1198,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </ul>
 <p><strong><em>Why use Functional programming?:</em></strong></p>
 <ul>
-<li>makes your code more readable and easier to test and debug</li>
+<li>makes your code easier to understand, test, debug and build upon</li>
 <li>It's widely used in data analysis and other fields where computation is important</li>
 </ul>
 <p><em>4 Key concepts in functional programming:</em></p>
@@ -1225,6 +1226,19 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 </ol>
 <h3 id="Goal:-To-use-functional-programming-concepts-in-our-Python-code">Goal: To use functional programming concepts in our Python code<a class="anchor-link" href="#Goal:-To-use-functional-programming-concepts-in-our-Python-code">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-Essence-of-Functional-Programming-in-Data-Analysis">The Essence of Functional Programming in Data Analysis<a class="anchor-link" href="#The-Essence-of-Functional-Programming-in-Data-Analysis">&#182;</a></h2><p>In data analysis tasks, particularly with tools like pandas, the essence of functional programming—writing clear, concise, and effective code—is achieved by:</p>
+<ul>
+<li>Minimizing Use of Mutable Data structures: By avoiding in-place modifications (changes made directly to the data structure)</li>
+<li>Encapsulating Operations in Functions: Encapsulation in a function improves readability, reusability, and allows for better testing and debugging</li>
+<li>Utilizing Functional Constructs: Leveraging built-in methods that abstract complex operations into simpler, concise statements</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -2884,11 +2898,13 @@ DataFrame with high temperatures based on complex conditions:
 <li><code>.mean()</code> average for the data within the window, completing the moving average operation</li>
 </ul>
 </li>
-<li><strong>Arguments</strong>:<ul>
+<li><p><strong>Arguments</strong>:</p>
+<ul>
 <li><code>data</code>: The dataset or series on which the moving average is to be calculated</li>
 <li><code>window</code>: The number of periods over which to calculate the average</li>
 <li>Window defines the "moving" part of the moving average, as this window slides over the data</li>
 </ul>
+<p>Note: We can consider .rolling() as a form of higher-order function because it takes a fucntion (mean()) and applies it to a window of data</p>
 </li>
 </ul>
 </li>
@@ -3426,7 +3442,7 @@ Name: om, Length: 73, dtype: int64
 <span class="c1"># and always generate the same ouptut for the same input</span>
 
 <span class="k">def</span> <span class="nf">movingAvg</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">window_size</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window_size</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># rolling is a pandas higher order function that we use within a our function</span>
+    <span class="k">return</span> <span class="n">series</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">window_size</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># rolling is a built-in pandas higher order function that we use within a our function</span>
 
 <span class="n">tor10yrMA</span> <span class="o">=</span> <span class="n">movingAvg</span> <span class="p">(</span><span class="n">annual_tors</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1">#average number of tornadoes occuring every 10 years </span>
 
@@ -3540,9 +3556,9 @@ Name: om, dtype: float64
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># After removing short term fluctuations we more clearly see a general increase in annual tornadoes over time</span>
-<span class="c1"># The reasons for this -not depicted here- are mostly due to enhanced detection of low magnitude events</span>
-<span class="c1"># Previously there have been high count years, such as in 2010, with record tornado outbreaks occuring</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># After removing short term fluctuations by averaging each point over a 10 year window, we clearly see a general increase in annual tornadoes over time</span>
+<span class="c1"># The reasons for this -not depicted here- are mostly due to spread and adoption of radar technology that enhanced detection of low magnitude events</span>
+
 
 <span class="c1"># Conclusion</span>
 <span class="c1"># Taken together, in the last 20 years we have consistently seen over 1000 tornadoes in the US </span>
