@@ -20,7 +20,7 @@ Damage assessment of the ~30,000 buildings on this 750 sq. km island nation took
 
 The scale and intensity of such a disaster  requires a more efficient and safe means of damage assessment. Ultimately, prolonged damaged assessment times delay response times and repairs. The hazards of navigating a damaged landscape and challenging terrain may also lead to inconsistent documentation preventing appropriate resource allocation and planning.
 
-The goal of this blog post is to document and share a high-level tutorial using Esri's deep learning model tools so that you might be able to perform your own building damage assessments in the wake of a disaster. We will start with a UAV image dataset that has been processed into a 2D orthophoto of Loubiere, Dominica post-Maria and load that image into ArcGIS Pro. Loubiere, is a coastal town in the Parish of Saint George in the Southwest of the island. The Pix4D-generated UAV orthophoto of the study area is here [Download the image data]({static}/GIS/InputData/Dominica2017PostMaria.tif) 
+The goal of this blog post is to document and share a high-level tutorial using Esri's deep learning model tools so that you might be able to perform your own building damage assessments in the wake of a disaster. We will start with a UAV image dataset that has been processed into a 2D orthophoto of Loubiere, Dominica post-Maria and load that image into ArcGIS Pro. Loubiere, is a coastal town in the Parish of Saint George in the Southwest of the island. The Pix4D-generated UAV orthophoto of the study area is here [Download the image data](https://drive.google.com/file/d/18m7yZXSUHRAvWg0fBuxTqRoC_5IKp4BS/view?usp=drive_link) 
 
 ### User Requirements / (My local system environment)
 - ArcGIS Pro (3.3)
