@@ -4,36 +4,36 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>Py and Sky Labs - Brian Estevez</title>
+        <title>Savage, MN GIS - Brian Estevez</title>
         <link rel="stylesheet" href="../theme/css/main.css" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="../">Py and Sky Labs</a></h1>
+                <h1><a href="../">Savage, MN GIS</a></h1>
                 <nav><ul>
-                    <li><a href="../pages/home.html">Welcome to Py-and-Sky Labs</a></li>
+                    <li><a href="../pages/home.html">Welcome</a></li>
                     <li><a href="../pages/about-me.html">About Me</a></li>
-                    <li><a href="../category/geographic-analysis.html">Geographic Analysis</a></li>
+                    <li><a href="../category/drones.html">Drones</a></li>
+                    <li><a href="../category/gis.html">GIS</a></li>
                     <li><a href="../category/python-examples.html">Python Examples</a></li>
-                    <li><a href="../category/raspberry-pi-examples.html">Raspberry Pi Examples</a></li>
-                    <li><a href="../category/tornado-analysis.html">Tornado Analysis</a></li>
+                    <li><a href="../category/tornados.html">Tornados</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="../articles/drone-maps-with-folium.html">Real-time Drone Folium Maps</a></h1>
+                    <h1 class="entry-title"><a href="../articles/real-df-copies.html">Copying Dataframes in Pandas</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2024-07-05T00:00:00-05:00">
-                Published: Fri 05 July 2024
+        <abbr class="published" title="2025-07-09T00:00:00-05:00">
+                Published: Wed 09 July 2025
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
-<p>In <a href="../category/geographic-analysis.html">Geographic Analysis</a>.</p>
-<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> </p>
+<p>In <a href="../category/python-examples.html">Python Examples</a>.</p>
+<p>tags: <a href="../tag/python.html">Python</a> </p>
 </footer><!-- /.post-info --><style type="text/css">/*!
 *
 * IPython notebook
@@ -1192,38 +1192,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="How-to-Use">How to Use<a class="anchor-link" href="#How-to-Use">&#182;</a></h2><ul>
-<li><p>Run Cell 1:</p>
-<ul>
-<li>This cell sets up the telemetry functions and initializes the CSV file.</li>
-</ul>
-</li>
-<li><p>Run Cell 2:</p>
-<ul>
-<li>This cell runs the telemetry loop. It will continuously fetch telemetry data and update the map until you interrupt the cell execution (e.g., using the stop button in Jupyter).</li>
-</ul>
-</li>
-<li><p>Run Cell 3:</p>
-<ul>
-<li>This cell displays the latest map. You can re-run this cell to refresh the map display with updated data.</li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Make-a-folium-map-of-drone-data">Make a folium map of drone data<a class="anchor-link" href="#Make-a-folium-map-of-drone-data">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Setup-and-Telemetry-Functions">Setup and Telemetry Functions<a class="anchor-link" href="#Setup-and-Telemetry-Functions">&#182;</a></h2>
+<h1 id="04_Making-real-copies-of-Dataframes-in-pandas">04_Making real copies of Dataframes in pandas<a class="anchor-link" href="#04_Making-real-copies-of-Dataframes-in-pandas">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -1232,130 +1201,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">folium</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
-<span class="kn">from</span> <span class="nn">dronekit</span> <span class="kn">import</span> <span class="n">connect</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="c1"># Function to start GStreamer</span>
-<span class="k">def</span> <span class="nf">start_gstreamer</span><span class="p">():</span>
-    <span class="n">gst_command</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="sa">r</span><span class="s2">&quot;C:\gstreamer\1.0\msvc_x86_64\bin\gst-launch-1.0.exe&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;udpsrc&quot;</span><span class="p">,</span> <span class="s2">&quot;port=5600&quot;</span><span class="p">,</span> <span class="s2">&quot;buffer-size=524288&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;application/x-rtp&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;rtpjitterbuffer&quot;</span><span class="p">,</span> <span class="s2">&quot;latency=200&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;rtph264depay&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;avdec_h264&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;videoconvert&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;!&quot;</span><span class="p">,</span> <span class="s2">&quot;autovideosink&quot;</span>
-    <span class="p">]</span>
-    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">gst_command</span><span class="p">)</span>
-
-<span class="c1"># Start GStreamer</span>
-<span class="n">gst_process</span> <span class="o">=</span> <span class="n">start_gstreamer</span><span class="p">()</span>
-
-<span class="c1"># Connect to the drone&#39;s telemetry feed</span>
-<span class="n">vehicle</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="s1">&#39;udpin:192.168.0.144:14550&#39;</span><span class="p">,</span> <span class="n">wait_ready</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">vehicle</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="n">vehicle</span><span class="o">.</span><span class="n">wait_ready</span><span class="p">(</span><span class="s1">&#39;autopilot_version&#39;</span><span class="p">)</span>
-
-<span class="n">telemetry_count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Initialize the counter</span>
-
-<span class="c1"># Path for the CSV file</span>
-<span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
-<span class="n">subdirectory</span> <span class="o">=</span> <span class="s1">&#39;Data&#39;</span>
-<span class="n">data_directory</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="n">subdirectory</span>
-<span class="n">data_directory</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">file_path</span> <span class="o">=</span> <span class="n">data_directory</span> <span class="o">/</span> <span class="s1">&#39;drone_photos.csv&#39;</span>
-
-<span class="c1"># Initialize the CSV file</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;photo&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">])</span>
-
-<span class="k">def</span> <span class="nf">print_telemetry</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prints the drone&#39;s telemetry data and updates the CSV file.&quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">telemetry_count</span>
-    <span class="n">telemetry_count</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Increment the counter</span>
-    <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>  <span class="c1"># Get the current local time</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Telemetry Data Feed </span><span class="si">{</span><span class="n">telemetry_count</span><span class="si">}</span><span class="s1"> - Timestamp: </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Location global alt (feet): </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">alt</span> <span class="o">*</span> <span class="mf">3.281</span> <span class="k">if</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">alt</span> <span class="k">else</span> <span class="kc">None</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pitch: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">attitude</span><span class="o">.</span><span class="n">pitch</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocity: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GPS: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">gps_0</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flight mode currently: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Battery level: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">battery</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Status: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">system_status</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Armed: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">armed</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Heading: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">heading</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Speed: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">groundspeed</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GPS fix: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">gps_0</span><span class="o">.</span><span class="n">fix_type</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Satellites: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">gps_0</span><span class="o">.</span><span class="n">satellites_visible</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Location global lat: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Location global lon: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Groundspeed: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">groundspeed</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Velocity: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">velocity</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-    
-    <span class="c1"># Save telemetry data to a CSV file</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span>
-            <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span>
-            <span class="n">vehicle</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">global_frame</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span>
-            <span class="s1">&#39;photo.jpg&#39;</span><span class="p">,</span>  <span class="c1"># Placeholder for photo name</span>
-            <span class="n">current_time</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s1">&#39;Telemetry Data Feed </span><span class="si">{</span><span class="n">telemetry_count</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="p">])</span>
-
-<span class="k">def</span> <span class="nf">update_map</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the Folium map with the latest telemetry data.&quot;&quot;&quot;</span>
-    <span class="c1"># Load the updated data</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-
-    <span class="c1"># Create a map centered around the average coordinates</span>
-    <span class="n">map_center</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
-
-    <span class="c1"># Add markers with popups for each telemetry point</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-        <span class="n">popup_html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        &lt;strong&gt;Description:&lt;/strong&gt; </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;</span>
-<span class="s2">        &lt;strong&gt;Timestamp:&lt;/strong&gt; </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br&gt;</span>
-<span class="s2">        &lt;img src=&#39;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;photo&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; alt=&#39;Photo&#39; width=&#39;200&#39;&gt;</span>
-<span class="s2">        &quot;&quot;&quot;</span>
-        <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]],</span> <span class="n">popup</span><span class="o">=</span><span class="n">popup_html</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-
-    <span class="c1"># Save the Folium map to a string</span>
-    <span class="n">folium_map</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">_repr_html_</span><span class="p">()</span>
-
-    <span class="c1"># Load the Jinja2 template</span>
-    <span class="n">template_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    &lt;!DOCTYPE html&gt;</span>
-<span class="s2">    &lt;html lang=&quot;en&quot;&gt;</span>
-<span class="s2">    &lt;head&gt;</span>
-<span class="s2">        &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
-<span class="s2">        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span>
-<span class="s2">        &lt;title&gt;Drone Photos Map&lt;/title&gt;</span>
-<span class="s2">    &lt;/head&gt;</span>
-<span class="s2">    &lt;body&gt;</span>
-<span class="s2">        {{ folium_map | safe }}</span>
-<span class="s2">    &lt;/body&gt;</span>
-<span class="s2">    &lt;/html&gt;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
-
-    <span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">template_html</span><span class="p">)</span>
-    <span class="n">rendered_html</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">folium_map</span><span class="o">=</span><span class="n">folium_map</span><span class="p">)</span>
-
-    <span class="c1"># Save the rendered HTML to a file</span>
-    <span class="n">output_path</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">/</span> <span class="s1">&#39;map.html&#39;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rendered_html</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 
     </div>
@@ -1366,7 +1212,14 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Running-the-Telemetry-Loop">Running the Telemetry Loop<a class="anchor-link" href="#Running-the-Telemetry-Loop">&#182;</a></h2>
+<h3 id="Examples-of-mutatble-and-non-mutable-data:">Examples of mutatble and non-mutable data:<a class="anchor-link" href="#Examples-of-mutatble-and-non-mutable-data:">&#182;</a></h3><h3 id="Lists">Lists<a class="anchor-link" href="#Lists">&#182;</a></h3><ul>
+<li>Are mutable</li>
+<li>When we add to or modify lists, the original data is changed
+### Tuples</li>
+<li>Are not mutable</li>
+<li>When we try to add to or modify tuples, we actually create a new tuple, as the original tuple cannot be changed</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -1375,28 +1228,203 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Let&#39;s start with simple example of appending to a list</span>
+<span class="n">listA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">listB</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
 
-<span class="n">exit_flag</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Flag to indicate whether to exit the main loop</span>
+<span class="n">listA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># we modify lists, using listName.append(value)</span>
 
-<span class="c1"># Continuously print telemetry data every 30 seconds until user interrupts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">listA</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">listB</span><span class="p">)</span>
+
+<span class="c1"># now we have added a value to our list</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># we can copy a list by setting it equal to a new variable</span>
+<span class="c1"># ...neat</span>
+<span class="c1"># but what will happen if you add to one of these lists?</span>
+
+<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">list2</span> <span class="o">=</span> <span class="n">list1</span>
+<span class="n">list2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># Modifying list2 also modifies list1 because they reference the same list</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
+
+<span class="c1"># DataFrame in pandas</span>
+
+    <span class="c1"># A DataFrame can be created from a dictionary of lists</span>
+    <span class="c1"># Each key-value pair in the dictionary corresponds to a column in the DataFrame</span>
+    <span class="c1"># The key is the column label and the list is the column data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="c1"># column 1</span>
+    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">],</span> <span class="c1"># column 2</span>
+    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span> <span class="c1"># column 3</span>
+<span class="p">}</span>
+<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1">#convert to a pandas Dataframe</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>  <span class="c1"># lets have a look before changing anything</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># A DataFrame is like a dictionary of lists, but with additional functionality</span>
+
+<span class="c1"># Be careful when modifying DataFrames OR lists</span>
+<span class="c1"># If you create a new DataFrame OR list by referencing an existing one, they will both point to the same data</span>
+<span class="n">cleaned_tdata</span> <span class="o">=</span> <span class="n">tdata</span>
+
+<span class="c1"># So if you modify one, the other will also be modified</span>
+<span class="n">cleaned_tdata</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">)</span>
+
+<span class="c1"># we dropped mag in the cleaned tdata</span>
+<span class="c1"># But that change was also applied to the tdata!</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Lets try dropping a single row, again notice how this change carries over to the data we &#39;copied&#39;?</span>
+
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="c1"># column 1</span>
+    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">],</span> <span class="c1"># column 2</span>
+    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span> <span class="c1"># column 3</span>
+<span class="p">}</span>
+<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># We create a &#39;copy&#39; of the data that we want to work on or clean</span>
+<span class="n">cleaned_tdata</span> <span class="o">=</span> <span class="n">tdata</span>
+
+<span class="c1"># Drop the specified rows from the DataFrame in-place</span>
+<span class="c1"># modify one, the other will also be modified</span>
+<span class="n">cleaned_tdata</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># To avoid this, create a real copy of the data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="c1"># column 1</span>
+    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">],</span> <span class="c1"># column 2</span>
+    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span> <span class="c1"># column 3</span>
+<span class="p">}</span>
+<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># create a REAL copy of the data to work on or clean</span>
+<span class="n">cleaned_tdata</span> <span class="o">=</span> <span class="n">tdata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># creates a real copy of the data</span>
+
+<span class="c1"># Drop the specified rows from the DataFrame in-place</span>
+<span class="n">cleaned_tdata</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span> <span class="c1"># The original data is unchanged</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Did we really mean to also modify the original tdata?...</span>
+<span class="c1"># Why did this happen?</span>
+    <span class="c1"># we dropped rows from cleaned_tdata &#39;in-place&#39;, which modified the original data for cleaned_tdata</span>
+    <span class="c1"># since tdata and cleand_tdata both point to the same DataFrame</span>
+    <span class="c1"># modifying the orignal data frame (i.e., using inplace=True) also affects tdata</span>
+
+<span class="c1"># To avoid changing/losing the original data, best to create a REAL copy using .copy()  BEFORE making any changes to the data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># use the tuple as a multi-index in the DataFrame. </span>
+<span class="c1"># This allows you to index the DataFrame using the values in multiple columns</span>
+
+<span class="c1"># Create a DataFrame from a dictionary of tuples</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span>
+    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Set &#39;mag&#39; and &#39;date&#39; as a multi-index</span>
+<span class="n">tdata</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">new_tdata</span><span class="o">=</span> <span class="n">tdata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_tdata</span><span class="p">)</span>
+
+<span class="c1"># Access data for a specific &#39;mag&#39; and &#39;date&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;April 11 2024&#39;</span><span class="p">)])</span>
+
+
+<span class="c1"># Access data for a specific &#39;mag&#39; and &#39;date&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_tdata</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;April 11 2024&#39;</span><span class="p">)])</span>
+
+<span class="c1"># Try to change the &#39;mag&#39; value for a specific row in the index</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">exit_flag</span><span class="p">:</span>
-        <span class="n">print_telemetry</span><span class="p">()</span>
-        <span class="n">update_map</span><span class="p">()</span>
-        
-        <span class="c1"># Wait for 30 seconds, but check for interruption</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">user_input</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;quit&#39;</span><span class="p">]:</span>
-                <span class="n">exit_flag</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">break</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-    <span class="n">exit_flag</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="k">finally</span><span class="p">:</span>
-    <span class="c1"># Close the vehicle connection</span>
-    <span class="n">vehicle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vehicle connection closed.&quot;</span><span class="p">)</span>
+    <span class="n">tdata</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;April 11 2024&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TypeError: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Try to change the &#39;date&#39; value for a specific row in the index</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">tdata</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;April 12 2024&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TypeError: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1404,20 +1432,107 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Display-the-Map-in-Jupyter-Notebook">Display the Map in Jupyter Notebook<a class="anchor-link" href="#Display-the-Map-in-Jupyter-Notebook">&#182;</a></h2>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># To change the mag or date values for a specific row</span>
+<span class="c1"># need to create a new tuple, which means creating a new dataframe</span>
+
+<span class="c1"># .resetindex() Creates NEW DataFrame, applied on tdata will remove the multi-index </span>
+<span class="c1"># reverts tdata back to default integer index, with mag and date as columns</span>
+<span class="n">tdata_copy</span> <span class="o">=</span> <span class="n">tdata</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>  <span class="c1"># tdata_copy is a separate object and does not reference the same data</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span> <span class="c1"># original data is maintained</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata_copy</span><span class="p">)</span> <span class="c1"># a new separate dataframe is created</span>
+
+
+<span class="c1"># Now that mag and date are not a tuple, we can change the &#39;mag&#39; and &#39;date&#39; values</span>
+<span class="n">tdata_copy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># changes mag in the first row</span>
+<span class="n">tdata_copy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;June 1 2024&#39;</span> <span class="c1"># changes date in the first row</span>
+
+<span class="c1"># Set the new multi-index</span>
+<span class="n">tdata_copy</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tdata_copy</span><span class="p">)</span> <span class="c1"># even though it is derived from tdata, it a separate object and changes to one will not affect the other</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span>
-<span class="n">IFrame</span><span class="p">(</span><span class="s1">&#39;map.html&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># In this example, we&#39;re setting &#39;mag&#39; and &#39;date&#39; as a multi-index for the DataFrame</span>
+<span class="c1"># This allows us to index the DataFrame using the values in both &#39;mag&#39; and &#39;date&#39;. The tuple of (&#39;mag&#39;, &#39;date&#39;) </span>
+<span class="c1">#     acts as a single key that we can use to index the DataFrame</span>
+<span class="c1"># This is a case where the immutability of tuples is relevant to the analysis of data in a DataFrame.</span>
+    <span class="c1"># Similar to how in functional programming,</span>
+    <span class="c1"># the immutability of data structures ensures that their identity remains constant even as new data structures are created based on them</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Say we find that we often need to change the data in our dataframe, maybe dates and mags have typos..</span>
+<span class="c1"># We need a function to simplify this re-occuring process </span>
+<span class="c1"># but our dataframe has a tuple multi index</span>
+<span class="c1"># So, our function should take a dataframe, and a tuple, then return a NEW dataframe with the updated index</span>
+
+<span class="k">def</span> <span class="nf">set_new_index</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">new_index_values</span><span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="c1">#input data we want to change</span>
+
+    <span class="c1"># Create a new DataFrame with the desired index</span>
+    <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1"># reset the index and create a NEW dataframe</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_copy</span><span class="p">)</span> <span class="c1"># check the results of the NEW dataframe</span>
+
+    <span class="n">df_copy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_index_values</span> <span class="c1"># change the mag and date for the first row of the NEW dataframe</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_copy</span><span class="p">)</span>
+
+    <span class="n">df_copy</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># set the index to the tuple of mag, date for the NEW dataframe</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_copy</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_copy</span> <span class="c1"># return the NEW dataframe with the modified index</span>
+
+<span class="c1"># This pure function , it doesn&#39;t modify the original DataFrame (it has no side effects)</span>
+<span class="c1"># will always product the same output Dataframe for the same input Dataframe,index (we have no external variables in the function modifying our output)</span>
+
+<span class="n">new_tdata</span> <span class="o">=</span> <span class="n">set_new_index</span><span class="p">(</span><span class="n">tdata</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;April 12 2024&#39;</span><span class="p">))</span> <span class="c1"># creates a new DataFrame with the multi index (tuple) updated</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">new_tdata</span><span class="p">)</span>
+
+<span class="c1"># This function doesn&#39;t modify the original DataFrame (no side effects)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span>
 </pre></div>
 
     </div>
@@ -1465,116 +1580,107 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="../articles/maps-with-folium.html" rel="bookmark"
-                           title="Permalink to Introduction to Folium Maps">Introduction to Folium Maps</a></h1>
+                    <h1><a href="../articles/list-comprehensions.html" rel="bookmark"
+                           title="Permalink to Using List comprehensions">Using List comprehensions</a></h1>
                 </header>
 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2024-07-05T00:00:00-05:00">
-                Published: Fri 05 July 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="../category/geographic-analysis.html">Geographic Analysis</a>.</p>
-<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> </p>
-</footer><!-- /.post-info -->                
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Make-a-folium-map-of-drone-data">Make a folium map of drone data<a class="anchor-link" href="#Make-a-folium-map-of-drone-data">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-                <a class="readmore" href="../articles/maps-with-folium.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="../articles/functional-programming.html" rel="bookmark"
-                           title="Permalink to Introduction to Functional Programming">Introduction to Functional Programming</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-06-04T00:00:00-05:00">
-                Published: Tue 04 June 2024
+        <abbr class="published" title="2025-07-08T00:00:00-05:00">
+                Published: Tue 08 July 2025
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
 <p>In <a href="../category/python-examples.html">Python Examples</a>.</p>
-<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/functions.html">Functions</a> </p>
+<p>tags: <a href="../tag/python.html">Python</a> </p>
 </footer><!-- /.post-info -->                
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Functional-programming"><strong>Functional programming</strong><a class="anchor-link" href="#Functional-programming">&#182;</a></h3><ul>
-<li>a style of programming where your output is determined solely by your input</li>
-<li>The function does not change anything outside of it or depend on external data to produce the output</li>
-</ul>
-<p><strong><em>Why use Functional programming?:</em></strong></p>
-<ul>
-<li>makes your code easier to understand, test, debug and build upon</li>
-<li>It's widely used in data analysis and other fields where computation is important</li>
-                <a class="readmore" href="../articles/functional-programming.html">read more</a>
+<h1 id="List-comprehensions">List comprehensions<a class="anchor-link" href="#List-comprehensions">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+                <a class="readmore" href="../articles/list-comprehensions.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="../articles/raspbery-pi-example-1.html" rel="bookmark"
-                           title="Permalink to Raspbery Pi Example 1">Raspbery Pi Example 1</a></h1>
+                    <h1><a href="../articles/disaster-mapping.html" rel="bookmark"
+                           title="Permalink to Disaster Mapping in Loubiere, Dominica">Disaster Mapping in Loubiere, Dominica</a></h1>
                 </header>
 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2024-05-30T00:00:00-05:00">
-                Published: Thu 30 May 2024
+        <abbr class="published" title="2025-02-19T00:00:00-06:00">
+                Published: Wed 19 February 2025
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
-<p>In <a href="../category/raspberry-pi-examples.html">Raspberry Pi Examples</a>.</p>
-
-</footer><!-- /.post-info -->                <p>This is Raspbery Pi Example 1</p>
-                <a class="readmore" href="../articles/raspbery-pi-example-1.html">read more</a>
+<p>In <a href="../category/gis.html">GIS</a>.</p>
+<p>tags: <a href="../tag/disaster.html">Disaster</a> <a href="../tag/hurricanes.html">Hurricanes</a> <a href="../tag/gis.html">GIS</a> <a href="../tag/drones.html">Drones</a> </p>
+</footer><!-- /.post-info -->                <p><img src= "../images/Dominica_map.png" alt ="Map of Dominica" style= " width 350px; height: 350px;"></p>
+<h2><strong>Disaster in Dominica</strong></h2>
+<p>On September, 18th 2017 Hurricane Maria made landfall on the small caribbean island of Dominica as a Category 5 with 167 mph winds. The storm was rare in the speed at which it went from Category 3 to 5 in less than 24 hours -- giving islands residents …</p>
+                <a class="readmore" href="../articles/disaster-mapping.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="../articles/raspbery-pi-example-2.html" rel="bookmark"
-                           title="Permalink to Raspbery Pi Example 2">Raspbery Pi Example 2</a></h1>
+                    <h1><a href="../articles/drones.html" rel="bookmark"
+                           title="Permalink to Drones">Drones</a></h1>
                 </header>
 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2024-05-30T00:00:00-05:00">
-                Published: Thu 30 May 2024
+        <abbr class="published" title="2025-02-18T00:00:00-06:00">
+                Published: Tue 18 February 2025
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
-<p>In <a href="../category/raspberry-pi-examples.html">Raspberry Pi Examples</a>.</p>
+<p>In <a href="../category/drones.html">Drones</a>.</p>
 
-</footer><!-- /.post-info -->                <p>This is Raspbery Pi Example 2</p>
-                <a class="readmore" href="../articles/raspbery-pi-example-2.html">read more</a>
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="../articles/drones.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../articles/gis.html" rel="bookmark"
+                           title="Permalink to GIS">GIS</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2025-02-18T00:00:00-06:00">
+                Published: Tue 18 February 2025
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/gis.html">GIS</a>.</p>
+
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="../articles/gis.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
-    Page 1 / 2
+    Page 1 / 5
         <a href="../author/brian-estevez2.html">&raquo;</a>
-        <a href="../author/brian-estevez2.html">&#8649;</a>
+        <a href="../author/brian-estevez5.html">&#8649;</a>
 </p>
                 </section><!-- /#content -->
         <section id="extras" class="body">

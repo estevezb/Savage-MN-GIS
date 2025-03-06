@@ -4,26 +4,26 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>Py and Sky Labs - Maps</title>
+        <title>Savage, MN GIS - Maps</title>
         <link rel="stylesheet" href="../theme/css/main.css" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="../">Py and Sky Labs</a></h1>
+                <h1><a href="../">Savage, MN GIS</a></h1>
                 <nav><ul>
-                    <li><a href="../pages/home.html">Welcome to Py-and-Sky Labs</a></li>
+                    <li><a href="../pages/home.html">Welcome</a></li>
                     <li><a href="../pages/about-me.html">About Me</a></li>
-                    <li><a href="../category/geographic-analysis.html">Geographic Analysis</a></li>
+                    <li><a href="../category/drones.html">Drones</a></li>
+                    <li><a href="../category/gis.html">GIS</a></li>
                     <li><a href="../category/python-examples.html">Python Examples</a></li>
-                    <li><a href="../category/raspberry-pi-examples.html">Raspberry Pi Examples</a></li>
-                    <li><a href="../category/tornado-analysis.html">Tornado Analysis</a></li>
+                    <li><a href="../category/tornados.html">Tornados</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="../articles/drone-maps-with-folium.html">Real-time Drone Folium Maps</a></h1>
+                    <h1 class="entry-title"><a href="../articles/drone-maps-with-folium-drones.html">Real-time Drone Folium Maps Drones</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2024-07-05T00:00:00-05:00">
                 Published: Fri 05 July 2024
@@ -32,8 +32,8 @@
         <address class="vcard author">
                 By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
-<p>In <a href="../category/geographic-analysis.html">Geographic Analysis</a>.</p>
-<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> </p>
+<p>In <a href="../category/drones.html">Drones</a>.</p>
+<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> <a href="../tag/drones.html">Drones</a> </p>
 </footer><!-- /.post-info --><style type="text/css">/*!
 *
 * IPython notebook
@@ -1362,6 +1362,28 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">Running cells with &#39;venv (Python 3.11.1)&#39; requires the ipykernel package.
+</span>
+<span class="ansi-red-intense-fg ansi-bold">Run the following command to install &#39;ipykernel&#39; into the Python environment. 
+</span>
+<span class="ansi-red-intense-fg ansi-bold">Command: &#39;c:/Users/Brian/Desktop/Drone/TensorFlow_image_classifier/venv/Scripts/python.exe -m pip install ipykernel -U --force-reinstall&#39;</span></pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -1465,8 +1487,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="../articles/maps-with-folium.html" rel="bookmark"
-                           title="Permalink to Introduction to Folium Maps">Introduction to Folium Maps</a></h1>
+                    <h1><a href="../articles/drone-maps-with-folium-gis.html" rel="bookmark"
+                           title="Permalink to Real-time Drone Folium Maps GIS">Real-time Drone Folium Maps GIS</a></h1>
                 </header>
 
                 <div class="entry-content">
@@ -1478,7 +1500,77 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
         <address class="vcard author">
                 By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
-<p>In <a href="../category/geographic-analysis.html">Geographic Analysis</a>.</p>
+<p>In <a href="../category/gis.html">GIS</a>.</p>
+<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> </p>
+</footer><!-- /.post-info -->                
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="How-to-Use">How to Use<a class="anchor-link" href="#How-to-Use">&#182;</a></h2><ul>
+<li><p>Run Cell 1:</p>
+<ul>
+<li>This cell sets up the telemetry functions and initializes the CSV file.</li>
+</ul>
+</li>
+<li><p>Run Cell 2:</p>
+<ul>
+<li>This cell runs the telemetry loop. It will continuously fetch telemetry data and update the map until you interrupt the cell execution (e.g., using the stop button in Jupyter).</li>
+</ul>
+</li>
+<li><p>Run Cell 3:</p>
+<ul>
+<li>This cell displays the latest map. You can re-run this cell to refresh the map display with updated data.</li>
+                <a class="readmore" href="../articles/drone-maps-with-folium-gis.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../articles/maps-with-folium-drones.html" rel="bookmark"
+                           title="Permalink to Introduction to Folium Maps Drones">Introduction to Folium Maps Drones</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-07-05T00:00:00-05:00">
+                Published: Fri 05 July 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/drones.html">Drones</a>.</p>
+<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> <a href="../tag/drones.html">Drones</a> </p>
+</footer><!-- /.post-info -->                
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Make-a-folium-map-of-drone-data">Make a folium map of drone data<a class="anchor-link" href="#Make-a-folium-map-of-drone-data">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+                <a class="readmore" href="../articles/maps-with-folium-drones.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../articles/maps-with-folium-gis.html" rel="bookmark"
+                           title="Permalink to Introduction to Folium Maps GIS">Introduction to Folium Maps GIS</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-07-05T00:00:00-05:00">
+                Published: Fri 05 July 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/gis.html">GIS</a>.</p>
 <p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> </p>
 </footer><!-- /.post-info -->                
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
@@ -1490,7 +1582,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-                <a class="readmore" href="../articles/maps-with-folium.html">read more</a>
+                <a class="readmore" href="../articles/maps-with-folium-gis.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

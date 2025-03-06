@@ -1,13 +1,23 @@
 from pelican import signals
 from pelican_jupyter import markup as nb_markup
 AUTHOR = 'Brian Estevez'
-SITENAME = 'Py and Sky Labs'
+SITENAME = 'Savage, MN GIS'
 SITEURL = '/'
 
 ARTICLE_URL= 'articles/{slug}.html'
 ARTICLE_SAVE_AS = 'articles/{slug}.html'
 PAGE_URL= 'pages/{slug}.html'
 PAGE_SAVE_AS= 'pages/{slug}.html'
+
+# CATEGORY_URL = 'category/{slug}.html'  # will use category as a page 
+# CATEGORY_SAVE_AS = 'category/{slug}.html'
+
+# Pelican writes the categories listing to docs/index.html
+CATEGORIES_SAVE_AS = 'index.html'    
+
+# categories page is served at the root URL (/), effectively becoming the home page.
+CATEGORIES_URL = ''
+
 
 OUTPUT_PATH = 'docs/'
 PATH = "content"
@@ -68,10 +78,27 @@ IPYNB_MARKUP_USE_FIRST_CELL = True
 
 
 
-STATIC_PATHS = ['images']
+STATIC_PATHS = ['static', 'images']
 
 I18N_TEMPLATES_LANG = 'en'
 
 BOOTSTRAP_THEME = 'flatly'
 PYGMENTS_STYLE = 'monokai'
-FAVICON = 'images/favicon-48x48.png'
+FAVICON = 'static/images/favicon-48x48.png'
+
+EXTRA_PATH_METADATA = {
+    'static/images/favicon-48x48.png': {'path': 'favicon-48x48.png'}
+}
+
+
+
+IGNORE_FILES = ["map.html", "map_template.html"]
+
+# Disable the default blog index
+# INDEX_SAVE_AS = 'index.html' # disabled to prevent recent blog page format being created
+
+INDEX_SAVE_AS = '' 
+INDEX_URL = ''
+#tells Pelican not to create index.html for recent posts
+
+THEME_TEMPLATES_OVERRIDES = ['templates']

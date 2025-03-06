@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="site-banner">
+  <img src="{{ SITEURL }}/static/images/Scott_County_Minnesota_Savage_Highlighted.png" 
+       alt="Minnesota Banner" class="banner">
+</header>
+
+<h1>Topics for {{ SITENAME }}</h1>
+
+{# Hard-coded mapping from category name to icon path #}
+{% set category_icons = {
+  'GIS': 'static/images/GIS_icon.png',
+  'Drones': 'static/images/drone_icon.png',
+  'Python Examples': 'static/images/python_icon.png',
+  'Tornados': 'static/images/tornado_icon.png'
+} %}
+
+<div class="grid-container">
+  {% for category, articles in categories %}
+    <div class="grid-item">
+      <a href="{{ SITEURL }}/category/{{ category.slug }}.html">
+        {% set icon_path = category_icons.get(category.name, 'static/images/default.png') %}
+        <img src="{{ SITEURL }}/{{ icon_path }}" alt="{{ category.name }}" class="category-icon">
+        <h2>{{ category.name }}</h2>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+  .site-banner {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .banner {
+    max-width: 100%;
+    height: auto;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .grid-item {
+    background: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+  }
+  .category-icon {
+    max-width: 100px;
+    display: block;
+    margin: 0 auto 10px;
+  }
+  .grid-item h2 {
+    margin: 0;
+  }
+</style>
+
+{% endblock %}

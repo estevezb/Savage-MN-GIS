@@ -6,20 +6,10 @@ Slug: about-me
 Authors: Brian Estevez
 Summary: Hello!
 
-Hello! My name is Brian Estevez.
+Hello! My name is Brian Estevez. I really enjoy using and learning about Python programming, UAV or Drone technology, and Geographical Information Systems (GIS).
 
-# Python Programming: A Joyous Art form
-To me, Python programming is more than code; it’s a vehicle to unlock the tapestry of the human mind, enabling you to express complex ideas and solve real problems. This dynamic language serves as a tool to sculpt data into insights and craft simple lines of code into powerful applications
+This site is a place to share in the exploration of python programming itself, and its applications in GIS and UAV technology.
 
-Imagine Python as a painter’s palette 🎨 able to hold an endless array of colors for you to blend into something new. Python programming is the practice of wielding this palette to craft programs that not only perform tasks but transform data into stories, numbers into insights, and enable new interactions between humans and machines
+# **What is Python programming?**
 
-## **That's nice...But What is Python programming, really?**
-
-Python is a popular computer programming language. Python programming is the practice of developing programs that control computer software.
-
-
-## Join the Party, Transform Curiosity to Action!
- This site is a place to explore the realms of data analysis, geographic information systems, drone technology, and the mysteries of severe weather phenomena, particularly tornadoes. 
- My hope is that this becomes a place for sharing discoveries and innovations, discussing challenges and breakthroughs, and connecting with like-minded enthusiasts and professionals.  Whether you are a novice eager to learn or an expert looking to dive deeper into specialized topics, my hope is that you will find valuable resources and engaging content here
-
-![Python as Creative Self Expression Image](https://github.com/estevezb/Fly-in-the-Ointment/raw/main/content/pages/Python_Creative_Self_Expression.jpg?raw=true)
+Python is a popular computer programming language. Python programming is the practice of writing scripts or code that enable you to control, communicate with and connects to computers. Python programming is more than stringing code into apps; it’s a way to explore the unknown, test ideas and solve real problems. Many fields (e.g., Atmospheric Sciences, Computer vision, and GIS) use python for software development, data analysis, and applications in artificial intelligence. 
