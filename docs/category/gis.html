@@ -14,6 +14,7 @@
                 <nav><ul>
                     <li><a href="../pages/home.html">Welcome</a></li>
                     <li><a href="../pages/about-me.html">About Me</a></li>
+                    <li><a href="../category/arcpy.html">ArcPY</a></li>
                     <li><a href="../category/drones.html">Drones</a></li>
                     <li class="active"><a href="../category/gis.html">GIS</a></li>
                     <li><a href="../category/python-examples.html">Python Examples</a></li>
@@ -63,7 +64,7 @@
 <p>The typical way to address the format issues is use ArcGIS Pro's Raster Function Extract Bands on your input TIF image. In the geoprocessing window you would input the values of the bands your in your image and set the Missing Band Action parameter to fail to ensure you correctly extracted 3 bands. After this step, you would then need to save that result because raster function outputs are temporary. To do that you would right-click on the new raster in your contents pane, select Data, and use Export Raster to save it permanently as TIF. However, here I want to advocate for automating this band extraction process and other aspect of the workflow using python scripting and the arcpy library. </p>
 <h3><strong><em>Automation in ArcGIS Pro</em></strong></h3>
 <p>One powerful aspect of ArcGIS Pro is its automation capabilities using the ModelBuilder tool. ModelBuilder gives you the ability to visually string together geoprocessing tools through a drag-and-drop user interface. It is a good way to standardize and streamline repetitive data processing operations. Then you can share those workflows, for example as a toolbox. ModelBuilder is not the only means to automate geoprocessing. Python scripting is also available for automation and tool creation. In fact, many ArcGIS Pro tools are written in and execute python scripts when you run them. If you did not look for it, you would not appreciate that because they behave and look similar to other geoprocessing tools. The point here is that you can write python to create tools that function in your toolbox and automate your workflow further than possible with ModelBuilder alone. Together, these tools can create workflows that are highly customized, shareable and automated.</p>
-<h4><strong>What is Arcpy?</strong></h4>
+<h4><strong>What is ArcPY?</strong></h4>
 <p>Arcpy is a Python library for automating GIS tasks in Arc GIS Pro. It allows you to perform geoprocessing, analysis, data management and mapping automation using python.
 Here is a script that would accomplish both these tasks : extracting bands and saving an formatted for Esri's pt-DL models. This script will function as a new tool allowing you to interact with it inside ArcGIS Pro just like other geoprocessing tools. This means you can re-use it, change the inputs, file names and folders, etc, for your use-case.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">### This script automates Raster conversion and formatting to generate 8-bit 3-band TIF Files</span>

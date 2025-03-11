@@ -59,7 +59,7 @@ The typical way to address the format issues is use ArcGIS Pro's Raster Function
 One powerful aspect of ArcGIS Pro is its automation capabilities using the ModelBuilder tool. ModelBuilder gives you the ability to visually string together geoprocessing tools through a drag-and-drop user interface. It is a good way to standardize and streamline repetitive data processing operations. Then you can share those workflows, for example as a toolbox. ModelBuilder is not the only means to automate geoprocessing. Python scripting is also available for automation and tool creation. In fact, many ArcGIS Pro tools are written in and execute python scripts when you run them. If you did not look for it, you would not appreciate that because they behave and look similar to other geoprocessing tools. The point here is that you can write python to create tools that function in your toolbox and automate your workflow further than possible with ModelBuilder alone. Together, these tools can create workflows that are highly customized, shareable and automated.
 
 
-#### **What is Arcpy?**
+#### **What is ArcPY?**
 
 Arcpy is a Python library for automating GIS tasks in Arc GIS Pro. It allows you to perform geoprocessing, analysis, data management and mapping automation using python.
 Here is a script that would accomplish both these tasks : extracting bands and saving an formatted for Esri's pt-DL models. This script will function as a new tool allowing you to interact with it inside ArcGIS Pro just like other geoprocessing tools. This means you can re-use it, change the inputs, file names and folders, etc, for your use-case.
