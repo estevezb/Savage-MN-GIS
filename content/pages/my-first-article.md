@@ -8,7 +8,7 @@ Summary: Hello!
 
 Hello! My name is Brian Estevez. I really enjoy using and learning about Python programming, UAV or Drone technology, and Geographical Information Systems (GIS).
 
-This site is a place to share in the exploration of python programming itself, and its applications in GIS and UAV technology.
+This site is a place to share in the exploration of these topics.
 
 # **What is Python programming?**
 
