@@ -1,0 +1,24 @@
+MN--Ground Water Contamination data mapping and analysis
+ 
+ArcGIS Workflow (ArcGIS v.3.3)
+------------------
+Datasets
+1. Groundwater and PFAS datasets 6 and 2 feature classes, respectively
+	- 6 fc MN GroundWater Contamination Atlas (.shp files)
+	- 2 fc MN PFAS levels (spreadsheets converted to points)
+2. MN City/township layer (https://webgis.dot.state.mn.us/65agsf1/rest/services/sdw_govnt/CITY_TOWNSHIP_UNORG_TERR/FeatureServer/0)
+
+
+Workflow
+1. Spatial join :Add city/township to contamination layer atlas 
+contamination summary layer , intersect, one to one --MN_PFAS_SpatialJoin
+
+2. Summary Statistic, Max Date: to get most recent water sampling for each city/township as a standalone table
+
+3. Create Field : Add field called join_key (TEXT) to the Max Date table, !Feature_NAME!+"_"+ str(!MaxDate!)
+4. Create Field: Repeat for MN_PFAS_SpatialJoin  !Feature_NAME!+"_"+str(!Latestsam!)
+
+5. Select by Attribute: to get latest PFAS by city/township  input- MN_PFAS_SpatialJoin, SQL expression:join_key IN (SELECT join_key FROM MN_PFAS_Levels_Max_date)
+
+6. Summarize within: to get the highest PFAS exceedance value across multiple samples for the latest sampling date, input_poly-City/township, input_features - MN_PFAS_SpatialJoin, use the selected records, summary field: exceedance max
+

@@ -6,7 +6,7 @@
         <meta name="generator" content="Pelican" />
         <title>What is ArcPY? Part2</title>
         <link rel="stylesheet" href="../theme/css/main.css" />
-        <meta name="description" content="Multiple Shapefile data sources access programmatically online adn converted to points in Arcpy, then mapped with ArcGIS pro What is Arcpy?: Part..." />
+        <meta name="description" content="Multiple Shapefile data sources access programmatically online and converted to points in Arcpy, then mapped with ArcGIS pro Shown below is a..." />
 </head>
 
 <body id="index" class="home">
@@ -1201,11 +1201,61 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src= "../images/MN_GroundWaterContamination_Data_2025.svg" alt ="Arcpy generated Point Feature Data from Ground water contamination, PFAS chemical levels and MNPCA clean up activity sites" style= " width 400px; height: 400px;"></p>
 <ul>
-<li>Multiple Shapefile data sources access programmatically online adn converted to points in Arcpy, then mapped with ArcGIS pro</li>
+<li>Multiple Shapefile data sources access programmatically online and converted to points in Arcpy, then mapped with ArcGIS pro</li>
+<li>Shown below is a dashboard of these data for the latest sampling dates where contamination data is grouped by city/township created </li>
 </ul>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[194]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Dashboard Created from these data</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span> <span class="c1"># a module for controlling notebook outputs, allows you to embed images, video, webpages with the Iframe function</span>
+
+<span class="c1"># ArcGIS Pro documentation URL for a specific tool</span>
+<span class="n">tool_url</span> <span class="o">=</span> <span class="s2">&quot;https://www.arcgis.com/apps/dashboards/e53b8dee993d458c858cb53a1ed56b99&quot;</span>
+
+<span class="c1"># Display the documentation inside Jupyter Notebook</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="n">tool_url</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;600px&quot;</span><span class="p">)</span> <span class="c1"># iframe can be used to display local or online webpages, documents, reports, visualizations , videos</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[194]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="100%"
+            height="600px"
+            src="https://www.arcgis.com/apps/dashboards/e53b8dee993d458c858cb53a1ed56b99"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
