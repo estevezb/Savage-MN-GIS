@@ -24,10 +24,10 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="../articles/what-is-arcpy.html">What is ArcPY?</a></h1>
+                    <h1 class="entry-title"><a href="../articles/what-is-arcpy-part2.html">What is ArcPY? Part2</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2024-05-29T00:00:00-05:00">
-                Published: Wed 29 May 2024
+        <abbr class="published" title="2024-06-05T00:00:00-05:00">
+                Published: Wed 05 June 2024
         </abbr>
 
         <address class="vcard author">
@@ -1193,7 +1193,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src= "../images/MN_WaterContamination_CleanupActivity_2025.svg" alt ="Arcpy generated Point Feature Data from Ground water contamination, PFAS chemical levels and MNPCA clean up activity sites" style= " width 400px; height: 400px;"></p>
+<p><img src= "../images/MN_GroundWaterContamination_Data_2025.svg" alt ="Arcpy generated Point Feature Data from Ground water contamination, PFAS chemical levels and MNPCA clean up activity sites" style= " width 400px; height: 400px;"></p>
 <ul>
 <li>Multiple Spreadsheet data sources converted to points in Arcpy and mapped with ArcGIS pro</li>
 </ul>
@@ -1204,7 +1204,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-is-Arcpy?"><strong><em>What is Arcpy?</em></strong><a class="anchor-link" href="#What-is-Arcpy?">&#182;</a></h3><p>Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
+<h3 id="What-is-Arcpy?:-Part-2"><strong><em>What is Arcpy?: Part 2</em></strong><a class="anchor-link" href="#What-is-Arcpy?:-Part-2">&#182;</a></h3><p>Reminder: Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
 <ul>
 <li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
 <li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
@@ -1215,18 +1215,35 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">arcpy</span> <span class="c1"># allows for access to ArcGIS pro geoprocessing tools and workflow automation</span>
-
 <span class="kn">import</span> <span class="nn">os</span> <span class="c1"># enables interaction with local system resources (paths to folders and files)</span>
+<span class="kn">import</span> <span class="nn">requests</span> <span class="c1"># access data from the web</span>
+<span class="kn">import</span> <span class="nn">zipfile</span> <span class="c1">## need this to process and extract downloaded zipfiles later on</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1">## use to check spreadsheet formatting</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-we-did-last-time">What we did last time<a class="anchor-link" href="#What-we-did-last-time">&#182;</a></h3><ul>
+<li>Went into details regarding setting up the arcpy environment, defining spatial reference and using geoprocessing tools</li>
+<li>We used arcrpy.XYTableToPoint() to convert multiple spreadsheets to point data.</li>
+<li>Although spreadsheet data is possible, it is more likely to have a shapefile
+### What we will do this time:</li>
+<li>walk through batch processing on shapefiles retrieved from the web</li>
+<li>walk through converting an excel spreadsheet retrieved from the web</li>
+</ul>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -1249,7 +1266,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##===================== Define the path to script and project folder</span>
@@ -1314,7 +1331,7 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## We often end up re-running the workflow to tweak the output</span>
@@ -1330,11 +1347,144 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Arcpy-Documentation"><strong><em>Arcpy Documentation</em></strong><a class="anchor-link" href="#Arcpy-Documentation">&#182;</a></h3><ul>
-<li>Before getting into the weeds, always good to have ArcGIS documentation on hand</li>
-<li><a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm#GUID-BF3F7B4C-E7C9-4C14-B8E1-8385E5246839">Link to ArcGIS Docs</a></li>
-<li>Here you can search a tool by name and then copy the required syntax from the python tab</li>
-<li>paste the code into your script for reference</li>
+<h3 id="Get-online-data-with-the-Requests-library"><strong><em>Get online data with the Requests library</em></strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="requests.get(url,-params=-None,-**kwargs)"><code>requests.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#requests.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
+<li>Required argument : url (url to send the request to)</li>
+<li>params(optional, default is None), allows you to pass in query parameters that filter, modify or sort the data you're requesting<ul>
+<li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params ={key:value})</li>
+</ul>
+</li>
+<li>**kwargs: keyword arguments. A way to pass additional arguments to the request function as a dictionary<ul>
+<li>can pass optional keyword arguments, headers, timeout</li>
+</ul>
+</li>
+<li>Use-case: make customized requests to web pages, API or get files<ul>
+<li>Example request with parameters: </li>
+<li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params={"State":"Minnesota"}, headers="User-Agent":"my-app")</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[190]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Quick example of using request: get weather data at a location with a format parameter</span>
+
+<span class="n">location</span><span class="o">=</span> <span class="s2">&quot;Savage, MN&quot;</span> <span class="c1"># pass in your location (city, state) </span>
+<span class="n">base_url</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://wttr.in/&quot;</span>
+
+<span class="c1"># Define query parameters</span>
+<span class="c1"># params is a variable holding a dictionary that modifies the request</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;format&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;u&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}</span> <span class="c1"># fyi, u:&quot;&quot; is a specific to the weather service API, it is a flag to include the u parameter without assing a specific value</span>
+
+<span class="c1"># fetch the weather data with the query parameters</span>
+                            <span class="c1">#url                    #params</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="c1"># make the get request with the constructed url</span>
+
+<span class="c1"># print the final constructed url for your request</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final URL&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># Get the weather data as text</span>
+<span class="n">weather_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+
+<span class="c1">#print(weather_data) # uncomment to see these </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Final URL https://wttr.in/Savage,%20MN?format=1&amp;u=
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[189]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 4 flavors for accessing the content: response.text, response.content and response.json</span>
+
+<span class="c1"># returns the headers for the content</span>
+<span class="n">response_header</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="c1"># make the get request with the constructed url</span>
+
+<span class="k">if</span> <span class="s1">&#39;Content-Length&#39;</span> <span class="ow">in</span> <span class="n">response_header</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Header content&quot;</span><span class="p">,</span> <span class="n">response_header</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">])</span> <span class="c1"># useful to determine the file size, which can be used to control how you process the files</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Content length header not found&quot;</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># returns text content, useful for webpages</span>
+<span class="c1">#print(&quot;Webpage textual content&quot;, response.text)</span>
+
+<span class="c1"># returns raw binary content, useful for non-text like images and files</span>
+<span class="c1">#print(&quot;Webpage non-text raw data content&quot;, response.content)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Parse the json data, use for handling json data from APIs</span>
+<span class="n">example_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://jsonplaceholder.typicode.com/posts/1&quot;</span><span class="p">)</span> <span class="c1"># example url with json formatted data</span>
+<span class="n">json_data</span><span class="o">=</span> <span class="n">example_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Json data content&quot;</span><span class="p">,</span> <span class="n">json_data</span><span class="p">)</span> <span class="c1"># returns a dictionary</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Content length header not found
+
+
+
+
+Json data content {&#39;userId&#39;: 1, &#39;id&#39;: 1, &#39;title&#39;: &#39;sunt aut facere repellat provident occaecati excepturi optio reprehenderit&#39;, &#39;body&#39;: &#39;quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Extract-and-validate-file-types-with-Magic-library"><strong><em>Extract and validate file types with Magic library</em></strong><a class="anchor-link" href="#Extract-and-validate-file-types-with-Magic-library">&#182;</a></h3><h4 id="magic.from_file(filename,-mime=True)"><code>magic.from_file(filename, mime=True)</code><a class="anchor-link" href="#magic.from_file(filename,-mime=True)">&#182;</a></h4><ul>
+<li>Required arguments : filename (the path to the file)</li>
+<li>MIME Types are standardized identifiers used to indicate the nature and format of a file <ul>
+<li>application/pdf for PDF or image/jpg for JPEG images</li>
+</ul>
+</li>
+<li>Use-case: Identify and ensure the type of file before processing it</li>
 </ul>
 
 </div>
@@ -1345,7 +1495,9 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Not bad...But why not load and search the documentation directly in this workbook? </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### BE SURE TO INSTALL LIBRARY FIRST : </span>
+<span class="c1"># step1 activate arcgispro-py3 environment: conda activate &quot;C:\Program Files\ArcGIS\Pro\bin\Python\envs\arcgispro-py3&quot;</span>
+<span class="c1"># step2 install library: pip install python-magic-bin (on windows, for unix system use conda install -c conda-forge python-magic)</span>
 </pre></div>
 
     </div>
@@ -1353,19 +1505,257 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Quick example of magic library for file type detection</span>
+<span class="kn">import</span> <span class="nn">magic</span>
+
+<span class="c1"># Path to the file to check file type</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\images\earth-18384_256.gif&quot;</span>
+
+<span class="c1"># Get the MIME type of our file</span>
+<span class="n">mime_type</span> <span class="o">=</span> <span class="n">magic</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="n">mime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The MIME type of the file is </span><span class="si">{</span><span class="n">mime_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># useful for validating file types and handling them according to file type</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The MIME type of the file is image/gif
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># quick reminder of where our current workspace is set</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data Folder is here&quot;</span> <span class="p">,</span> <span class="n">wksp</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Data Folder is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Using a folder to store data is ok. </span>
+<span class="c1"># But geodatabase storage is more efficient way to store and manage multiple dataset in ArcGIS Pro</span>
+
+<span class="c1">###=========================    Define the output folder</span>
+<span class="n">file_folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result&quot;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">file_folder</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">file_folder</span><span class="p">)</span>
+    
+<span class="c1">###=========================    Create the gdb in the output folder</span>
+<span class="n">gdb</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_folder</span><span class="p">,</span> <span class="s2">&quot;MN_WaterContamination.gdb&quot;</span><span class="p">)</span>
+<span class="n">gdb_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">gdb</span><span class="p">):</span>
+    <span class="c1">## TOOL: arcpy.management.CreateFileGDB(out_folder_path, out_name, {out_version})</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">CreateFileGDB</span><span class="p">(</span><span class="n">file_folder</span><span class="p">,</span><span class="n">gdb_name</span> <span class="p">)</span>
+
+<span class="c1">###========================     Set up the working environment</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">gdb</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">overwriteOutput</span><span class="o">=</span><span class="kc">True</span> <span class="c1"># doesn&#39;t hurt to do this again</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Getting online geospatial data, handling file size and file type</span>
+<span class="c1"># As things getting more complicated. Good idea to jot down approach in plain english, sprinkle in methods or functions if it helps</span>
+
+
+<span class="c1">## Workflow: </span>
+<span class="c1">#  Part 1-  Define input and output folder paths: input_folder, output_folder--&gt; download_file_path</span>
+<span class="c1">#  Part 2-  optional, Get file size data from url: response = request.head(url)--&gt;response.headers[Content-length]--&gt; if &#39;Content-Length&#39;</span>
+<span class="c1">#  Part 3-  Access the raw data, open the file, write the content to file: response = request.Get(url) </span>
+<span class="c1">#  Part 4-  Open output file and write the content to the disk: with open(download_file_path,&quot;wb&quot;) as file: --&gt;file.write(response.content)</span>
+<span class="c1">#  Part 5-  Identify and validate the filetype: mime = magic.Magic(mime=True) --&gt; file_type = mime.from_file(file_path)</span>
+<span class="c1">#  Part 6:  Check if file is a zip, open, Extract zip file --&gt; with zipfile.ZipFile(download_file_path &quot;r&quot;) as zipf: zipf.extractall(ExtractFolder)</span>
+
+
+<span class="c1">###===============================   Set up input and output folders, create gdb</span>
+<span class="c1"># Define a path to store the incoming data</span>
+<span class="n">input_folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data&quot;</span>
+<span class="n">shapefile_folder</span> <span class="o">=</span>  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_folder</span><span class="p">,</span><span class="s2">&quot;ShapeFile_Inputs&quot;</span><span class="p">)</span> 
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">shapefile_folder</span><span class="p">,</span><span class="s2">&quot;downloaded_file.zip&quot;</span><span class="p">)</span> <span class="c1"># we should know and define what data format are pulling from the web (.zip, .csv, .tif)</span>
+
+<span class="c1"># Define path to output folder</span>
+<span class="n">output_folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result&quot;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_folder</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_folder</span><span class="p">)</span>
+
+<span class="c1"># Set up geodatabase in output folder    </span>
+<span class="n">gdb</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="s2">&quot;MN_WaterContamination.gdb&quot;</span><span class="p">)</span>
+<span class="n">gdb_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">gdb</span><span class="p">):</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">CreateFileGDB</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span><span class="n">gdb_name</span> <span class="p">)</span>
+
+
+
+<span class="c1"># if no folder, make a new folder </span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">shapefile_folder</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">shapefile_folder</span><span class="p">)</span>
+
+
+<span class="c1">###===========================   Set up the working environment</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">gdb</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">overwriteOutput</span><span class="o">=</span><span class="kc">True</span>
+
+
+
+<span class="c1">###==============================    Access online data through url, download the data, check its datatype, extract to a folder</span>
+
+<span class="c1"># where is the data?, get the url </span>
+<span class="n">url</span><span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_pca/env_mn_gw_contamination_atlas/shp_env_mn_gw_contamination_atlas.zip&quot;</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># check file size key from the response.headers and use the value to handle small and large file sizes</span>
+<span class="k">if</span> <span class="s1">&#39;Content-Length&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span> <span class="c1"># works because response.headers is a dictionary, keys are the header names i.e., Content-Length is a key</span>
+    <span class="n">file_size</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">])</span> <span class="c1"># get the value from the content-length key, value is a string of the size of the file in bytes</span>
+    <span class="n">file_size_mb</span> <span class="o">=</span>  <span class="n">file_size</span><span class="o">//</span><span class="p">(</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span> <span class="c1"># convert bytes to megabytes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File size is about: </span><span class="si">{</span><span class="n">file_size</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span> <span class="c1"># fyi , // is integer division, provides a rounded down whole number</span>
+    
+    <span class="c1"># handle file size</span>
+    <span class="k">if</span> <span class="n">file_size_mb</span> <span class="o">&lt;</span><span class="mi">200</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File is smaller than 200 MB, OK to load the entire file into memory and directly download the entire file&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Large file, process and download in chunks&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># fetch content in a stream, dont load all at once into memory</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">65536</span><span class="p">):</span> <span class="c1"># 64 KB chunks</span>
+                <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Content length header not found&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Content download successful&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># detect file type</span>
+<span class="n">mime_type</span> <span class="o">=</span> <span class="n">magic</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File type is: &quot;</span><span class="p">,</span> <span class="n">mime_type</span><span class="p">)</span>
+
+<span class="c1"># set up a temporary folder to hold the extracted files</span>
+<span class="n">extractedZip_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">shapefile_folder</span><span class="p">,</span><span class="s2">&quot;ExtractedZip&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">extractedZip_folder</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extractedZip_folder</span><span class="p">)</span>
+
+<span class="c1"># check if its a zipfile</span>
+<span class="k">if</span> <span class="n">mime_type</span> <span class="o">==</span><span class="s2">&quot;application/zip&quot;</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_f</span><span class="p">:</span>
+        <span class="n">zip_f</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">extractedZip_folder</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloaded and extracted the file to </span><span class="si">{</span><span class="n">extractedZip_folder</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not a zip file!, the file type is: &quot;</span><span class="p">,</span> <span class="n">mime_type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>File size is about: 4318487 MB
+File is smaller than 200 MB, OK to load the entire file into memory and directly download the entire file
+
+Content download successful
+
+
+File type is:  application/zip
+Downloaded and extracted the file to C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data\ShapeFile_Inputs\ExtractedZip
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Load-ArcGIS-Documentation-directly-into-the-Notebook">Load ArcGIS Documentation directly into the Notebook<a class="anchor-link" href="#Load-ArcGIS-Documentation-directly-into-the-Notebook">&#182;</a></h4>
+<h3 id="Bulk-importing-shapefiles-into-a-Geodatabase"><strong><em>Bulk importing shapefiles into a Geodatabase</em></strong><a class="anchor-link" href="#Bulk-importing-shapefiles-into-a-Geodatabase">&#182;</a></h3><h4 id="FeatureClassToGeodatabase()"><code>FeatureClassToGeodatabase()</code><a class="anchor-link" href="#FeatureClassToGeodatabase()">&#182;</a></h4><ul>
+<li>arcpy.conversion.FeatureClassToGeodatabase(Input_Features, Output_Geodatabase)</li>
+<li>can take a single input or a list of inputs</li>
+</ul>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span> <span class="c1"># a module for controlling notebook outputs, allows you to embed images, video, webpages with the Iframe function</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Search the documentation for arcpy.conversion.FeatureClassToGeodatabase()</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span> <span class="c1"># a module for controlling notebook outputs, allows you to embed images, video, webpages with the Iframe function</span>
 
 <span class="c1"># ArcGIS Pro documentation URL for a specific tool</span>
 <span class="n">tool_url</span> <span class="o">=</span> <span class="s2">&quot;https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/xy-table-to-point.htm&quot;</span>
@@ -1384,7 +1774,7 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[&nbsp;]:</div>
 
 
 
@@ -1407,22 +1797,33 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Listing-and-searching-toolbox-and-tool-names">Listing and searching toolbox and tool names<a class="anchor-link" href="#Listing-and-searching-toolbox-and-tool-names">&#182;</a></h4>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#get a list of all toolboxes</span>
-<span class="n">toolboxes</span><span class="o">=</span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListToolboxes</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Loop through the folder with extracted files and compile a list of all the shape file paths</span>
+<span class="n">shapefile_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># start an empty list to hold .shp files</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Availiable Toolboxes&quot;</span><span class="p">,</span> <span class="n">toolboxes</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">extractedZip_folder</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.shp&quot;</span><span class="p">):</span>
+        <span class="n">full_shp_path</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extractedZip_folder</span><span class="p">,</span><span class="n">f</span><span class="p">)</span> <span class="c1"># get the full path for each file</span>
+        <span class="n">shapefile_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_shp_path</span><span class="p">)</span> <span class="c1"># add to a list</span>
+
+<span class="c1">###================================  Batch Convert shapefile to Feature classes in the Gdb</span>
+<span class="c1"># check the list of shp files exists</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">shapefile_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no shape files found for extraction&quot;</span><span class="p">)</span>
+
+
+<span class="c1">## Load the shapefiles into the gdb</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">FeatureClassToGeodatabase</span><span class="p">(</span><span class="n">shapefile_list</span><span class="p">,</span><span class="n">gdb</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Successfully Loaded shapefiles into into the </span><span class="si">{</span><span class="n">gdb</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error Loading Shapefiles into the GDB &quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
 </pre></div>
 
     </div>
@@ -1439,9 +1840,393 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Availiable Toolboxes [&#39;Space Time Pattern Mining Tools(stpm)&#39;, &#39;Aviation Tools(aviation)&#39;, &#39;3D Analyst Tools(3d)&#39;, &#39;Territory Design Tools(td)&#39;, &#39;Defense Tools(defense)&#39;, &#39;Business Analyst Tools(ba)&#39;, &#39;Analysis Tools(analysis)&#39;, &#39;Bathymetry Tools(bathymetry)&#39;, &#39;Public Transit Tools(transit)&#39;, &#39;Cartography Tools(cartography)&#39;, &#39;Conversion Tools(conversion)&#39;, &#39;Crime Analysis and Safety Tools(ca)&#39;, &#39;Data Interoperability Tools(interop)&#39;, &#39;Linear Referencing Tools(lr)&#39;, &#39;Data Management Tools(management)&#39;, &#39;Data Reviewer Tools(Reviewer)&#39;, &#39;Editing Tools(edit)&#39;, &#39;Server Tools(server)&#39;, &#39;GeoAI Tools(geoai)&#39;, &#39;GeoAnalytics Desktop Tools(gapro)&#39;, &#39;GeoAnalytics Tools(geoanalytics)&#39;, &#39;Geocoding Tools(geocoding)&#39;, &#39;Network Analyst Tools(na)&#39;, &#39;Geostatistical Analyst Tools(ga)&#39;, &#39;Image Analyst Tools(ia)&#39;, &#39;Indoor Positioning Tools(indoorpositioning)&#39;, &#39;Indoors Tools(indoors)&#39;, &#39;Intelligence Tools(intelligence)&#39;, &#39;Knowledge Graph Tools(kg)&#39;, &#39;Location Referencing Tools(locref)&#39;, &#39;Maritime Tools(maritime)&#39;, &#39;Spatial Statistics Tools(stats)&#39;, &#39;Model Tools(mb)&#39;, &#39;Multidimension Tools(md)&#39;, &#39;Network Diagram Tools(nd)&#39;, &#39;Utility Network Tools(un)&#39;, &#39;Oriented Imagery Tools(oi)&#39;, &#39;Parcel Tools(parcel)&#39;, &#39;Raster Analysis Tools(ra)&#39;, &#39;ReadyToUseServiceTools(agolservices)&#39;, &#39;Reality Mapping Tools(rm)&#39;, &#39;Spatial Analyst Tools(sa)&#39;, &#39;Standard Feature Analysis Tools(sfa)&#39;, &#39;Topographic Production Tools(topographic)&#39;, &#39;Trace Network Tools(tn)&#39;, &#39;Workflow Manager Tools(wmx)&#39;]
+<pre> Successfully Loaded shapefiles into into the C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Check the gdb </span>
+
+<span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;atlas_contamination_areas&#39;,
+ &#39;atlas_contamination_area_lines&#39;,
+ &#39;atlas_contamination_sites&#39;,
+ &#39;atlas_contamination_sites_noca&#39;,
+ &#39;atlas_contamination_source_areas&#39;,
+ &#39;atlas_contamination_wells_result_sum&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Use the Describe Object to access properties of a Feature class like its Spatial Reference</span>
+
+<span class="c1">## Get all the fc classes from the gdb</span>
+<span class="n">list_fc</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">list_fc</span><span class="p">:</span>
+    <span class="n">desc</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+    <span class="n">sr</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">SpatialReference</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature class: , </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="s2">, Spatial Reference name :, </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, Spatial Ref Type : </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">, Geometry</span><span class="si">{</span><span class="n">desc</span><span class="o">.</span><span class="n">shapetype</span><span class="si">}</span><span class="s2">, WKID: </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">factorycode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">150</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># add line and space between prints</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Feature class: , atlas_contamination_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_area_lines, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites_noca, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_source_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_wells_result_sum, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Let&#39;s add-in some additional data related to PFAS levels to ensure our dataset has some overlap</span>
+
+
+<span class="kn">import</span> <span class="nn">magic</span> <span class="c1"># import if not already done prior</span>
+
+<span class="c1">###=========================    Set up input and output data folders, define the new file name</span>
+<span class="n">input_folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data&quot;</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_folder</span><span class="p">,</span><span class="s2">&quot;MN_PFAS_Levels.xlsx&quot;</span><span class="p">)</span>
+
+<span class="n">output_folder</span> <span class="o">=</span>  <span class="sa">r</span><span class="s2">&quot;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result&quot;</span>
+<span class="n">gdb</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span><span class="s2">&quot;MN_WaterContamination.gdb&quot;</span><span class="p">)</span>
+<span class="n">gdb_name</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">gdb</span><span class="p">)</span>
+
+<span class="c1"># check if gdb exists</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">gdb</span><span class="p">):</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">CreateFileGDB</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span><span class="n">gdb_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created a new gdb&quot;</span><span class="p">)</span>
+
+<span class="c1"># define new feature class name</span>
+<span class="n">file_basename</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_basename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># removes the extension </span>
+<span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gdb</span><span class="p">,</span><span class="n">file_name</span><span class="p">)</span>
+
+
+<span class="c1">###=====================    Set the env</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span><span class="n">gdb</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">overwriteOutput</span><span class="o">=</span><span class="kc">True</span>
+
+
+<span class="c1">###=========================    Get the data from a url that points to a spreadsheet</span>
+<span class="c1"># where is the data?, get the url </span>
+<span class="n">url</span><span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;https://www.pca.state.mn.us/sites/default/files/p-gen1-22i.xlsx&quot;</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;Content-Length&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+    <span class="n">file_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">])</span>
+    <span class="n">file_size_mb</span><span class="o">=</span> <span class="n">file_size</span> <span class="o">//</span> <span class="p">(</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File size is :&quot;</span><span class="p">,</span> <span class="n">file_size_mb</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">file_size_mb</span> <span class="o">&lt;</span><span class="mi">200</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">response</span><span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">65536</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No content length found in url header&quot;</span><span class="p">)</span>
+
+<span class="n">file_type</span> <span class="o">=</span> <span class="n">magic</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File type is&quot;</span><span class="p">,</span> <span class="n">file_type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>File size is : 3
+File type is application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data\MN_PFAS_Levels.xlsx&#39;</span>
+
+<span class="c1"># load in the data to determine the format and data layout</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+<span class="n">excel_file</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">ExcelFile</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="n">excel_file</span><span class="o">.</span><span class="n">sheet_names</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sheet</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data\MN_PFAS_Levels.xlsx
+Metadata
+Data
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[151]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## This spreadsheet is nicely organized. One sheet holds the Metadata and another one holds the Data</span>
+<span class="n">df_pf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Metadata&quot;</span><span class="p">)</span>
+<span class="n">df_pf</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[151]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>About this dataset</th>
+      <th>Unnamed: 1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>About the project</td>
+      <td>The MPCA published the PFAS Monitoring Plan in...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>About the data</td>
+      <td>Includes PFAS sample data that was collected a...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Date of dataset</td>
+      <td>2024-04-15 00:00:00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Questions?</td>
+      <td>For questions about the data, email pfasinfo.p...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Field definitions</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Field name</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Group</td>
+      <td>Facility group. Values include: Manufacturing ...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Program</td>
+      <td>MPCA Program that led outreach and/or sampling...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Preferred ID</td>
+      <td>ID used by the MPCA Program to refer to this f...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Facility name</td>
+      <td>Name of this facility in our EQuIS database fo...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Sys Loc Code</td>
+      <td>Internal code for the specific sampling location.</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Loc Name</td>
+      <td>Name of sampling location.</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Loc Type</td>
+      <td>Type of sampling location.</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Latitude</td>
+      <td>Latitude where the sample was taken.</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Longitude</td>
+      <td>Longitude where the sample was taken.</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Sys Sample Code</td>
+      <td>Internal code for the sample.</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Sample date</td>
+      <td>Date the sample was taken.</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Medium</td>
+      <td>Medium from which sample was taken (e.g. air, ...</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Matrix</td>
+      <td>Matrix from which sample was taken (e.g. Wtr-S...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Analyte</td>
+      <td>Chemical name.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
 </div>
 
 </div>
@@ -1453,434 +2238,10 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">del</span> <span class="n">toolboxes</span> <span class="c1"># delete the variable</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## access all tool names</span>
-
-<span class="c1"># get list of all tools</span>
-<span class="n">tools</span> <span class="o">=</span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListTools</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span> <span class="c1"># the asterisk is a wildcard that can be replaced with a string of the name  or part of what you are looking for e.g., &quot;*Ma&quot;</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Availiable Tools&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Availiable Tools [&#39;MakeTerritorySolutionLayer_td&#39;, &#39;MakeSuitabilityAnalysisLayer_ba&#39;, &#39;MapServerCacheTilingSchemeToPolygons_cartography&#39;, &#39;MapToKML_conversion&#39;, &#39;MakeRouteEventLayer_lr&#39;, &#39;MakeAggregationQueryLayer_management&#39;, &#39;MakeBuildingLayer_management&#39;, &#39;MakeFeatureLayer_management&#39;, &#39;MakeImageServerLayer_management&#39;, &#39;MakeLasDatasetLayer_management&#39;, &#39;MakeMosaicLayer_management&#39;, &#39;MakeQueryLayer_management&#39;, &#39;MakeQueryTable_management&#39;, &#39;MakeRasterLayer_management&#39;, &#39;MakeSceneLayer_management&#39;, &#39;MakeTableView_management&#39;, &#39;MakeTinLayer_management&#39;, &#39;MakeTrajectoryLayer_management&#39;, &#39;MakeWCSLayer_management&#39;, &#39;MakeXYEventLayer_management&#39;, &#39;ManageFeatureBinCache_management&#39;, &#39;ManageTileCache_management&#39;, &#39;MatchControlPoints_management&#39;, &#39;MatchLayerSymbologyToAStyle_management&#39;, &#39;MatchPhotosToRowsByTime_management&#39;, &#39;ManageMapServerCacheScales_server&#39;, &#39;ManageMapServerCacheStatus_server&#39;, &#39;ManageMapServerCacheTiles_server&#39;, &#39;MakeClosestFacilityAnalysisLayer_na&#39;, &#39;MakeLastMileDeliveryAnalysisLayer_na&#39;, &#39;MakeLocationAllocationAnalysisLayer_na&#39;, &#39;MakeNetworkDatasetLayer_na&#39;, &#39;MakeODCostMatrixAnalysisLayer_na&#39;, &#39;MakeRouteAnalysisLayer_na&#39;, &#39;MakeServiceAreaAnalysisLayer_na&#39;, &#39;MakeVehicleRoutingProblemAnalysisLayer_na&#39;, &#39;MakeMultidimensionalRasterLayer_md&#39;, &#39;MakeMultidimensionalVoxelLayer_md&#39;, &#39;MakeNetCDFFeatureLayer_md&#39;, &#39;MakeNetCDFRasterLayer_md&#39;, &#39;MakeNetCDFTableView_md&#39;, &#39;MakeOPeNDAPRasterLayer_md&#39;, &#39;ManageMultidimensionalRaster_md&#39;, &#39;MakeDiagramLayer_nd&#39;, &#39;MatchControlPoints_rm&#39;, &#39;MajorityFilter_sa&#39;, &#39;MakeGridsAndGraticulesLayer_topographic&#39;, &#39;MakeMasksFromRules_topographic&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get list of all tools within a specific toolbox</span>
-<span class="n">tools</span> <span class="o">=</span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListTools</span><span class="p">(</span><span class="s2">&quot;*_management&quot;</span><span class="p">)</span> <span class="c1"># * is a wildcard that can be replaced with a string of the name or part of what you are looking for e.g., &quot;*Ma&quot;</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Availiable Tools&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Availiable Tools [&#39;Add3DFormats_management&#39;, &#39;AddAttachments_management&#39;, &#39;AddAttributeRule_management&#39;, &#39;AddCodedValueToDomain_management&#39;, &#39;AddColormap_management&#39;, &#39;AddContingentValue_management&#39;, &#39;AddDataToTrajectoryDataset_management&#39;, &#39;AddFeatureClassToTopology_management&#39;, &#39;AddField_management&#39;, &#39;AddFieldConflictFilter_management&#39;, &#39;AddFields_management&#39;, &#39;AddFilesToLasDataset_management&#39;, &#39;AddGlobalIDs_management&#39;, &#39;AddGPSMetadataFields_management&#39;, &#39;AddIncrementingIDField_management&#39;, &#39;AddIndex_management&#39;, &#39;AddItemsToCatalogDataset_management&#39;, &#39;AddJoin_management&#39;, &#39;AddPortalItemsToCatalogDataset_management&#39;, &#39;AddRastersToMosaicDataset_management&#39;, &#39;AddRelate_management&#39;, &#39;AddRuleToRelationshipClass_management&#39;, &#39;AddRuleToTopology_management&#39;, &#39;AddSpatialIndex_management&#39;, &#39;AddSpatialJoin_management&#39;, &#39;AddSubtype_management&#39;, &#39;AddXY_management&#39;, &#39;Adjust3DZ_management&#39;, &#39;AlterAttributeRule_management&#39;, &#39;AlterDomain_management&#39;, &#39;AlterField_management&#39;, &#39;AlterFieldGroup_management&#39;, &#39;AlterMosaicDatasetSchema_management&#39;, &#39;AlterVersion_management&#39;, &#39;Analyze_management&#39;, &#39;AnalyzeControlPoints_management&#39;, &#39;AnalyzeDatasets_management&#39;, &#39;AnalyzeMosaicDataset_management&#39;, &#39;AnalyzeToolboxForVersion_management&#39;, &#39;AnalyzeToolsForPro_management&#39;, &#39;Append_management&#39;, &#39;AppendAnnotation_management&#39;, &#39;AppendControlPoints_management&#39;, &#39;ApplyBlockAdjustment_management&#39;, &#39;ApplySymbologyFromLayer_management&#39;, &#39;AssignDefaultToField_management&#39;, &#39;AssignDomainToField_management&#39;, &#39;BatchBuildPyramids_management&#39;, &#39;BatchCalculateStatistics_management&#39;, &#39;BatchProject_management&#39;, &#39;BatchUpdateFields_management&#39;, &#39;BearingDistanceToLine_management&#39;, &#39;BuildBoundary_management&#39;, &#39;BuildFootprints_management&#39;, &#39;BuildLasDatasetPyramid_management&#39;, &#39;BuildMosaicDatasetItemCache_management&#39;, &#39;BuildOverviews_management&#39;, &#39;BuildPyramids_management&#39;, &#39;BuildPyramidsandStatistics_management&#39;, &#39;BuildRasterAttributeTable_management&#39;, &#39;BuildSeamlines_management&#39;, &#39;BuildStereoModel_management&#39;, &#39;CalculateCellSizeRanges_management&#39;, &#39;CalculateEndTime_management&#39;, &#39;CalculateField_management&#39;, &#39;CalculateFields_management&#39;, &#39;CalculateGeometryAttributes_management&#39;, &#39;CalculateStatistics_management&#39;, &#39;ChangePrivileges_management&#39;, &#39;ChangeVersion_management&#39;, &#39;CheckGeometry_management&#39;, &#39;ClearPixelCache_management&#39;, &#39;ClearWorkspaceCache_management&#39;, &#39;Clip_management&#39;, &#39;ColorBalanceMosaicDataset_management&#39;, &#39;Compact_management&#39;, &#39;CompareReplicaSchema_management&#39;, &#39;CompositeBands_management&#39;, &#39;Compress_management&#39;, &#39;CompressFileGeodatabaseData_management&#39;, &#39;ComputeBlockAdjustment_management&#39;, &#39;ComputeCameraModel_management&#39;, &#39;ComputeControlPoints_management&#39;, &#39;ComputeDepthMap_management&#39;, &#39;ComputeDirtyArea_management&#39;, &#39;ComputeFiducials_management&#39;, &#39;ComputeMosaicCandidates_management&#39;, &#39;ComputePansharpenWeights_management&#39;, &#39;ComputeTiePoints_management&#39;, &#39;ConfigureGeodatabaseLogFileTables_management&#39;, &#39;ConsolidateLayer_management&#39;, &#39;ConsolidateLocator_management&#39;, &#39;ConsolidateMap_management&#39;, &#39;ConsolidateProject_management&#39;, &#39;ConsolidateToolbox_management&#39;, &#39;ConvertCoordinateNotation_management&#39;, &#39;ConvertRasterFunctionTemplate_management&#39;, &#39;ConvertSchemaReport_management&#39;, &#39;ConvertTimeField_management&#39;, &#39;ConvertTimeZone_management&#39;, &#39;Copy_management&#39;, &#39;CopyFeatures_management&#39;, &#39;CopyRaster_management&#39;, &#39;CopyRows_management&#39;, &#39;Create3DObjectSceneLayerPackage_management&#39;, &#39;CreateBuildingSceneLayerPackage_management&#39;, &#39;CreateCatalogDataset_management&#39;, &#39;CreateCloudStorageConnectionFile_management&#39;, &#39;CreateColorComposite_management&#39;, &#39;CreateCustomGeoTransformation_management&#39;, &#39;CreateCustomVerticalTransformation_management&#39;, &#39;CreateDatabaseConnection_management&#39;, &#39;CreateDatabaseConnectionString_management&#39;, &#39;CreateDatabaseSequence_management&#39;, &#39;CreateDatabaseUser_management&#39;, &#39;CreateDatabaseView_management&#39;, &#39;CreateDataLoadingWorkspace_management&#39;, &#39;CreateDomain_management&#39;, &#39;CreateEnterpriseGeodatabase_management&#39;, &#39;CreateFeatureclass_management&#39;, &#39;CreateFeatureDataset_management&#39;, &#39;CreateFieldGroup_management&#39;, &#39;CreateFileGDB_management&#39;, &#39;CreateFishnet_management&#39;, &#39;CreateFolder_management&#39;, &#39;CreateIntegratedMeshSceneLayerPackage_management&#39;, &#39;CreateLasDataset_management&#39;, &#39;CreateMapTilePackage_management&#39;, &#39;CreateMobileGDB_management&#39;, &#39;CreateMobileMapPackage_management&#39;, &#39;CreateMobileScenePackage_management&#39;, &#39;CreateMosaicDataset_management&#39;, &#39;CreateOrthoCorrectedRasterDataset_management&#39;, &#39;CreatePansharpenedRasterDataset_management&#39;, &#39;CreatePointCloudSceneLayerPackage_management&#39;, &#39;CreatePointSceneLayerPackage_management&#39;, &#39;CreateRandomPoints_management&#39;, &#39;CreateRandomRaster_management&#39;, &#39;CreateRasterDataset_management&#39;, &#39;CreateReferencedMosaicDataset_management&#39;, &#39;CreateRelationshipClass_management&#39;, &#39;CreateReplica_management&#39;, &#39;CreateReplicaFromServer_management&#39;, &#39;CreateRole_management&#39;, &#39;CreateSpatiallyBalancedPoints_management&#39;, &#39;CreateSpatialReference_management&#39;, &#39;CreateSpatialSamplingLocations_management&#39;, &#39;CreateSpatialType_management&#39;, &#39;CreateSQLiteDatabase_management&#39;, &#39;CreateTable_management&#39;, &#39;CreateTopology_management&#39;, &#39;CreateTrajectoryDataset_management&#39;, &#39;CreateUnRegisteredFeatureclass_management&#39;, &#39;CreateUnRegisteredTable_management&#39;, &#39;CreateVectorTileIndex_management&#39;, &#39;CreateVectorTilePackage_management&#39;, &#39;CreateVersion_management&#39;, &#39;CreateVoxelSceneLayerContent_management&#39;, &#39;DefineMosaicDatasetNoData_management&#39;, &#39;DefineOverviews_management&#39;, &#39;DefineProjection_management&#39;, &#39;Delete_management&#39;, &#39;DeleteAttributeRule_management&#39;, &#39;DeleteCodedValueFromDomain_management&#39;, &#39;DeleteColormap_management&#39;, &#39;DeleteDatabaseSequence_management&#39;, &#39;DeleteDomain_management&#39;, &#39;DeleteFeatures_management&#39;, &#39;DeleteField_management&#39;, &#39;DeleteFieldGroup_management&#39;, &#39;DeleteIdentical_management&#39;, &#39;DeleteMosaicDataset_management&#39;, &#39;DeleteRasterAttributeTable_management&#39;, &#39;DeleteRows_management&#39;, &#39;DeleteSchemaGeodatabase_management&#39;, &#39;DeleteVersion_management&#39;, &#39;DetectFeatureChanges_management&#39;, &#39;DiagnoseVersionMetadata_management&#39;, &#39;DiagnoseVersionTables_management&#39;, &#39;Dice_management&#39;, &#39;DisableArchiving_management&#39;, &#39;DisableAttachments_management&#39;, &#39;DisableAttributeRules_management&#39;, &#39;DisableCOGO_management&#39;, &#39;DisableEditorTracking_management&#39;, &#39;DisableFeatureBinning_management&#39;, &#39;DisableReplicaTracking_management&#39;, &#39;Dissolve_management&#39;, &#39;DomainToTable_management&#39;, &#39;DowngradeAttachments_management&#39;, &#39;DownloadRasters_management&#39;, &#39;EditRasterFunction_management&#39;, &#39;Eliminate_management&#39;, &#39;EliminatePolygonPart_management&#39;, &#39;EnableArchiving_management&#39;, &#39;EnableAttachments_management&#39;, &#39;EnableAttributeRules_management&#39;, &#39;EnableCOGO_management&#39;, &#39;EnableEditorTracking_management&#39;, &#39;EnableEnterpriseGeodatabase_management&#39;, &#39;EnableFeatureBinning_management&#39;, &#39;EnableReplicaTracking_management&#39;, &#39;EncodeField_management&#39;, &#39;EvaluateRules_management&#39;, &#39;Export3DObjects_management&#39;, &#39;ExportAcknowledgementMessage_management&#39;, &#39;ExportAttachments_management&#39;, &#39;ExportAttributeRules_management&#39;, &#39;ExportContingentValues_management&#39;, &#39;ExportDataChangeMessage_management&#39;, &#39;ExportFrameAndCameraParameters_management&#39;, &#39;ExportGeodatabaseConfigurationKeywords_management&#39;, &#39;ExportMosaicDatasetGeometry_management&#39;, &#39;ExportMosaicDatasetItems_management&#39;, &#39;ExportMosaicDatasetPaths_management&#39;, &#39;ExportRasterWorldFile_management&#39;, &#39;ExportReplicaSchema_management&#39;, &#39;ExportReportToPDF_management&#39;, &#39;ExportTileCache_management&#39;, &#39;ExportTopologyErrors_management&#39;, &#39;ExportXMLWorkspaceDocument_management&#39;, &#39;ExtractDataFromGeodatabase_management&#39;, &#39;ExtractPackage_management&#39;, &#39;ExtractSubDataset_management&#39;, &#39;FeatureCompare_management&#39;, &#39;FeatureEnvelopeToPolygon_management&#39;, &#39;FeatureToLine_management&#39;, &#39;FeatureToPoint_management&#39;, &#39;FeatureToPolygon_management&#39;, &#39;FeatureVerticesToPoints_management&#39;, &#39;FieldStatisticsToTable_management&#39;, &#39;FileCompare_management&#39;, &#39;FindIdentical_management&#39;, &#39;Flip_management&#39;, &#39;GenerateAttachmentMatchTable_management&#39;, &#39;GenerateBlockAdjustmentReport_management&#39;, &#39;GenerateExcludeArea_management&#39;, &#39;GenerateFgdbLicense_management&#39;, &#39;GenerateLicensedFgdb_management&#39;, &#39;GenerateMappingTable_management&#39;, &#39;GeneratePointCloud_management&#39;, &#39;GeneratePointsAlongLines_management&#39;, &#39;GenerateRasterCollection_management&#39;, &#39;GenerateRasterFromRasterFunction_management&#39;, &#39;GenerateRectanglesAlongLines_management&#39;, &#39;GenerateSchemaReport_management&#39;, &#39;GenerateTableFromRasterFunction_management&#39;, &#39;GenerateTessellation_management&#39;, &#39;GenerateTileCacheTilingScheme_management&#39;, &#39;GenerateTransectsAlongLines_management&#39;, &#39;GeodeticDensify_management&#39;, &#39;GeoTaggedPhotosToPoints_management&#39;, &#39;GetCellValue_management&#39;, &#39;GetCount_management&#39;, &#39;GetRasterProperties_management&#39;, &#39;Import3DObjects_management&#39;, &#39;ImportAttributeRules_management&#39;, &#39;ImportContingentValues_management&#39;, &#39;ImportGeodatabaseConfigurationKeywords_management&#39;, &#39;ImportMessage_management&#39;, &#39;ImportMosaicDatasetGeometry_management&#39;, &#39;ImportReplicaSchema_management&#39;, &#39;ImportTileCache_management&#39;, &#39;ImportXMLWorkspaceDocument_management&#39;, &#39;Integrate_management&#39;, &#39;InterpolateFromPointCloud_management&#39;, &#39;JoinField_management&#39;, &#39;LasDatasetStatistics_management&#39;, &#39;LasPointStatsAsRaster_management&#39;, &#39;LoadDataToPreview_management&#39;, &#39;LoadDataUsingWorkspace_management&#39;, &#39;MakeAggregationQueryLayer_management&#39;, &#39;MakeBuildingLayer_management&#39;, &#39;MakeFeatureLayer_management&#39;, &#39;MakeImageServerLayer_management&#39;, &#39;MakeLasDatasetLayer_management&#39;, &#39;MakeMosaicLayer_management&#39;, &#39;MakeQueryLayer_management&#39;, &#39;MakeQueryTable_management&#39;, &#39;MakeRasterLayer_management&#39;, &#39;MakeSceneLayer_management&#39;, &#39;MakeTableView_management&#39;, &#39;MakeTinLayer_management&#39;, &#39;MakeTrajectoryLayer_management&#39;, &#39;MakeWCSLayer_management&#39;, &#39;MakeXYEventLayer_management&#39;, &#39;ManageFeatureBinCache_management&#39;, &#39;ManageTileCache_management&#39;, &#39;MatchControlPoints_management&#39;, &#39;MatchLayerSymbologyToAStyle_management&#39;, &#39;MatchPhotosToRowsByTime_management&#39;, &#39;Merge_management&#39;, &#39;MergeMosaicDatasetItems_management&#39;, &#39;MigrateDateFieldToHighPrecision_management&#39;, &#39;MigrateObjectIDTo64Bit_management&#39;, &#39;MigrateRelationshipClass_management&#39;, &#39;MigrateStorage_management&#39;, &#39;MinimumBoundingGeometry_management&#39;, &#39;Mirror_management&#39;, &#39;Mosaic_management&#39;, &#39;MosaicDatasetToMobileMosaicDataset_management&#39;, &#39;MosaicToNewRaster_management&#39;, &#39;MultipartToSinglepart_management&#39;, &#39;Package3DTiles_management&#39;, &#39;PackageLayer_management&#39;, &#39;PackageLocator_management&#39;, &#39;PackageMap_management&#39;, &#39;PackageProject_management&#39;, &#39;PackageResult_management&#39;, &#39;PivotTable_management&#39;, &#39;PointsToLine_management&#39;, &#39;PolygonToLine_management&#39;, &#39;Project_management&#39;, &#39;ProjectRaster_management&#39;, &#39;RasterCompare_management&#39;, &#39;RasterToDTED_management&#39;, &#39;RebuildIndexes_management&#39;, &#39;RecalculateFeatureClassExtent_management&#39;, &#39;ReclassifyField_management&#39;, &#39;ReconcileVersions_management&#39;, &#39;RecoverFileGDB_management&#39;, &#39;ReExportUnacknowledgedMessages_management&#39;, &#39;RefreshExcel_management&#39;, &#39;RegisterAsVersioned_management&#39;, &#39;RegisterRaster_management&#39;, &#39;RegisterWithGeodatabase_management&#39;, &#39;Remove3DFormats_management&#39;, &#39;RemoveAttachments_management&#39;, &#39;RemoveContingentValue_management&#39;, &#39;RemoveDepthMap_management&#39;, &#39;RemoveDomainFromField_management&#39;, &#39;RemoveFeatureClassFromTopology_management&#39;, &#39;RemoveFieldConflictFilter_management&#39;, &#39;RemoveFilesFromLasDataset_management&#39;, &#39;RemoveIndex_management&#39;, &#39;RemoveJoin_management&#39;, &#39;RemoveRastersFromMosaicDataset_management&#39;, &#39;RemoveRelate_management&#39;, &#39;RemoveRuleFromRelationshipClass_management&#39;, &#39;RemoveRuleFromTopology_management&#39;, &#39;RemoveSpatialIndex_management&#39;, &#39;RemoveSubtype_management&#39;, &#39;Rename_management&#39;, &#39;ReorderAttributeRule_management&#39;, &#39;RepairGeometry_management&#39;, &#39;RepairMosaicDatasetPaths_management&#39;, &#39;RepairTrajectoryDatasetPaths_management&#39;, &#39;RepairVersionMetadata_management&#39;, &#39;RepairVersionTables_management&#39;, &#39;Resample_management&#39;, &#39;Rescale_management&#39;, &#39;Rotate_management&#39;, &#39;SaveToLayerFile_management&#39;, &#39;SaveToolboxToVersion_management&#39;, &#39;SelectLayerByAttribute_management&#39;, &#39;SelectLayerByLocation_management&#39;, &#39;SetClusterTolerance_management&#39;, &#39;SetDefaultSubtype_management&#39;, &#39;SetFeatureClassSplitModel_management&#39;, &#39;SetMosaicDatasetProperties_management&#39;, &#39;SetRasterProperties_management&#39;, &#39;SetRelationshipClassSplitPolicy_management&#39;, &#39;SetSubtypeField_management&#39;, &#39;SetValueForRangeDomain_management&#39;, &#39;SharePackage_management&#39;, &#39;Shift_management&#39;, &#39;Sort_management&#39;, &#39;SortCodedValueDomain_management&#39;, &#39;SplitLine_management&#39;, &#39;SplitLineAtPoint_management&#39;, &#39;SplitMosaicDatasetItems_management&#39;, &#39;SplitRaster_management&#39;, &#39;StandardizeField_management&#39;, &#39;SubdividePolygon_management&#39;, &#39;SubsetFeatures_management&#39;, &#39;SynchronizeChanges_management&#39;, &#39;SynchronizeMosaicDataset_management&#39;, &#39;TableCompare_management&#39;, &#39;TableToDomain_management&#39;, &#39;TableToEllipse_management&#39;, &#39;TableToRelationshipClass_management&#39;, &#39;TINCompare_management&#39;, &#39;TransferFiles_management&#39;, &#39;TransformField_management&#39;, &#39;TransposeFields_management&#39;, &#39;TrimArchiveHistory_management&#39;, &#39;TruncateTable_management&#39;, &#39;UncompressFileGeodatabaseData_management&#39;, &#39;UnregisterAsVersioned_management&#39;, &#39;UnregisterReplica_management&#39;, &#39;UnsplitLine_management&#39;, &#39;UpdateDataLoadingWorkspace_management&#39;, &#39;UpdateEnterpriseGeodatabaseLicense_management&#39;, &#39;UpdateGeodatabaseConnectionPropertiesToBranch_management&#39;, &#39;UpdateInteriorOrientation_management&#39;, &#39;UpdatePortalDatasetOwner_management&#39;, &#39;UpgradeAttachments_management&#39;, &#39;UpgradeDataset_management&#39;, &#39;UpgradeGDB_management&#39;, &#39;UpgradeSceneLayer_management&#39;, &#39;UploadFileToPortal_management&#39;, &#39;ValidateJoin_management&#39;, &#39;ValidateSceneLayerPackage_management&#39;, &#39;ValidateTopology_management&#39;, &#39;Warp_management&#39;, &#39;WarpFromFile_management&#39;, &#39;WorkspaceToRasterDataset_management&#39;, &#39;XYTableToPoint_management&#39;, &#39;XYToLine_management&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">del</span> <span class="n">tools</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Search within a specific toolbox</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListTools</span><span class="p">(</span><span class="s2">&quot;*_analysis&quot;</span><span class="p">))</span>  <span class="c1"># Get tools only from the Analysis Toolbox</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;ApportionPolygon_analysis&#39;, &#39;Buffer_analysis&#39;, &#39;Clip_analysis&#39;, &#39;CountOverlappingFeatures_analysis&#39;, &#39;CreateThiessenPolygons_analysis&#39;, &#39;Enrich_analysis&#39;, &#39;Erase_analysis&#39;, &#39;Frequency_analysis&#39;, &#39;GenerateNearTable_analysis&#39;, &#39;GenerateOriginDestinationLinks_analysis&#39;, &#39;GraphicBuffer_analysis&#39;, &#39;Identity_analysis&#39;, &#39;Intersect_analysis&#39;, &#39;MultipleRingBuffer_analysis&#39;, &#39;Near_analysis&#39;, &#39;PairwiseBuffer_analysis&#39;, &#39;PairwiseClip_analysis&#39;, &#39;PairwiseDissolve_analysis&#39;, &#39;PairwiseErase_analysis&#39;, &#39;PairwiseIntegrate_analysis&#39;, &#39;PairwiseIntersect_analysis&#39;, &#39;PolygonNeighbors_analysis&#39;, &#39;RemoveOverlapMultiple_analysis&#39;, &#39;Select_analysis&#39;, &#39;SpatialJoin_analysis&#39;, &#39;Split_analysis&#39;, &#39;SplitByAttributes_analysis&#39;, &#39;Statistics_analysis&#39;, &#39;SummarizeNearby_analysis&#39;, &#39;SummarizeWithin_analysis&#39;, &#39;SymDiff_analysis&#39;, &#39;TableSelect_analysis&#39;, &#39;TabulateIntersection_analysis&#39;, &#39;Union_analysis&#39;, &#39;Update_analysis&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Search by specific tool name</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListTools</span><span class="p">(</span><span class="s2">&quot;Buffer_*&quot;</span><span class="p">))</span> <span class="c1"># Get tools that start with the word Buffer</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;Buffer_analysis&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Creating-Geodatabases-to-manage-data-in-ArcGIS-Pro"><strong><em>Creating Geodatabases to manage data in ArcGIS Pro</em></strong><a class="anchor-link" href="#Creating-Geodatabases-to-manage-data-in-ArcGIS-Pro">&#182;</a></h3><h4 id="arcpy.management.CreateFileGDB()"><code>arcpy.management.CreateFileGDB()</code><a class="anchor-link" href="#arcpy.management.CreateFileGDB()">&#182;</a></h4><ul>
-<li>arcpy.management.CreateFileGDB(out_folder_path, out_name, {out_version})<ul>
-<li>Geodatabases are the way project files are structured and managed in ArcGIS Pro</li>
-<li>Collection of geographic datasets held in a common folder</li>
-</ul>
-</li>
-<li>Use-case:  creating, managing and editing datasets</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[107]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##========================  Create a Geodatabase to store project data</span>
-
-<span class="c1">## TOOL: arcpy.management.CreateFileGDB(out_folder_path, out_name, {out_version})</span>
-
-<span class="c1"># folder path</span>
-<span class="n">gdb_folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result&#39;</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">gdb_folder</span><span class="p">):</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">gdb_folder</span><span class="p">)</span>
-
-<span class="c1">#params, path</span>
-<span class="n">gdb_name</span> <span class="o">=</span> <span class="s1">&#39;MN_EnvironmentalData.gdb&#39;</span>
-<span class="n">gdb_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gdb_folder</span><span class="p">,</span><span class="n">gdb_name</span><span class="p">)</span>
-
-<span class="c1"># Create gdb if it does not exist</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">):</span>
-    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">CreateFileGDB</span><span class="p">(</span><span class="n">gdb_folder</span><span class="p">,</span><span class="n">gdb_name</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GDB already exists&quot;</span><span class="p">,</span> <span class="n">gdb_path</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>GDB already exists C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_EnvironmentalData.gdb
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Define-Coordinate-System-by-creating-a-spatial-reference-object"><strong><em>Define Coordinate System by creating a spatial reference object</em></strong><a class="anchor-link" href="#Define-Coordinate-System-by-creating-a-spatial-reference-object">&#182;</a></h3><ul>
-<li><code>arcpy.SpatialReference()</code></li>
-<li>Use-case: changing or defining the CS for a new dataset</li>
-<li><p>multiple ways you can specify a coordinate system</p>
-<ul>
-<li>use a projection file (.prj), name of coordinate system(e.g., GCS_WGS _1984), or WKID (e.g., 4326) also known as factory code</li>
-<li>WKID is less prone to error</li>
-<li>Link to look up coordinate systems : <a href="https://pro.arcgis.com/en/pro-app/arcpy/classes/pdf/geographic_coordinate_systems.pdf">https://pro.arcgis.com/en/pro-app/arcpy/classes/pdf/geographic_coordinate_systems.pdf</a></li>
-</ul>
-</li>
-<li><p>Note the general pattern: library.class.attribute</p>
-<ul>
-<li>accessing attributes of class gets you more info </li>
-<li>sr = arcpy.SpatialReference(4326)</li>
-<li>sr.name</li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##========================  Create a Spatial Reference object to define Coordinate Systems</span>
-
-<span class="c1">### TOOL: arcpy.SpatialReference(item, {vcs}, {text})</span>
-
-
-<span class="c1"># Input Data USGC Minnesota Wells : https://nwis.waterdata.usgs.gov/nwis/gwlevels?search_criteria=state_cd&amp;submitted_form=introduction</span>
-<span class="c1"># Metadata Shows CS is NAD83</span>
-
-<span class="n">wkid</span> <span class="o">=</span> <span class="mi">4269</span> <span class="c1"># GCS_North_American_1983</span>
-
-<span class="n">sr</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkid</span><span class="p">)</span> <span class="c1"># Can pass in a Geographic or Projected CS (e.g., could have passed in wkid 26915 for PCS NAD83 UTM Zone 15N)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Name of CS: &quot;</span><span class="p">,</span><span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\n</span><span class="s2">Type of CS: &quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Datum name: &quot;</span> <span class="p">,</span> <span class="n">sr</span><span class="o">.</span><span class="n">datumName</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Units are : &quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">.</span><span class="n">angularUnitName</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Name of CS:  GCS_North_American_1983  
-Type of CS:  Geographic 
-Datum name:  D_North_American_1983 
-Units are :  Degree
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Using-Geoprocessing-Tools-in-Python"><strong><em>Using Geoprocessing Tools in Python</em></strong><a class="anchor-link" href="#Using-Geoprocessing-Tools-in-Python">&#182;</a></h3><ul>
-<li>Geoprocessing tools are called using this general structure: arcpy.module.ToolName<ul>
-<li>module is pythons way of accessing a toolbox as seen in ArcGIS</li>
-</ul>
-</li>
-<li><code>arcpy.management.XYTableToPoint</code><ul>
-<li>arcpy.management.XYTableToPoint(in_table, out_feature_class, x_field, y_field, {z_field}, {coordinate_system})</li>
-<li>Optional parameters have curly braces { }</li>
-<li>Skip optional ones with double quotes "" or specify only those optional parameters you are using</li>
-</ul>
-</li>
-</ul>
-<p>```python</p>
-
-<pre><code>                                                                ## Optional Parameter specified
-</code></pre>
-<p>arcpy.management.XYTableToPoint(intable, outfeature, x_field, y_field, coordinate_system = arcpy.SpatialReference(4326))</p>
-
-<pre><code>-  Note: 4326 is the well-known ID (WKID) for WGS 1984</code></pre>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[108]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##========================  Load in example wells csv file data and check its datatypes</span>
-
-<span class="c1"># note: to identify x, y fields and CS, open the file or load into python (pandas or similar) </span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
-<span class="n">input_data</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data\MN_Water_wells_rft.csv&#39;</span>
-
-<span class="c1"># Read CSV using tab as the delimiter</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="c1"># ensure file is comma-delimited, we need  comma-delimited for arcpy to work</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>agency_cd              object
-site_no                 int64
-station_nm             object
-site_tp_cd             object
-dec_lat_va            float64
-dec_long_va           float64
-coord_acy_cd           object
-dec_coord_datum_cd     object
-county_cd               int64
-map_nm                 object
-well_depth_va         float64
-dtype: object
-
-Index([&#39;agency_cd&#39;, &#39;site_no&#39;, &#39;station_nm&#39;, &#39;site_tp_cd&#39;, &#39;dec_lat_va&#39;,
-       &#39;dec_long_va&#39;, &#39;coord_acy_cd&#39;, &#39;dec_coord_datum_cd&#39;, &#39;county_cd&#39;,
-       &#39;map_nm&#39;, &#39;well_depth_va&#39;],
-      dtype=&#39;object&#39;)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[109]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##========================   Reformat datatypes to match the expected format</span>
 
-
-<span class="c1">#Convert &#39;int64&#39; fields to  float&#39; (ArcPy does not support int64)</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;site_no&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;site_no&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>  <span class="c1"># Converts int64 to float64</span>
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;county_cd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;county_cd&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
-
-<span class="c1"># save to csv with fixed formatting</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;01 Data\MN_Water_wells_fixed.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[114]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##========================  Change the working directory to the GDB</span>
-
-<span class="c1"># set the folder path as the working environment, and store it for later use</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">gdb_path</span>
-    <span class="n">wksp</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="c1">## optionally, update the path in wksp variable</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error setting up the path, </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">, Exception type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># python&#39;s built-in error messaging, {e} prints description and type(e).__name__ category</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Working environment is here&quot;</span><span class="p">,</span><span class="n">wksp</span><span class="p">)</span>
-
-<span class="c1">##========================  Convert spreadsheet data to point a feature class based on x,y coordinates from a table</span>
-
-<span class="c1">### TOOL: arcpy.management.XYTableToPoint(in_table, out_feature_class, x_field, y_field, {z_field}, {coordinate_system})</span>
-
-<span class="c1"># params</span>
-<span class="n">input_data</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data\MN_Water_wells_fixed.csv&#39;</span>
-<span class="n">output_data</span><span class="o">=</span> <span class="s2">&quot;MN_Wells&quot;</span>
-<span class="n">y_coords</span> <span class="o">=</span>  <span class="s1">&#39;dec_lat_va&#39;</span>
-<span class="n">x_coords</span> <span class="o">=</span>  <span class="s1">&#39;dec_long_va&#39;</span> <span class="c1"># ensure longitude is x</span>
-
-
-<span class="c1"># try/except to handle errors</span>
-
-<span class="k">try</span><span class="p">:</span>                                                                                <span class="c1"># argument (sr) passed in with the key word (coordinate_system)</span>
-    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">XYTableToPoint</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_data</span><span class="p">,</span> <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">coordinate_system</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error converting table&quot;</span> <span class="p">,</span><span class="n">e</span><span class="p">)</span>
+<span class="n">df_pf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+<span class="n">df_pf</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -1897,115 +2258,51 @@ Index([&#39;agency_cd&#39;, &#39;site_no&#39;, &#39;station_nm&#39;, &#39;site_t
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Working environment is here C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_EnvironmentalData.gdb
+<pre>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 22496 entries, 0 to 22495
+Data columns (total 36 columns):
+ #   Column                     Non-Null Count  Dtype         
+---  ------                     --------------  -----         
+ 0   Group                      22496 non-null  object        
+ 1   Program                    22496 non-null  object        
+ 2   Preferred ID               22496 non-null  object        
+ 3   Facility name              22496 non-null  object        
+ 4   Sys Loc Code               22496 non-null  object        
+ 5   Loc Name                   21072 non-null  object        
+ 6   Loc Type                   22266 non-null  object        
+ 7   Latitude                   22496 non-null  float64       
+ 8   Longitude                  22496 non-null  float64       
+ 9   Sys Sample Code            22496 non-null  object        
+ 10  Sample date                22496 non-null  datetime64[ns]
+ 11  Medium                     22496 non-null  object        
+ 12  Matrix                     22496 non-null  object        
+ 13  Analyte                    22496 non-null  object        
+ 14  Analyte Short Name         22463 non-null  object        
+ 15  CAS                        22496 non-null  object        
+ 16  Detect Flag                22496 non-null  object        
+ 17  Result text                22496 non-null  object        
+ 18  Result numeric             3987 non-null   float64       
+ 19  Unit                       22496 non-null  object        
+ 20  Lab Qualifiers             19611 non-null  object        
+ 21  Detect description         18509 non-null  object        
+ 22  Method Detection Limit     22495 non-null  float64       
+ 23  Reporting Detection Limit  22496 non-null  float64       
+ 24  Approval code              22496 non-null  object        
+ 25  Fraction                   22496 non-null  object        
+ 26  Dilution factor            22496 non-null  int64         
+ 27  Result type code           22496 non-null  object        
+ 28  Analytic method            22496 non-null  object        
+ 29  AI ID                      22496 non-null  int64         
+ 30  AI name                    22496 non-null  object        
+ 31  Address                    22496 non-null  object        
+ 32  City                       22356 non-null  object        
+ 33  State                      22496 non-null  object        
+ 34  Zip Code                   22496 non-null  object        
+ 35  County                     22496 non-null  object        
+dtypes: datetime64[ns](1), float64(5), int64(2), object(28)
+memory usage: 6.2+ MB
 </pre>
 </div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[120]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Check if the new feature exists in the gdb</span>
-
-<span class="n">fc_list</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span> <span class="c1"># will list all features in the current workspace (i.e, our gdb), can specify feature_type e.g., Point.</span>
-
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fc_list</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">fc</span> <span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>MN_Wells
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[122]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Access properties for the feature class</span>
-
-<span class="n">fc_desc</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
-
-<span class="n">fc_desc</span><span class="o">.</span><span class="n">spatialReference</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[122]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<style>table td#td0  {font-weight: bold}</style><table class="notebook"><colgroup><col style="width:45%"></col><col style="width:55%"></col></colgroup><tr><td id = "td0" title="name (Geographic Coordinate System)">name (Geographic Coordinate System)</td><td title="GCS_North_American_1983">GCS_North_American_1983</td></tr><tr><td id = "td0" title="factoryCode (WKID)">factoryCode (WKID)</td><td title="4269">4269</td></tr><tr><td id = "td0" title="angularUnitName (Angular Unit)">angularUnitName (Angular Unit)</td><td title="Degree">Degree</td></tr><tr><td id = "td0" title="datumName (Datum)">datumName (Datum)</td><td title="D_North_American_1983">D_North_American_1983</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[155]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc_desc</span><span class="o">.</span><span class="n">shapeType</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[155]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;Point&#39;</pre>
-</div>
-
 </div>
 
 </div>
@@ -2015,85 +2312,168 @@ Index([&#39;agency_cd&#39;, &#39;site_no&#39;, &#39;station_nm&#39;, &#39;site_t
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Batch-Creation-of-Multiple-Tables-to-Point-features"><strong><em>Batch Creation of Multiple Tables to Point features</em></strong><a class="anchor-link" href="#Batch-Creation-of-Multiple-Tables-to-Point-features">&#182;</a></h3><ul>
-<li>use-case: multiple new data inputs that need to converted to points</li>
-<li>Steps:</li>
-</ul>
-<ol>
-<li>Check Coordinate Systems match</li>
-<li>Project to common CS, if needed</li>
-<li>Check x,y (lat/lon) columns, re-format</li>
-<li>Convert tables to points</li>
-</ol>
-<h4 id="Data-Sources-:">Data Sources :<a class="anchor-link" href="#Data-Sources-:">&#182;</a></h4><ul>
-<li>Geography: MN</li>
-</ul>
-<table>
-<thead><tr>
-<th>Input Name</th>
-<th>Coordinate System</th>
-<th>Source</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Water Well locations</td>
-<td>GCS: NAD 83</td>
-<td><a href="https://nwis.waterdata.usgs.gov/nwis/gwlevels?search_criteria=state_cd&amp;submitted_form=introduction">CSV output</a></td>
-</tr>
-<tr>
-<td>What's in my neighborhood sites</td>
-<td>PCS: NAD 83 UTM Zone 15N</td>
-<td><a href="https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_pca/env_my_neighborhood/metadata/metadata.html">MetaData</a></td>
-</tr>
-<tr>
-<td>MN pollution control activity sites</td>
-<td>PCS: NAD 83 UTM Zone 15N</td>
-<td><a href="https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_pca/env_mpca_agency_interests/metadata/metadata.html">MetaData</a></td>
-</tr>
-<tr>
-<td>PFAS levels</td>
-<td>PCS: NAD 83 UTM Zone 15N</td>
-<td><a href="https://www.pca.state.mn.us/sites/default/files/w-sw4-37.pdf">Report</a></td>
-</tr>
-<tr>
-<td>Ground Water contamination sites</td>
-<td>PCS: NAD 83 UTM Zone 15N</td>
-<td><a href="https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_pca/env_mn_gw_contamination_atlas/metadata/metadata.html">MetaData</a></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>One input dataset is different, we will reproject that one to the same PCS as the others</li>
+<h3 id="Convert-SpreadSheet-Data-to-Points"><strong><em>Convert SpreadSheet Data to Points</em></strong><a class="anchor-link" href="#Convert-SpreadSheet-Data-to-Points">&#182;</a></h3><h4 id="arcpy.conversion.ExcelToTable()"><code>arcpy.conversion.ExcelToTable()</code><a class="anchor-link" href="#arcpy.conversion.ExcelToTable()">&#182;</a></h4><ul>
+<li>Use-case: converting an excel spreadsheet into a ArcGIS compatible table</li>
+<li>ArcGIS will not directly recognize Excel files</li>
+<li>Create an ArcGIS-compatible table in the gdb that can then be populated with out point data</li>
 </ul>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[160]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We now know the x and y columns</span>
+
+<span class="c1"># define x and y</span>
+<span class="n">ycoords</span><span class="o">=</span> <span class="s2">&quot;Latitude&quot;</span>
+<span class="n">xcoords</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span>
+
+<span class="n">wkid</span><span class="o">=</span> <span class="mi">4269</span> <span class="c1"># define the spatial reference</span>
+<span class="n">sr</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkid</span><span class="p">)</span>
+
+
+<span class="c1">###================================  Convert the Excel file to a table format that can be recognized by ArcGIS</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data\MN_PFAS_Levels.xlsx&#39;</span>
+
+<span class="n">pfas_table</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gdb</span><span class="p">,</span><span class="s2">&quot;MN_PFAS_Table&quot;</span><span class="p">)</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">ExcelToTable</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="n">pfas_table</span><span class="p">,</span> <span class="n">Sheet</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully converted excel file to correct table format&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">XYTableToPoint</span><span class="p">(</span><span class="n">pfas_table</span><span class="p">,</span><span class="n">output_path</span><span class="p">,</span> <span class="n">xcoords</span><span class="p">,</span> <span class="n">ycoords</span><span class="p">,</span> <span class="n">coordinate_system</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully converted the </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> to points&quot;</span><span class="p">)</span>           
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error converting table to points&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Successfully converted excel file to correct table format
+Successfully converted the C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\01 Data\MN_PFAS_Levels.xlsx to points
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[161]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">###====================  Project spatial data from one coordinate system to another</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
 
 
-<span class="c1">## TOOL: arcpy.management.Project(in_dataset, out_dataset, out_coor_system, {transform_method}, {in_coor_system}, {preserve_shape}, {max_deviation}, {vertical})</span>
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[161]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;atlas_contamination_areas&#39;,
+ &#39;atlas_contamination_area_lines&#39;,
+ &#39;atlas_contamination_sites&#39;,
+ &#39;atlas_contamination_sites_noca&#39;,
+ &#39;atlas_contamination_source_areas&#39;,
+ &#39;atlas_contamination_wells_result_sum&#39;,
+ &#39;MN_PFAS_Levels&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Evaluate-Coordinate-System-and-Define-Spatial-Reference"><strong><em>Evaluate Coordinate System and Define Spatial Reference</em></strong><a class="anchor-link" href="#Evaluate-Coordinate-System-and-Define-Spatial-Reference">&#182;</a></h3><h4 id="MetaData">MetaData<a class="anchor-link" href="#MetaData">&#182;</a></h4><ul>
+<li>This dataset does not clearly state the spatial reference for the spreadseet</li>
+<li>Hints for Correct CS<ul>
+<li>Coordinate Data (lat, lon) in decimal degrees, not in meters or feet</li>
+<li>historic PFAS reports show datum being used is NAD 83</li>
+</ul>
+</li>
+</ul>
+<h4 id="arcpy.SpatialReference()"><code>arcpy.SpatialReference()</code><a class="anchor-link" href="#arcpy.SpatialReference()">&#182;</a></h4><ul>
+<li>Use-case: changing or defining the CS for a new dataset</li>
+<li>multiple ways you can specify a coordinate system<ul>
+<li>use a projection file (.prj), name of coordinate system(e.g., GCS_WGS _1984), or WKID (e.g., 4326) also known as factory code</li>
+<li>WKID is less prone to error</li>
+<li>Link to look up coordinate systems : <a href="https://pro.arcgis.com/en/pro-app/arcpy/classes/pdf/geographic_coordinate_systems.pdf">https://pro.arcgis.com/en/pro-app/arcpy/classes/pdf/geographic_coordinate_systems.pdf</a></li>
+</ul>
+</li>
+<li>Example:<ul>
+<li>sr = arcpy.SpatialReference(4326)</li>
+<li>sr now holds the spatial reference that can be used when assigning a CS to a dataset</li>
+</ul>
+</li>
+</ul>
+<h4 id="arcpy.management.DefineProjection(input_fc,-arcpy.SpatialReference())"><code>arcpy.management.DefineProjection(input_fc, arcpy.SpatialReference())</code><a class="anchor-link" href="#arcpy.management.DefineProjection(input_fc,-arcpy.SpatialReference())">&#182;</a></h4><ul>
+<li>Use-case: Assign a spatial reference to a dataset</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[174]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##========================  Create a Spatial Reference object to define Coordinate Systems</span>
 
 <span class="c1"># params</span>
-<span class="n">input_data</span> <span class="o">=</span> <span class="s2">&quot;MN_Wells&quot;</span>
-<span class="n">out_proj</span><span class="o">=</span> <span class="s1">&#39;MN_Wells_repojected&#39;</span>
-<span class="n">wkid_proj</span> <span class="o">=</span> <span class="mi">26915</span>
-<span class="n">out_cs</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkid_proj</span><span class="p">)</span>
+<span class="n">wkid</span><span class="o">=</span> <span class="mi">4269</span> <span class="c1"># GCS_North_American_1983</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Name of CS: &quot;</span><span class="p">,</span><span class="n">out_cs</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\n</span><span class="s2">Type of CS: &quot;</span><span class="p">,</span> <span class="n">out_cs</span><span class="o">.</span><span class="n">type</span> <span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Units are : &quot;</span><span class="p">,</span> <span class="n">out_cs</span><span class="o">.</span><span class="n">linearUnitName</span><span class="p">)</span>
 
+<span class="c1">### TOOL: arcpy.SpatialReference(item, {vcs}, {text})</span>
+<span class="n">sr</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Point feature class spatial reference: &quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sr</span><span class="o">.</span><span class="n">factoryCode</span><span class="p">)</span>
+<span class="c1"># Why?:</span>
+<span class="c1"># Previous PFAS report shows datum is NAD 1983, and all projected CS in contamination atlas are NAD 83 UTM 15N</span>
+<span class="c1"># We define the CS as GCS NAD 1983 and then project to NAD 83 UTM 15N to align with the contamination atlas data</span>
+
+<span class="n">input_fc</span> <span class="o">=</span> <span class="s2">&quot;MN_PFAS_Levels&quot;</span>
 <span class="k">try</span><span class="p">:</span>
-
-    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">out_proj</span><span class="p">,</span><span class="n">out_cs</span><span class="p">)</span>
-    
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">DefineProjection</span><span class="p">(</span><span class="n">input_fc</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully defined the coordinate system&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">GetAllMessages</span><span class="p">())</span> <span class="c1"># prints all messages during tool execution</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error projecting the data&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error defining the CS&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcpy Tool Error&quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -2110,10 +2490,9 @@ Index([&#39;agency_cd&#39;, &#39;site_no&#39;, &#39;station_nm&#39;, &#39;site_t
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Name of CS:  NAD_1983_UTM_Zone_15N  
-Type of CS:  Projected 
-Units are :  Meter
+<pre>Point feature class spatial reference:  GCS_North_American_1983 4269
+Successfully defined the coordinate system
+[[2, 0, &#39;Start Time: Sunday, March 16, 2025 9:18:46 PM&#39;], [3, 0, &#39;Succeeded at Sunday, March 16, 2025 9:18:46 PM (Elapsed Time: 0.06 seconds)&#39;]]
 </pre>
 </div>
 </div>
@@ -2127,58 +2506,20 @@ Units are :  Meter
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check that new projected fc exists in the workspace</span>
-<span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[&nbsp;]:</div>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">###======================   Check if Feature Classes were created and have the expected Characteristics</span>
 
 
 
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;MN_Wells&#39;, &#39;MN_Wells_repojected&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[231]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##=====================  Select and create a list of the tables to be processed</span>
-
-<span class="n">input_folder_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data&#39;</span>
-
-<span class="n">new_file_list</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-<span class="c1"># use Walk to list out the names of the files in the folder</span>
-<span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">Walk</span><span class="p">(</span><span class="n">input_folder_path</span><span class="p">):</span> <span class="c1"># returns folder path, folders, and file names. Is a tuple of folder path, folder names, and files</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Walking through this folder&quot;</span><span class="p">,</span> <span class="n">dirpath</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;MN_Water&quot;</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_folder_path</span><span class="p">,</span><span class="n">file</span><span class="p">)</span>
-            <span class="n">new_file_list</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+<span class="c1">## Get all the fc classes from the gdb</span>
+<span class="n">list_fc</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
 
 
+<span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">list_fc</span><span class="p">:</span>
+    <span class="n">desc</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span> <span class="c1">#  Use the Describe Object to access properties of a Feature class like its Spatial Reference</span>
+    <span class="n">sr</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">SpatialReference</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Compiled input files&quot;</span><span class="p">,</span> <span class="n">new_file_list</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature class: , </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="s2">, Spatial Reference name :, </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, Spatial Ref Type : </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">, Geometry</span><span class="si">{</span><span class="n">desc</span><span class="o">.</span><span class="n">shapetype</span><span class="si">}</span><span class="s2">, WKID: </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">factorycode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">150</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># add line and space between prints</span>
 </pre></div>
 
     </div>
@@ -2195,13 +2536,27 @@ Units are :  Meter
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Walking through this folder C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data
-MN_GroundWater_ContaminationSites.csv
-MN_PFAS_levels.csv
-mpca_agency_interests.csv
-my_neighborhood_sites.csv
-Walking through this folder C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data\metadata
-Compiled input files {&#39;C:\\Users\\beste\\Desktop\\ArcPy\\what_is_arcpy\\01 Data\\MN_PFAS_levels.csv&#39;, &#39;C:\\Users\\beste\\Desktop\\ArcPy\\what_is_arcpy\\01 Data\\MN_GroundWater_ContaminationSites.csv&#39;, &#39;C:\\Users\\beste\\Desktop\\ArcPy\\what_is_arcpy\\01 Data\\my_neighborhood_sites.csv&#39;, &#39;C:\\Users\\beste\\Desktop\\ArcPy\\what_is_arcpy\\01 Data\\mpca_agency_interests.csv&#39;}
+<pre>Feature class: , atlas_contamination_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_area_lines, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites_noca, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_source_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_wells_result_sum, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels, Spatial Reference name :, GCS_North_American_1983, Spatial Ref Type : Geographic, GeometryPoint, WKID: 4269
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
 </pre>
 </div>
 </div>
@@ -2210,18 +2565,81 @@ Compiled input files {&#39;C:\\Users\\beste\\Desktop\\ArcPy\\what_is_arcpy\\01 D
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Avoiding-Repetitive-coding"><strong><em>Avoiding Repetitive coding</em></strong><a class="anchor-link" href="#Avoiding-Repetitive-coding">&#182;</a></h3><ul>
+<li>Problem: some check or task is done twice or more, convert that task into a function</li>
+<li>Task: list out all the feature classes in the workspace, spatial reference, and geometry</li>
+<li>Instead of repeatedly writing or maintaining large amounts of code, just call that function</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[232]:</div>
+<div class="prompt input_prompt">In&nbsp;[164]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check columns are same for x,y fields, reformat them if not</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">###======================   Check Feature Classes were created and have the expected Characteristics</span>
 
-<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">new_file_list</span><span class="p">:</span>
-    <span class="n">df</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="c1">#Initially, Lat , Long casing was different, reformat all to be lowercase, trim extra spaces</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File path: &quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="c1"># prevents extra index column being added</span>
+<span class="c1"># Instead of re-writing this we will wrap the operations into a function called def listFC_dataset_Attributes():</span>
+
+<span class="k">def</span> <span class="nf">listFC_dataset_Attributes</span><span class="p">(</span><span class="n">workspace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1"># accepts a workspace path parameter,By default uses the existing one if left as None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;List feature classes in the workspace and their attributes&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">workspace</span><span class="p">:</span>
+        <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span><span class="o">=</span> <span class="n">workspace</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No workspace is set! Please specify a workspace&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="c1"># ensures we exit the function if not workspace is set</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1">## Get all the fc classes from the gdb</span>
+        <span class="n">list_fc</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+        <span class="n">wksp_path</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Workspace is set here </span><span class="si">{</span><span class="n">wksp_path</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">list_fc</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No feature classes found inthe workspace&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="c1"># exit the function if not fc found</span>
+        <span class="n">wkid_list</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">CS_types</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> 
+        <span class="n">fc_counter</span><span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">list_fc</span><span class="p">:</span>
+            <span class="n">desc</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span> <span class="c1">## Use the Describe Object to access properties of a Feature class like its Spatial Reference</span>
+
+            <span class="n">sr</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">SpatialReference</span>
+            <span class="n">wkid_list</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sr</span><span class="o">.</span><span class="n">factorycode</span><span class="p">)</span>
+            <span class="n">CS_types</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sr</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+            <span class="n">fc_counter</span><span class="o">+=</span><span class="mi">1</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature class: , </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="s2">, Spatial Reference name :, </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, Spatial Ref Type : </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">, Geometry</span><span class="si">{</span><span class="n">desc</span><span class="o">.</span><span class="n">shapetype</span><span class="si">}</span><span class="s2">, WKID: </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">factorycode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">150</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># add line and space between prints</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">fc_counter</span><span class="si">}</span><span class="s2"> Feature classes found in the workspace path</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wkid_list</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning Different wkid detected among Feature Classes: &quot;</span> <span class="p">,</span> <span class="n">wkid_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">CS_types</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning Different Coordinate Systems types found among Feature Classes: &quot;</span><span class="p">,</span> <span class="n">CS_types</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error occurred. Description: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">, Error Category: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+        <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[165]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">listFC_dataset_Attributes</span><span class="p">()</span> <span class="c1"># we already set our workspace. So we do not have to pass in a workspace</span>
 </pre></div>
 
     </div>
@@ -2238,66 +2656,34 @@ Compiled input files {&#39;C:\\Users\\beste\\Desktop\\ArcPy\\what_is_arcpy\\01 D
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>File path:  C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data\MN_PFAS_levels.csv 
- Index([&#39;group&#39;, &#39;program&#39;, &#39;preferred id&#39;, &#39;facility name&#39;, &#39;sys loc code&#39;,
-       &#39;loc name&#39;, &#39;loc type&#39;, &#39;latitude&#39;, &#39;longitude&#39;, &#39;sys sample code&#39;,
-       &#39;sample date&#39;, &#39;medium&#39;, &#39;matrix&#39;, &#39;analyte&#39;, &#39;analyte short name&#39;,
-       &#39;cas&#39;, &#39;detect flag&#39;, &#39;result text&#39;, &#39;result numeric&#39;, &#39;unit&#39;,
-       &#39;lab qualifiers&#39;, &#39;detect description&#39;, &#39;method detection limit&#39;,
-       &#39;reporting detection limit&#39;, &#39;approval code&#39;, &#39;fraction&#39;,
-       &#39;dilution factor&#39;, &#39;result type code&#39;, &#39;analytic method&#39;, &#39;ai id&#39;,
-       &#39;ai name&#39;, &#39;address&#39;, &#39;city&#39;, &#39;state&#39;, &#39;zip code&#39;, &#39;county&#39;],
-      dtype=&#39;object&#39;)
-File path:  C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data\MN_GroundWater_ContaminationSites.csv 
- Index([&#39;id&#39;, &#39;name&#39;, &#39;preferredid&#39;, &#39;description&#39;, &#39;county&#39;, &#39;municipality&#39;,
-       &#39;address&#39;, &#39;zip&#39;, &#39;state&#39;, &#39;longitude&#39;, &#39;latitude&#39;, &#39;acreage&#39;,
-       &#39;typedescription&#39;],
-      dtype=&#39;object&#39;)
-File path:  C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data\my_neighborhood_sites.csv 
- Index([&#39;objectid&#39;, &#39;site_id&#39;, &#39;name&#39;, &#39;active_flag&#39;, &#39;address_street&#39;,
-       &#39;address_city&#39;, &#39;address_state&#39;, &#39;address_zip&#39;, &#39;city&#39;, &#39;county&#39;,
-       &#39;cong_district&#39;, &#39;senate_district&#39;, &#39;house_district&#39;, &#39;huc8&#39;,
-       &#39;watershed_name&#39;, &#39;site_url&#39;, &#39;activity&#39;, &#39;activity_list&#39;, &#39;mpca_id&#39;,
-       &#39;mpca_id_list&#39;, &#39;program_code_list&#39;, &#39;program_name&#39;,
-       &#39;program_name_list&#39;, &#39;industrial_classification&#39;, &#39;ic_flag&#39;, &#39;latitude&#39;,
-       &#39;longitude&#39;, &#39;coord_collect_method_code&#39;, &#39;coord_collect_method_name&#39;,
-       &#39;shape&#39;, &#39;gdb_geomattr_data&#39;],
-      dtype=&#39;object&#39;)
-</pre>
-</div>
-</div>
+<pre>Workspace is set here C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
 
-<div class="output_area">
+Feature class: , atlas_contamination_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
 
-    <div class="prompt"></div>
+Feature class: , atlas_contamination_area_lines, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites_noca, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_source_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_wells_result_sum, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels, Spatial Reference name :, GCS_North_American_1983, Spatial Ref Type : Geographic, GeometryPoint, WKID: 4269
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
 
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>C:\Users\beste\AppData\Local\Temp\ipykernel_33536\470595180.py:4: DtypeWarning: Columns (9,10) have mixed types. Specify dtype option on import or set low_memory=False.
-  df= pd.read_csv(file)
-</pre>
-</div>
-</div>
+7 Feature classes found in the workspace path
 
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>File path:  C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data\mpca_agency_interests.csv 
- Index([&#39;objectid&#39;, &#39;item_id&#39;, &#39;ai_id&#39;, &#39;int_doc_id&#39;, &#39;si_type&#39;, &#39;si_cat&#39;,
-       &#39;si_id&#39;, &#39;si_cat_desc&#39;, &#39;si_type_desc&#39;, &#39;description&#39;, &#39;si_designation&#39;,
-       &#39;name&#39;, &#39;program&#39;, &#39;program_list&#39;, &#39;address&#39;, &#39;city&#39;, &#39;state&#39;, &#39;zip&#39;,
-       &#39;county_code&#39;, &#39;county&#39;, &#39;ctu_code&#39;, &#39;ctu_name&#39;, &#39;cong_dist&#39;,
-       &#39;house_dist&#39;, &#39;senate_dist&#39;, &#39;huc8&#39;, &#39;huc8_name&#39;, &#39;huc10&#39;, &#39;huc10_name&#39;,
-       &#39;huc12&#39;, &#39;huc12_name&#39;, &#39;dwsma_code&#39;, &#39;dwsma_name&#39;, &#39;loc_desc&#39;, &#39;trdsqq&#39;,
-       &#39;pls_twsp&#39;, &#39;range&#39;, &#39;range_dir&#39;, &#39;section&#39;, &#39;quarters&#39;, &#39;latitude&#39;,
-       &#39;longitude&#39;, &#39;method_code&#39;, &#39;method_desc&#39;, &#39;ref_code&#39;, &#39;ref_desc&#39;,
-       &#39;verified&#39;, &#39;collection_date&#39;, &#39;tmsp_created&#39;, &#39;user_created&#39;,
-       &#39;tmsp_updt&#39;, &#39;user_updt&#39;, &#39;status&#39;, &#39;status_date&#39;, &#39;spatial_id&#39;,
-       &#39;shape&#39;],
-      dtype=&#39;object&#39;)
+Warning Different wkid detected among Feature Classes:  {26915, 4269}
+Warning Different Coordinate Systems types found among Feature Classes:  {&#39;Geographic&#39;, &#39;Projected&#39;}
 </pre>
 </div>
 </div>
@@ -2305,54 +2691,51 @@ File path:  C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data\my_neighborhood_s
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Project-feature-classes"><strong><em>Project feature classes</em></strong><a class="anchor-link" href="#Project-feature-classes">&#182;</a></h3><h4 id="arcpy.management.Project()"><code>arcpy.management.Project()</code><a class="anchor-link" href="#arcpy.management.Project()">&#182;</a></h4><ul>
+<li>use-case: <ul>
+<li>project a GCS onto a 2D plane</li>
+<li>align coordinate systems across datasets for downstream analysis </li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[167]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[233]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##========================  Convert Multiple spreadsheets to point a feature class based on x,y coordinates</span>
-
-<span class="c1"># verify the workspace where points will be created</span>
-<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">gdb_path</span>
-<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">overwriteOutput</span><span class="o">=</span><span class="kc">True</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gdb path set to: &quot;</span><span class="p">,</span> <span class="n">gdb_path</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">###====================  Project feature class with GCS to align with the projected coordinate system of the other datasets</span>
 
 <span class="c1"># params</span>
-<span class="n">y_coords</span> <span class="o">=</span>  <span class="s1">&#39;latitude&#39;</span>
-<span class="n">x_coords</span> <span class="o">=</span>  <span class="s1">&#39;longitude&#39;</span> <span class="c1"># ensure longitude is x</span>
+<span class="n">input_fc</span><span class="o">=</span><span class="s2">&quot;MN_PFAS_Levels&quot;</span>
+<span class="n">output_fc_proj</span><span class="o">=</span> <span class="s2">&quot;MN_PFAS_Levels_proj&quot;</span>
+<span class="n">wkid</span> <span class="o">=</span> <span class="mi">26915</span>
+<span class="n">out_cs</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkid</span><span class="p">)</span> <span class="c1"># NAD 83 UTM Zone 15N</span>
 
 
-<span class="c1">##=======================    Loop through files one-by-one and convert them to points</span>
-<span class="n">counter</span><span class="o">=</span> <span class="mi">0</span>
-<span class="c1"># try/except to handle errors</span>
-<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">new_file_list</span><span class="p">:</span>
-    <span class="n">input_data</span> <span class="o">=</span> <span class="n">file</span>
-    <span class="n">output_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># get the file name , split extension from file name, and select the file name</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">output_name</span><span class="p">)</span>
-    <span class="n">output_data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">,</span><span class="n">output_name</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>                                                                                <span class="c1"># argument (sr) passed in with the key word (coordinate_system)</span>
-        <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">XYTableToPoint</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">output_name</span><span class="p">,</span> <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">coordinate_system</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully Converted </span><span class="si">{</span><span class="n">output_name</span><span class="si">}</span><span class="s2"> to points&quot;</span><span class="p">)</span>
-        <span class="n">counter</span><span class="o">+=</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current workspace: </span><span class="si">{</span><span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">overwriteOutput</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">input_fc</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature Class found&quot;</span><span class="p">)</span>
+    <span class="n">desc</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">input_fc</span><span class="p">)</span>
+    <span class="n">sr</span><span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">SpatialReference</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature class CS name </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, and type </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">factorycode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ## TOOL: arcpy.management.Project(in_dataset, out_dataset, out_coor_system, {transform_method}, {in_coor_system}, {preserve_shape}, {max_deviation}, {vertical})</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">Project</span><span class="p">(</span><span class="n">input_fc</span><span class="p">,</span> <span class="n">output_fc_proj</span><span class="p">,</span> <span class="n">out_cs</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error converting table </span><span class="si">{</span><span class="n">output_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">,</span><span class="n">e</span><span class="p">)</span>
-
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished Converting </span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2"> tables to points&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error converting CS for the Feature Class&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -2369,16 +2752,9 @@ File path:  C:\Users\beste\Desktop\ArcPy\what_is_arcpy\01 Data\my_neighborhood_s
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Gdb path set to:  C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_EnvironmentalData.gdb
-MN_PFAS_levels
-Successfully Converted MN_PFAS_levels to points
-MN_GroundWater_ContaminationSites
-Successfully Converted MN_GroundWater_ContaminationSites to points
-my_neighborhood_sites
-Successfully Converted my_neighborhood_sites to points
-mpca_agency_interests
-Successfully Converted mpca_agency_interests to points
-Finished Converting 4 tables to points
+<pre>Current workspace: C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
+Feature Class found
+Feature class CS name GCS_North_American_1983, and type 4269
 </pre>
 </div>
 </div>
@@ -2389,11 +2765,10 @@ Finished Converting 4 tables to points
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[234]:</div>
+<div class="prompt input_prompt">In&nbsp;[168]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check the features that exist in the workspace</span>
-<span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">listFC_dataset_Attributes</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -2406,20 +2781,43 @@ Finished Converting 4 tables to points
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[234]:</div>
+    <div class="prompt"></div>
 
 
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Workspace is set here C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
+
+Feature class: , atlas_contamination_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_area_lines, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites_noca, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_source_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_wells_result_sum, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels, Spatial Reference name :, GCS_North_American_1983, Spatial Ref Type : Geographic, GeometryPoint, WKID: 4269
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels_proj, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
 
 
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;MN_Wells&#39;,
- &#39;MN_Wells_repojected&#39;,
- &#39;MN_PFAS_levels&#39;,
- &#39;MN_GroundWater_ContaminationSites&#39;,
- &#39;my_neighborhood_sites&#39;,
- &#39;mpca_agency_interests&#39;]</pre>
+8 Feature classes found in the workspace path
+
+Warning Different wkid detected among Feature Classes:  {26915, 4269}
+Warning Different Coordinate Systems types found among Feature Classes:  {&#39;Geographic&#39;, &#39;Projected&#39;}
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -2459,6 +2857,52 @@ Finished Converting 4 tables to points
 </script>
                 </article>
             </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../articles/what-is-arcpy-part1.html" rel="bookmark"
+                           title="Permalink to What is ArcPY? Part1">What is ArcPY? Part1</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-05-29T00:00:00-05:00">
+                Published: Wed 29 May 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/arcpy.html">ArcPY</a>.</p>
+<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/arcpy.html">Arcpy</a> <a href="../tag/gis.html">GIS</a> </p>
+</footer><!-- /.post-info -->                
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="images/MN_WaterContamination_CleanupActivity_2025.svg" alt="Arcpy generated Point Feature Data from Ground water contamination, PFAS chemical levels and MNPCA clean up activity sites" style=" width 400px; height: 400px;"></p>
+<ul>
+<li>Multiple Spreadsheet data sources converted to points in Arcpy and mapped with ArcGIS pro</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-Arcpy?"><strong><em>What is Arcpy?</em></strong><a class="anchor-link" href="#What-is-Arcpy?">&#182;</a></h3><p>Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
+<ul>
+<li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
+<li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
+                <a class="readmore" href="../articles/what-is-arcpy-part1.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
