@@ -40,7 +40,7 @@
                 By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
         </address>
 <p>In <a href="../category/arcpy.html">ArcPY</a>.</p>
-<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/arcpy.html">Arcpy</a> <a href="../tag/gis.html">GIS</a> </p>
+
 </footer><!-- /.post-info -->      <style type="text/css">/*!
 *
 * IPython notebook
@@ -1208,16 +1208,28 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-Arcpy?:-Part-2"><strong>What is Arcpy?: Part 2</strong><a class="anchor-link" href="#What-is-Arcpy?:-Part-2">&#182;</a></h3><p>Reminder: Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
+<ul>
+<li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
+<li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[194]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Dashboard Created from these data</span>
 
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span> <span class="c1"># a module for controlling notebook outputs, allows you to embed images, video, webpages with the Iframe function</span>
 
-<span class="c1"># ArcGIS Pro documentation URL for a specific tool</span>
+<span class="c1"># ArcGIS Online URL for a dashboard showing groundwater contamination data </span>
 <span class="n">tool_url</span> <span class="o">=</span> <span class="s2">&quot;https://www.arcgis.com/apps/dashboards/e53b8dee993d458c858cb53a1ed56b99&quot;</span>
 
 <span class="c1"># Display the documentation inside Jupyter Notebook</span>
@@ -1234,7 +1246,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[194]:</div>
+    <div class="prompt output_prompt">Out[&nbsp;]:</div>
 
 
 
@@ -1256,18 +1268,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-is-Arcpy?:-Part-2"><strong><em>What is Arcpy?: Part 2</em></strong><a class="anchor-link" href="#What-is-Arcpy?:-Part-2">&#182;</a></h3><p>Reminder: Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
-<ul>
-<li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
-<li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
-</ul>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1292,10 +1292,55 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <h3 id="What-we-did-last-time">What we did last time<a class="anchor-link" href="#What-we-did-last-time">&#182;</a></h3><ul>
 <li>Went into details regarding setting up the arcpy environment, defining spatial reference and using geoprocessing tools</li>
 <li>We used arcrpy.XYTableToPoint() to convert multiple spreadsheets to point data.</li>
-<li>Although spreadsheet data is possible, it is more likely to have a shapefile
-### What we will do this time:</li>
-<li>walk through batch processing on shapefiles retrieved from the web</li>
+<li>Although spreadsheet data is possible, it is more likely to have a shapefile</li>
+</ul>
+<h3 id="What-we-will-do-this-time:"><strong>What we will do this time:</strong><a class="anchor-link" href="#What-we-will-do-this-time:">&#182;</a></h3><ul>
+<li>walk through batch processing on multiple shapefiles retrieved from the web</li>
 <li>walk through converting an excel spreadsheet retrieved from the web</li>
+<li>All will be loaded into the same geodatabase</li>
+</ul>
+<h3 id="Accessing-multiple-online-datasets-and-loading-into-ArcGIS-Pro"><strong><em>Accessing multiple online datasets and loading into ArcGIS Pro</em></strong><a class="anchor-link" href="#Accessing-multiple-online-datasets-and-loading-into-ArcGIS-Pro">&#182;</a></h3><ul>
+<li>use-case: Taking in multiple new datasets and loading them into the same geodatabase for analysis in ArcGIS Pro
+#### Steps:</li>
+</ul>
+<ol>
+<li>Pull the online dataset using its url</li>
+<li>Handle dataset based on file size and type</li>
+<li>Check Coordinate Systems match</li>
+<li>Convert Excel to ArcGIS compatible table</li>
+<li>Check x,y (lat/lon) columns, re-format</li>
+<li>Convert tables to points</li>
+<li>Assign Coordinate System</li>
+<li>Project GCS to common PCS</li>
+</ol>
+<h4 id="Data-Sources-:">Data Sources :<a class="anchor-link" href="#Data-Sources-:">&#182;</a></h4><ul>
+<li>Geography: MN</li>
+</ul>
+<table>
+<thead><tr>
+<th>Input Name</th>
+<th>file types</th>
+<th>Coordinate System</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MN PFAS levels</td>
+<td>1 excel file</td>
+<td>GCS: NAD 83</td>
+<td><a href="https://www.pca.state.mn.us/sites/default/files/w-sw4-37.pdf">Report</a></td>
+</tr>
+<tr>
+<td>MN Groundwater contamination atlas</td>
+<td>6 shape files</td>
+<td>PCS: NAD 83 UTM Zone 15N</td>
+<td><a href="https://gisdata.mn.gov/dataset/env-mn-gw-contamination-atlasl">MetaData</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>One input dataset is different, we will reproject that one to the same PCS as the other to align them</li>
 </ul>
 
 </div>
@@ -1304,7 +1349,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Set-up-a-workspace"><strong><em>Set up a workspace</em></strong><a class="anchor-link" href="#Set-up-a-workspace">&#182;</a></h3><h4 id="arcpy.env.workspace"><code>arcpy.env.workspace</code><a class="anchor-link" href="#arcpy.env.workspace">&#182;</a></h4><ul>
+<h3 id="Set-up-a-workspace"><strong>Set up a workspace</strong><a class="anchor-link" href="#Set-up-a-workspace">&#182;</a></h3><h4 id="arcpy.env.workspace"><code>arcpy.env.workspace</code><a class="anchor-link" href="#arcpy.env.workspace">&#182;</a></h4><ul>
 <li>Use-case: get or set the current workspace environment in which to perform arcpy operations</li>
 <li><p>Breaking down the synax</p>
 <ul>
@@ -1403,7 +1448,7 @@ Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\con
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Get-online-data-with-the-Requests-library"><strong><em>Get online data with the Requests library</em></strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="requests.get(url,-params=-None,-**kwargs)"><code>requests.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#requests.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
+<h3 id="Get-online-data-with-the-Requests-library"><strong>Get online data with the Requests library</strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="requests.get(url,-params=-None,-**kwargs)"><code>requests.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#requests.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
 <li>Required argument : url (url to send the request to)</li>
 <li>params(optional, default is None), allows you to pass in query parameters that filter, modify or sort the data you're requesting<ul>
 <li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params ={key:value})</li>
@@ -1534,7 +1579,7 @@ Json data content {&#39;userId&#39;: 1, &#39;id&#39;: 1, &#39;title&#39;: &#39;s
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Extract-and-validate-file-types-with-Magic-library"><strong><em>Extract and validate file types with Magic library</em></strong><a class="anchor-link" href="#Extract-and-validate-file-types-with-Magic-library">&#182;</a></h3><h4 id="magic.from_file(filename,-mime=True)"><code>magic.from_file(filename, mime=True)</code><a class="anchor-link" href="#magic.from_file(filename,-mime=True)">&#182;</a></h4><ul>
+<h3 id="Extract-and-validate-file-types-with-Magic-library"><strong>Extract and validate file types with Magic library</strong><a class="anchor-link" href="#Extract-and-validate-file-types-with-Magic-library">&#182;</a></h3><h4 id="magic.from_file(filename,-mime=True)"><code>magic.from_file(filename, mime=True)</code><a class="anchor-link" href="#magic.from_file(filename,-mime=True)">&#182;</a></h4><ul>
 <li>Required arguments : filename (the path to the file)</li>
 <li>MIME Types are standardized identifiers used to indicate the nature and format of a file <ul>
 <li>application/pdf for PDF or image/jpg for JPEG images</li>
@@ -1796,7 +1841,7 @@ Downloaded and extracted the file to C:\Projects\my_git_pages_website\Py-and-Sky
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Bulk-importing-shapefiles-into-a-Geodatabase"><strong><em>Bulk importing shapefiles into a Geodatabase</em></strong><a class="anchor-link" href="#Bulk-importing-shapefiles-into-a-Geodatabase">&#182;</a></h3><h4 id="FeatureClassToGeodatabase()"><code>FeatureClassToGeodatabase()</code><a class="anchor-link" href="#FeatureClassToGeodatabase()">&#182;</a></h4><ul>
+<h3 id="Bulk-importing-shapefiles-into-a-Geodatabase"><strong>Bulk importing shapefiles into a Geodatabase</strong><a class="anchor-link" href="#Bulk-importing-shapefiles-into-a-Geodatabase">&#182;</a></h3><h4 id="FeatureClassToGeodatabase()"><code>FeatureClassToGeodatabase()</code><a class="anchor-link" href="#FeatureClassToGeodatabase()">&#182;</a></h4><ul>
 <li>arcpy.conversion.FeatureClassToGeodatabase(Input_Features, Output_Geodatabase)</li>
 <li>can take a single input or a list of inputs</li>
 </ul>
@@ -2368,7 +2413,7 @@ memory usage: 6.2+ MB
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Convert-SpreadSheet-Data-to-Points"><strong><em>Convert SpreadSheet Data to Points</em></strong><a class="anchor-link" href="#Convert-SpreadSheet-Data-to-Points">&#182;</a></h3><h4 id="arcpy.conversion.ExcelToTable()"><code>arcpy.conversion.ExcelToTable()</code><a class="anchor-link" href="#arcpy.conversion.ExcelToTable()">&#182;</a></h4><ul>
+<h3 id="Convert-SpreadSheet-Data-to-Points"><strong>Convert SpreadSheet Data to Points</strong><a class="anchor-link" href="#Convert-SpreadSheet-Data-to-Points">&#182;</a></h3><h4 id="arcpy.conversion.ExcelToTable()"><code>arcpy.conversion.ExcelToTable()</code><a class="anchor-link" href="#arcpy.conversion.ExcelToTable()">&#182;</a></h4><ul>
 <li>Use-case: converting an excel spreadsheet into a ArcGIS compatible table</li>
 <li>ArcGIS will not directly recognize Excel files</li>
 <li>Create an ArcGIS-compatible table in the gdb that can then be populated with out point data</li>
@@ -2474,8 +2519,8 @@ Successfully converted the C:\Projects\my_git_pages_website\Py-and-Sky-Labs\cont
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Evaluate-Coordinate-System-and-Define-Spatial-Reference"><strong><em>Evaluate Coordinate System and Define Spatial Reference</em></strong><a class="anchor-link" href="#Evaluate-Coordinate-System-and-Define-Spatial-Reference">&#182;</a></h3><h4 id="MetaData">MetaData<a class="anchor-link" href="#MetaData">&#182;</a></h4><ul>
-<li>This dataset does not clearly state the spatial reference for the spreadseet</li>
+<h3 id="Define-Spatial-Reference"><strong>Define Spatial Reference</strong><a class="anchor-link" href="#Define-Spatial-Reference">&#182;</a></h3><h4 id="Evaluate-Coordinate-System-described-in-MetaData"><strong><em>Evaluate Coordinate System described in MetaData</em></strong><a class="anchor-link" href="#Evaluate-Coordinate-System-described-in-MetaData">&#182;</a></h4><ul>
+<li>This dataset does not clearly state the spatial reference for the Excel spreadsheet</li>
 <li>Hints for Correct CS<ul>
 <li>Coordinate Data (lat, lon) in decimal degrees, not in meters or feet</li>
 <li>historic PFAS reports show datum being used is NAD 83</li>
@@ -2484,13 +2529,15 @@ Successfully converted the C:\Projects\my_git_pages_website\Py-and-Sky-Labs\cont
 </ul>
 <h4 id="arcpy.SpatialReference()"><code>arcpy.SpatialReference()</code><a class="anchor-link" href="#arcpy.SpatialReference()">&#182;</a></h4><ul>
 <li>Use-case: changing or defining the CS for a new dataset</li>
-<li>multiple ways you can specify a coordinate system<ul>
+<li><p>multiple ways you can specify a coordinate system</p>
+<ul>
 <li>use a projection file (.prj), name of coordinate system(e.g., GCS_WGS _1984), or WKID (e.g., 4326) also known as factory code</li>
 <li>WKID is less prone to error</li>
 <li>Link to look up coordinate systems : <a href="https://pro.arcgis.com/en/pro-app/arcpy/classes/pdf/geographic_coordinate_systems.pdf">https://pro.arcgis.com/en/pro-app/arcpy/classes/pdf/geographic_coordinate_systems.pdf</a></li>
 </ul>
 </li>
-<li>Example:<ul>
+<li><p>Example:</p>
+<ul>
 <li>sr = arcpy.SpatialReference(4326)</li>
 <li>sr now holds the spatial reference that can be used when assigning a CS to a dataset</li>
 </ul>
@@ -2624,7 +2671,7 @@ Feature class: , MN_PFAS_Levels, Spatial Reference name :, GCS_North_American_19
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Avoiding-Repetitive-coding"><strong><em>Avoiding Repetitive coding</em></strong><a class="anchor-link" href="#Avoiding-Repetitive-coding">&#182;</a></h3><ul>
+<h3 id="Avoiding-Repetitive-coding"><strong>Avoiding Repetitive coding</strong><a class="anchor-link" href="#Avoiding-Repetitive-coding">&#182;</a></h3><ul>
 <li>Problem: some check or task is done twice or more, convert that task into a function</li>
 <li>Task: list out all the feature classes in the workspace, spatial reference, and geometry</li>
 <li>Instead of repeatedly writing or maintaining large amounts of code, just call that function</li>
@@ -2751,7 +2798,7 @@ Warning Different Coordinate Systems types found among Feature Classes:  {&#39;G
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Project-feature-classes"><strong><em>Project feature classes</em></strong><a class="anchor-link" href="#Project-feature-classes">&#182;</a></h3><h4 id="arcpy.management.Project()"><code>arcpy.management.Project()</code><a class="anchor-link" href="#arcpy.management.Project()">&#182;</a></h4><ul>
+<h3 id="Project-feature-classes-to-different-Coordinate-System"><strong>Project feature classes to different Coordinate System</strong><a class="anchor-link" href="#Project-feature-classes-to-different-Coordinate-System">&#182;</a></h3><h4 id="arcpy.management.Project()"><code>arcpy.management.Project()</code><a class="anchor-link" href="#arcpy.management.Project()">&#182;</a></h4><ul>
 <li>use-case: <ul>
 <li>project a GCS onto a 2D plane</li>
 <li>align coordinate systems across datasets for downstream analysis </li>

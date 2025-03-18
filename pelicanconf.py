@@ -102,3 +102,7 @@ INDEX_URL = ''
 #tells Pelican not to create index.html for recent posts
 
 THEME_TEMPLATES_OVERRIDES = ['templates']
+
+
+# code blocks with line numbers
+PYGMENTS_RST_OPTIONS = {"linenos": "table"}
