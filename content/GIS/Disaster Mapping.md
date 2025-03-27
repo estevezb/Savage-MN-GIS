@@ -52,7 +52,7 @@ Drag and drop the .tif imagery onto the map in ArcGIS Pro. Go to the contents an
 
 The other difference is the input image cell size of ~4.7 cm which is different than what the model expects. In our case, we will modify the resolution to 10 cm. 
 
-The typical way to address the format issues is use ArcGIS Pro's Raster Function Extract Bands on your input TIF image. In the geoprocessing window you would input the values of the bands your in your image and set the Missing Band Action parameter to fail to ensure you correctly extracted 3 bands. After this step, you would then need to save that result because raster function outputs are temporary. To do that you would right-click on the new raster in your contents pane, select Data, and use Export Raster to save it permanently as TIF. However, here I want to advocate for automating this band extraction process and other aspect of the workflow using python scripting and the arcpy library. 
+The typical way to address the format issues is use ArcGIS Pro's Raster Function Extract Bands on your input TIF image. In the geoprocessing window you would input the values of the bands your in your image and set the Missing Band Action parameter to fail to ensure you correctly extracted 3 bands. After this step, you would then need to save that result because raster function outputs are temporary. To do that you would right-click on the new raster in your contents pane, select Data, and use Export Raster to save it permanently as TIF. However, here I want to advocate for automating this band extraction process and other aspects of the workflow using python scripting and the arcpy library. 
 
 ### ***Automation in ArcGIS Pro*** 
 
@@ -61,8 +61,8 @@ One powerful aspect of ArcGIS Pro is its automation capabilities using the Model
 
 #### **What is ArcPY?**
 
-Arcpy is a Python library for automating GIS tasks in Arc GIS Pro. It allows you to perform geoprocessing, analysis, data management and mapping automation using python.
-Here is a script that would accomplish both these tasks : extracting bands and saving an formatted for Esri's pt-DL models. This script will function as a new tool allowing you to interact with it inside ArcGIS Pro just like other geoprocessing tools. This means you can re-use it, change the inputs, file names and folders, etc, for your use-case.
+If the goal is automating extracting raster bands and other GIS workflows, you would do well to become familiar with Arcpy. Arcpy is a Python library for automating GIS tasks in Arc GIS Pro. It allows you to perform geoprocessing, analysis, data management and mapping automation using python[What is ArcPY? Part1](internal://what-is-arcpy-part1)
+Below is a script that would accomplish both extracting bands and saving the raster in the correct for format for Esri's pt-DL models. This script behaves as a new tool in ArcGIS Desktop allowing you to interact with it inside ArcGIS Pro just like other geoprocessing tools. This means you can re-use it, change the inputs, file names and folders, etc, to match your own use-case.
 
 ``` python 
 
