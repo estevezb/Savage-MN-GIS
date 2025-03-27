@@ -1710,7 +1710,7 @@ Json data content {&#39;userId&#39;: 1, &#39;id&#39;: 1, &#39;title&#39;: &#39;s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Getting online geospatial data, handling file size and file type</span>
@@ -1766,7 +1766,7 @@ Json data content {&#39;userId&#39;: 1, &#39;id&#39;: 1, &#39;title&#39;: &#39;s
 <span class="c1"># check file size key from the response.headers and use the value to handle small and large file sizes</span>
 <span class="k">if</span> <span class="s1">&#39;Content-Length&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span> <span class="c1"># works because response.headers is a dictionary, keys are the header names i.e., Content-Length is a key</span>
     <span class="n">file_size</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">])</span> <span class="c1"># get the value from the content-length key, value is a string of the size of the file in bytes</span>
-    <span class="n">file_size_mb</span> <span class="o">=</span>  <span class="n">file_size</span><span class="o">//</span><span class="p">(</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span> <span class="c1"># convert bytes to megabytes</span>
+    <span class="n">file_size_mb</span> <span class="o">=</span>  <span class="n">file_size</span><span class="o">//</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span> <span class="c1"># convert bytes to megabytes</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File size is about: </span><span class="si">{</span><span class="n">file_size</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span> <span class="c1"># fyi , // is integer division, provides a rounded down whole number</span>
     
     <span class="c1"># handle file size</span>
@@ -2416,7 +2416,7 @@ memory usage: 6.2+ MB
 <h3 id="Convert-SpreadSheet-Data-to-Points"><strong>Convert SpreadSheet Data to Points</strong><a class="anchor-link" href="#Convert-SpreadSheet-Data-to-Points">&#182;</a></h3><h4 id="arcpy.conversion.ExcelToTable()"><code>arcpy.conversion.ExcelToTable()</code><a class="anchor-link" href="#arcpy.conversion.ExcelToTable()">&#182;</a></h4><ul>
 <li>Use-case: converting an excel spreadsheet into a ArcGIS compatible table</li>
 <li>ArcGIS will not directly recognize Excel files</li>
-<li>Create an ArcGIS-compatible table in the gdb that can then be populated with out point data</li>
+<li>Create an ArcGIS-compatible table in the gdb that can then be populated with our point data</li>
 </ul>
 
 </div>
