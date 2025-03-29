@@ -6,7 +6,7 @@
         <meta name="generator" content="Pelican" />
         <title>QC and Join data in Arcpy</title>
         <link rel="stylesheet" href="../theme/css/main.css" />
-        <meta name="description" content="Multiple Shapefile data sources access programmatically online and converted to points in Arcpy, then mapped with ArcGIS pro Shown below is a..." />
+        <meta name="description" content="Flow chart of a workflow to prepare two datasets for spatial join The analysis includes checks for unique ID fields and duplicate geometry What is..." />
 </head>
 
 <body id="index" class="home">
@@ -1199,10 +1199,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src= "../images/MN_GroundWaterContamination_Data_2025.svg" alt ="Arcpy generated Point Feature Data from Ground water contamination, PFAS chemical levels and MNPCA clean up activity sites" style= " width 400px; height: 400px;"></p>
+<p><img src= "../images/ArcPY_QC_FlowChart.svg" alt ="Obsidian-generated flow chart depicting steps of an Arcpy spatial data QC and join" style= " width 400px; height: 400px;"></p>
 <ul>
-<li>Multiple Shapefile data sources access programmatically online and converted to points in Arcpy, then mapped with ArcGIS pro</li>
-<li>Shown below is a dashboard of these data for the latest sampling dates where contamination data is grouped by city/township </li>
+<li>Flow chart of a workflow to prepare two datasets for spatial join</li>
+<li>The analysis includes checks for unique ID fields and duplicate geometry </li>
 </ul>
 
 </div>
@@ -1352,8 +1352,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># note: importing the custom tool sets a variable called initial_dir to the path of the script</span>
-        <span class="c1"># this is intentionally done to support its functionality i.e., creating folders to store data</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># note: When you import the custom arcpy tools module it sets a variable called initial_dir to store the path where your script is located</span>
+        <span class="c1"># this is intentionally done to support the modules functionality i.e., creating folders locally from a known reference point to store data</span>
 </pre></div>
 
     </div>
@@ -1980,19 +1980,6 @@ Warning Different Coordinate Systems types found among Feature Classes:  {&#39;P
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Check uniqueness of the input CTU dataset to ensure we can really bucket wells by a unique location i.e., by GNIS_Feature_ID</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -4928,6 +4915,41 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="More-on-Well-Known-Text(WKT)-format-data"><strong>More on Well-Known Text(WKT) format data</strong><a class="anchor-link" href="#More-on-Well-Known-Text(WKT)-format-data">&#182;</a></h3><p><code>SHAPE@WKT</code></p>
+<ul>
+<li>WKT is a text based format standardized by the international Open GeoSpatial Consortium of experts on geospatial data standards</li>
+<li>USed to represent vector geometry or coordinate systems</li>
+<li>Two types of WKT:<ol>
+<li>WKT for <strong><em>Geometry</em></strong> (most commonly used):<ul>
+<li>Point (30 10) </li>
+<li>LINESTRING (30 10, 10 30, 40 40)</li>
+<li>POLYGON (30 10, 40 40, 20 40, 10 20, 30 10)</li>
+<li>MULTIPOLYGON ((...))</li>
+</ul>
+</li>
+<li>WKT for <strong><em>Coordinate Systems</em></strong><ul>
+<li>GEOGCS["WGS 84", DATUM["WGS_1984",...]]</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>WKT is used in:<ul>
+<li>PostGIS (PostgreSQL extension) to insert, export and transform geometries<ul>
+<li>PostGIS also supports well-known binary format (WKB) but WKT is more human-readable</li>
+</ul>
+</li>
+<li>APIs / Data Interchange to send, receive data from spatial services, GeoJson to WKT conversion, import export format in tools likeArcGIS, QGIS</li>
+<li>Although WKT is vector data, can be used to represent raster extent, projection system (e.g., might be present in raster metadata for spatial reference)</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
@@ -4942,16 +4964,162 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Note that the default ArcPY behavior for shapefiles labels WKT polygons as multipolygons, even though they have one part as seen above</span>
+<span class="c1">### The main benefit of WKT, being easy to visually see and understand, much easier to work with and move between systems</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Geometry Type of the features</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;city_township_unorg&quot;</span>
+<span class="n">geom_list</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">SearchCursor</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;SHAPE@WKT&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="n">geom</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">geom</span><span class="p">:</span>
+            <span class="n">geom_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">geom_list</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">geom_name</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List of WKT Geometries</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">geom_list</span><span class="p">)</span>
+
+<span class="n">count_geom_types</span>  <span class="o">=</span>  <span class="n">Counter</span><span class="p">(</span><span class="n">geom_list</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="n">count_geom_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>List of WKT Geometries
+ {&#39;MULTIPOLYGON&#39;}
+MULTIPOLYGON 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Add-features-to-a-layer-with-arcpy.managment.Append()"><strong>Add features to a layer with <code>arcpy.managment.Append()</code></strong><a class="anchor-link" href="#Add-features-to-a-layer-with-arcpy.managment.Append()">&#182;</a></h3>
+<h3 id="SHAPE@-ArcGIS-Native-Geometry-Object"><strong>SHAPE@ ArcGIS Native Geometry Object</strong><a class="anchor-link" href="#SHAPE@-ArcGIS-Native-Geometry-Object">&#182;</a></h3><p><code>SHAPE@</code></p>
+<ul>
+<li>Not a string but a geometry object</li>
+<li>Has special methods and properties </li>
+<li><p>Can access:</p>
+<ul>
+<li>.area, .length, .centroid, .extent, .partCount</li>
+</ul>
+</li>
+<li><p>Can use to construct buffers, intersection</p>
+</li>
+</ul>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+
+<span class="n">geom_list</span><span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">SearchCursor</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;SHAPE@&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="n">geom</span> <span class="o">=</span>   <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">geom</span><span class="p">:</span>
+            <span class="n">geom_list</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="c1"># Can access other properties of geometry object : .area, .centroid, .extent, .partCount</span>
+
+<span class="n">count_geom_types</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">geom_list</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">count_geom_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">count</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>polygon 1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Manually-add-Geometry-features-to-a-layer-with-arcpy.managment.Append()-and-arcpy.FROMWKT()"><strong>Manually add Geometry features to a layer with <code>arcpy.managment.Append()</code> and <code>arcpy.FROMWKT()</code></strong><a class="anchor-link" href="#Manually-add-Geometry-features-to-a-layer-with-arcpy.managment.Append()-and-arcpy.FROMWKT()">&#182;</a></h3><h4 id="arcpy.management.Append()"><code>arcpy.management.Append()</code><a class="anchor-link" href="#arcpy.management.Append()">&#182;</a></h4><ul>
+<li>Adds new features to an existing dataset</li>
+<li>Can add point, line or polygon feature classes to an existing dataset of the same time</li>
+<li>Can also add several tables to an existing table or several rasters to an existing raster</li>
+<li>arcpy.management.Append(inputs, target, {schema_type}, {field_mapping}, {subtype}, {expression}, {match_fields}, {update_geometry}, {enforce_domains})</li>
+<li>key fields: <ul>
+<li>input: data to be appended to the target dataset (Note you can combine Tables and Feature Classes e.g., Fc+Table--&gt; NewTable with Fc attributes)</li>
+<li>target: existing dataset where the input will be added</li>
+<li>schema_type: whether fields must match. TEST, causes error if fields do not match. NO_TEST allows fields to be null,TEST_AND_SKIP, will leave out the non-matching fields</li>
+</ul>
+</li>
+</ul>
+<h4 id="arcpy.FromWKT(wkt_string,{spatial_reference})"><code>arcpy.FromWKT(wkt_string,{spatial_reference})</code><a class="anchor-link" href="#arcpy.FromWKT(wkt_string,{spatial_reference})">&#182;</a></h4><ul>
+<li>Creates a geometry object from well-known text string</li>
+<li>This geometry object is the same one as the native SHAPE@</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># insert a duplicate polygon as a positive control to test for overlapping polygons</span>
@@ -4960,9 +5128,11 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 <span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;city_township_unorg&quot;</span>
 
 <span class="k">try</span><span class="p">:</span>
+    <span class="c1">### TOOL: arcpy.management.Append(inputs, target, {schema_type}, {field_mapping}, {subtype}, {expression}, {match_fields}, {update_geometry}, {enforce_domains})</span>
     <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">Append</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">arcpy</span><span class="o">.</span><span class="n">FromWKT</span><span class="p">(</span><span class="n">wkt_geom</span><span class="p">,</span><span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span><span class="o">.</span><span class="n">spatialReference</span><span class="p">)],</span> <span class="n">target</span><span class="o">=</span><span class="n">fc</span><span class="p">,</span> <span class="n">schema_type</span><span class="o">=</span><span class="s2">&quot;NO_TEST&quot;</span><span class="p">)</span>
-<span class="c1">## Schema_type is whether you want to enforce field matching for the inserted geometry. If TEST, all fields must match exactly, including types and order</span>
-<span class="c1">## we just have the WKT so we do not want to enforce field matching(NO_TEST)</span>
+                                <span class="c1">## Schema_type is whether you want to enforce field matching for the inserted geometry. If TEST, all fields must match exactly, including types and order</span>
+                                <span class="c1">## we just have the WKT so we do not want to enforce field matching(NO_TEST)</span>
+
 <span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcpy Error:&quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
@@ -4971,6 +5141,40 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># recall we can access fc attributes using describe object</span>
+<span class="n">sr</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span><span class="o">.</span><span class="n">spatialReference</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sr</span><span class="o">.</span><span class="n">factoryCode</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>NAD_1983_UTM_Zone_15N 26915
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -5012,8 +5216,14 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 <span class="c1">### TOOL: arcpy.analysis.PairwiseIntersect(in_features, out_feature_class, {join_attributes}, {cluster_tolerance}, {output_type})</span>
     <span class="n">arcpy</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">PairwiseIntersect</span><span class="p">([</span><span class="n">in_fc</span><span class="p">,</span> <span class="n">in_fc</span><span class="p">],</span> <span class="n">out_fc</span><span class="p">,</span> <span class="n">join_attributes</span><span class="o">=</span><span class="s2">&quot;ONLY_FID&quot;</span><span class="p">)</span> <span class="c1"># We only want FID to track which of the original ObjectIDs overlap</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully completed PairwiseIntersect Analysis&quot;</span><span class="p">)</span>
-<span class="c1">### =========================   Filter for actual overlaps (not self-intersections)</span>
 
+
+<span class="c1">### =========================   Filter for actual overlaps (not self-intersections)</span>
+<span class="c1">### Step1: Create a temporary layer from the pairwise overlap feature class</span>
+<span class="c1">### Step2: Select those paired features whose FID values do not match, overlapping features</span>
+<span class="c1">### Step3: Count the number of those overlapping features</span>
+
+    <span class="c1">### TOOL: arcpy.management.MakeFeatureLayer(in_features, out_layer, {where_clause}, {workspace}, {field_info})</span>
     <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">MakeFeatureLayer</span><span class="p">(</span><span class="n">out_fc</span><span class="p">,</span> <span class="s2">&quot;overlap_lyr&quot;</span><span class="p">)</span>
 
 <span class="c1">### TOOL: arcpy.management.SelectLayerByAttribute(in_layer_or_view, {selection_type}, {where_clause}, {invert_where_clause})</span>
@@ -5068,7 +5278,7 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Updated function with doc-strings to show unique values and geometries by field</span>
@@ -5084,7 +5294,7 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 <span class="sd">    - Field length (applicable for Text fields)</span>
 <span class="sd">    - Count of unique values for each field</span>
 <span class="sd">    </span>
-<span class="sd">    Additionally, it prints counts of total records and total unique Geometries (by WKT) for the Feature Class</span>
+<span class="sd">    Additionally, it prints counts of total records and total unique Geometries (by Well-Known Text String) for the Feature Class</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">    -----</span>
@@ -5105,8 +5315,9 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 <span class="sd">    OBJECTID             OID          -       100          </span>
 <span class="sd">    Name                 String       50      24           </span>
 <span class="sd">    Total Record Count:  100</span>
+<span class="sd">    Total Geometry Count:100</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">record_count</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">GetCount</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+    <span class="n">record_count</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">GetCount</span><span class="p">(</span><span class="n">fc</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Summary of Fields in Feature Class: </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Name                 Type         Length   Unique_Values&quot;</span><span class="p">)</span>
@@ -5126,6 +5337,9 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
         <span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="si">:</span><span class="s2">20</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">field</span><span class="o">.</span><span class="n">type</span><span class="si">:</span><span class="s2">10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">length</span><span class="p">)</span><span class="si">:</span><span class="s2">5</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_ids</span><span class="p">))</span><span class="si">:</span><span class="s2">10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total Record Count: </span><span class="si">{</span><span class="n">record_count</span><span class="si">}</span><span class="s2">, Total Geometry Count(by WKT): </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">geometry_set</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">record_count</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">geometry_set</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning </span><span class="si">{</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">record_count</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">geometry_set</span><span class="p">))</span><span class="si">}</span><span class="s2"> Potential Duplicate Features Detected in the Feature Class&quot;</span><span class="p">)</span>
     <span class="k">return</span>
 </pre></div>
 
@@ -5136,7 +5350,7 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You may have noticed a new function called arcpy.da.SearchCursor()</span>
@@ -5151,7 +5365,7 @@ MULTIPOLYGON (((269009.04899999965 5371745.4189999998, 268943.26099999994 537174
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span><span class="s2">&quot;city_township_unorg&quot;</span>
@@ -5187,8 +5401,10 @@ Name                 Type         Length   Unique_Values
  SHAPE_Leng           | Double     | 8     | 2743      
  Shape_Length         | Double     | 8     | 2743      
  Shape_Area           | Double     | 8     | 2743      
+ Combined_GNIS_IDs    | String     | 50    | 2743      
 
 Total Record Count: 2744, Total Geometry Count(by WKT): 2743
+Warning 1 Potential Duplicate Features Detected in the Feature Class
 </pre>
 </div>
 </div>
@@ -5208,7 +5424,7 @@ Total Record Count: 2744, Total Geometry Count(by WKT): 2743
     <span class="c1"># But it is NOT unique by the GNIS_Feature_ID field</span>
     <span class="c1"># CTU total record count is greater than GNIS_FEATU count (location ID field)</span>
 
-<span class="c1"># Number of unique geometries or shapes in the layer (polygons in this case) matches total record count</span>
+<span class="c1"># Number of unique geometries or shapes in the layer (polygons in this case) matches total record count --except the one we added manually!</span>
     <span class="c1"># Each row represents a unique CTU location, as evident by the number of unique geometries and lack of overlap between them</span>
     <span class="c1"># but we do not have a corresponding unique attribute field marking each of those unique polygons</span>
 </pre></div>
@@ -5265,11 +5481,11 @@ Total Record Count: 2744, Total Geometry Count(by WKT): 2743
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## One more tool -- Counter</span>
-<span class="c1"># will need to use a built-in tool to count duplicates more directly</span>
+<span class="c1"># a built-in tool to count duplicates more directly</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
@@ -5309,7 +5525,7 @@ Total Record Count: 2744, Total Geometry Count(by WKT): 2743
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># counter is a special method for counting items</span>
 <span class="c1"># used to count things that are in lists</span>
-<span class="c1"># returns a counter object that is dictionary, keys= unique values from the list, and values count of how many times the key appears</span>
+<span class="c1"># returns a counter object that is dictionary, keys= unique values from the list, and values=how many times the key appears</span>
 </pre></div>
 
     </div>
@@ -5319,15 +5535,17 @@ Total Record Count: 2744, Total Geometry Count(by WKT): 2743
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Check for repeated ID</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
 <span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;city_township_unorg&quot;</span>
-<span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
+
+
 <span class="c1"># identify the duplicates</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">SearchCursor</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;GNIS_FEATU&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
         <span class="n">ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -5620,7 +5838,7 @@ Total Record Count: 17443, Total Geometry Count(by WKT): 12914
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Why do we use Counter(ids).items() and not just loop over Counter(id)?</span>
@@ -5690,7 +5908,7 @@ E77
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># hopefully i convinced you that we need to understand these duplicates better, are they simply different sampling dates?</span>
@@ -5702,7 +5920,7 @@ E77
 
 <span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">SearchCursor</span><span class="p">(</span><span class="n">wells_fc</span><span class="p">,[</span><span class="s2">&quot;sys_loc_co&quot;</span><span class="p">,</span><span class="s2">&quot;latest_sam&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
-        <span class="n">key</span><span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># key created as a tuple of two fields</span>
+        <span class="n">key</span><span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># key created as a tuple of two fields: well id and date</span>
         <span class="n">id_date_counter</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> 
 
 
@@ -10738,7 +10956,7 @@ sys_loc_code 174272 on date 2007-03-30 00:00:00 occurs 2 times
         <span class="c1"># if the row[0](sys_loc_co / well ID) already exists add the date to the set,</span>
         <span class="n">well_dates</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># if row[0] does not exist in the dictionary, create a new sys_loc_co ID entry and add its dates</span>
 
-<span class="c1"># count well with different dates</span>
+<span class="c1"># count wells with different dates</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Well with multiple different sample dates:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">code</span><span class="p">,</span><span class="n">dates</span> <span class="ow">in</span> <span class="n">well_dates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     
@@ -10809,11 +11027,9 @@ sys_loc_code 174272 on date 2007-03-30 00:00:00 occurs 2 times
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Add-a-New-Field"><strong>Add a New Field</strong><a class="anchor-link" href="#Add-a-New-Field">&#182;</a></h3><h4 id="arcpy.management.AddField()"><code>arcpy.management.AddField()</code><a class="anchor-link" href="#arcpy.management.AddField()">&#182;</a></h4><ul>
-<li>use to add new fields to a feature class attributes<ul>
+<li>use to add new fields to a feature class attributes</li>
 <li>arcpy.management.AddField(input_data,field_name,field_type, {field_alias},{field_length} , only applies to text--Default is 255, {template})<ul>
 <li>field types include: SHORT, DOUBLE, TEXT , DATE, DATEONLY, TIMEONLY, BLOB, RASTER</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -10874,6 +11090,35 @@ Succeeded at Wednesday, March 26, 2025 11:05:49 PM (Elapsed Time: 0.03 seconds)
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Edit-Feature-Class-and-Table-attributes-with-UpdateCursor"><strong>Edit Feature Class and Table attributes with UpdateCursor</strong><a class="anchor-link" href="#Edit-Feature-Class-and-Table-attributes-with-UpdateCursor">&#182;</a></h3><h4 id="arcpy.da.UpdateCursor()"><code>arcpy.da.UpdateCursor()</code><a class="anchor-link" href="#arcpy.da.UpdateCursor()">&#182;</a></h4><ul>
 <li>use to add data to a feature class or table</li>
+<li><p>UpdateCursor (in_table, field_names, {where_clause}, {spatial_reference}, {explode_to_points}, {sql_clause}, {datum_transformation}, {explicit}, {spatial_filter}, {spatial_relationship}, {search_order})</p>
+<ul>
+<li>Works similar to SearchCursor in that you are accessing the rows of data for a table</li>
+<li>Key difference is how to apply changes <ul>
+<li>cursor.updateRow(row)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Example:</p>
+<ul>
+<li>with arcpy.da.SearchCursor() we read data and store it in a variable<ul>
+<li>for row in cursor:<ul>
+<li>some_data = row[0]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>with arcpy.da.UpdateCursor() reads data and can also write data to the row<ul>
+<li>for row in cursor:<ul>
+<li>some_data = row[0]</li>
+<li>row[1] = some_data</li>
+<li>cursor.updateRow(row)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -10881,7 +11126,7 @@ Succeeded at Wednesday, March 26, 2025 11:05:49 PM (Elapsed Time: 0.03 seconds)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Update the table with the new field that combines two ID fields to create a combined unique ID field</span>
@@ -10895,9 +11140,9 @@ Succeeded at Wednesday, March 26, 2025 11:05:49 PM (Elapsed Time: 0.03 seconds)
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
             <span class="n">gnis_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;NULL&quot;</span>
             <span class="n">county_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;NULL&quot;</span>
-            <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gnis_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">county_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gnis_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">county_id</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># sets the new field value</span>
 
-            <span class="n">cursor</span><span class="o">.</span><span class="n">updateRow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">updateRow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="c1"># applies the changes to the row </span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully Updated Records with new ID&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
@@ -11029,19 +11274,6 @@ Unique records 2743
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Can we aggregate the data in one field by its location? sys_loc_co with same coords?</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Arcpy documentation (kept for reference)</span>
 
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span> <span class="c1"># a module for controlling notebook outputs, allows you to embed images, video, webpages with the Iframe function</span>
@@ -11083,17 +11315,18 @@ Unique records 2743
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Goal:  Group Water contamination point data by city/township</span>
 <span class="c1"># Will do a spatial join to add city/township polygon layer attribute data to the groundwater water contamination points</span>
 
 <span class="k">try</span><span class="p">:</span>
-
+                                    <span class="c1">## target                           # join features</span>
     <span class="n">arcpy</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">SpatialJoin</span><span class="p">(</span><span class="s2">&quot;atlas_contamination_wells_result_sum&quot;</span><span class="p">,</span> <span class="s2">&quot;city_township_unorg&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span><span class="p">,</span><span class="s2">&quot;JOIN_ONE_TO_ONE&quot;</span><span class="p">,</span><span class="s2">&quot;KEEP_ALL&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;INTERSECT&quot;</span><span class="p">)</span>
+                            <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span><span class="p">,</span><span class="s2">&quot;JOIN_ONE_TO_ONE&quot;</span><span class="p">,</span><span class="s2">&quot;KEEP_ALL&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;INTERSECT&quot;</span><span class="p">)</span>            
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully joined the features&quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
 <span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured during join: &quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
@@ -11140,6 +11373,23 @@ Succeeded at Wednesday, March 26, 2025 11:09:17 PM (Elapsed Time: 1.35 seconds)
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Result">Result<a class="anchor-link" href="#Result">&#182;</a></h3><p><img src= "../images/SpatialJoinResult_JoinCount0.png" alt ="ArcGIS showing Map of Spatial Join Result for well sites enriched with county/township location attributes" style= " width 400px; height: 400px;"></p>
+<ul>
+<li>This is the result of joining the Water Contamination Water Contamination Monitoring Point Feature Class and County Township Unorganized (CTU) Territory Polygon Feature class</li>
+<li>This new Feature class shows Join_Count = 1 for all features except one , meaning all but one water monitoring site was matched to a CTU location  <ul>
+<li>Makes sense for this one to not have matched since their is no CTU in Iowa</li>
+<li>Also, all fields that were not matched to that out-of-state well show Null values for all the added CTU attribute fields, as expected</li>
+<li>Let's assume the database is really not intended to have non-Minnesota located monitoring sites and drop this site from the analysis</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
 </div>
  
 

@@ -1,0 +1,2749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>Update Features and Analysis in Arcpy</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <meta name="description" content="Multiple Shapefile data sources access programmatically online and converted to points in Arcpy, then mapped with ArcGIS pro Shown below is a..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">Savage, MN GIS</a></h1>
+                <nav><ul>
+                    <li><a href="../pages/home.html">Welcome</a></li>
+                    <li><a href="../pages/about-me.html">About Me</a></li>
+                    <li class="active"><a href="../category/arcpy.html">ArcPY</a></li>
+                    <li><a href="../category/drones.html">Drones</a></li>
+                    <li><a href="../category/gis.html">GIS</a></li>
+                    <li><a href="../category/python-examples.html">Python Examples</a></li>
+                    <li><a href="../category/tornados.html">Tornados</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="../articles/arcpy-update-and-analysis.html" rel="bookmark"
+           title="Permalink to Update Features and Analysis in Arcpy">Update Features and Analysis in Arcpy</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2025-01-20T00:00:00-06:00">
+                Published: Mon 20 January 2025
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/arcpy.html">ArcPY</a>.</p>
+
+</footer><!-- /.post-info -->      <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
+.ansibold {
+  font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
+  border-color: #ababab;
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
+}
+@media print {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+div.output_area .mglyph > img {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+
+
+
+.rendered_html pre,
+
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
+ .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
+ .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
+ .highlight pre  .o { color: #666666 } /* Operator */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+ .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
+ .highlight pre  .ge { font-style: italic } /* Generic.Emph */
+ .highlight pre  .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
+ .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
+ .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+ .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
+ .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+ .highlight pre  .gt { color: #0044DD } /* Generic.Traceback */
+ .highlight pre  .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+ .highlight pre  .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+ .highlight pre  .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+ .highlight pre  .kp { color: #008000 } /* Keyword.Pseudo */
+ .highlight pre  .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+ .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
+ .highlight pre  .m { color: #666666 } /* Literal.Number */
+ .highlight pre  .s { color: #BA2121 } /* Literal.String */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
+ .highlight pre  .nb { color: #008000 } /* Name.Builtin */
+ .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+ .highlight pre  .no { color: #880000 } /* Name.Constant */
+ .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+ .highlight pre  .nf { color: #0000FF } /* Name.Function */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
+ .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+ .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
+ .highlight pre  .nv { color: #19177C } /* Name.Variable */
+ .highlight pre  .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+ .highlight pre  .w { color: #bbbbbb } /* Text.Whitespace */
+ .highlight pre  .mb { color: #666666 } /* Literal.Number.Bin */
+ .highlight pre  .mf { color: #666666 } /* Literal.Number.Float */
+ .highlight pre  .mh { color: #666666 } /* Literal.Number.Hex */
+ .highlight pre  .mi { color: #666666 } /* Literal.Number.Integer */
+ .highlight pre  .mo { color: #666666 } /* Literal.Number.Oct */
+ .highlight pre  .sa { color: #BA2121 } /* Literal.String.Affix */
+ .highlight pre  .sb { color: #BA2121 } /* Literal.String.Backtick */
+ .highlight pre  .sc { color: #BA2121 } /* Literal.String.Char */
+ .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
+ .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+ .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
+ .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
+ .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
+ .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
+ .highlight pre  .fm { color: #0000FF } /* Name.Function.Magic */
+ .highlight pre  .vc { color: #19177C } /* Name.Variable.Class */
+ .highlight pre  .vg { color: #19177C } /* Name.Variable.Global */
+ .highlight pre  .vi { color: #19177C } /* Name.Variable.Instance */
+ .highlight pre  .vm { color: #19177C } /* Name.Variable.Magic */
+ .highlight pre  .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style><body>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src= "../images/MN_GroundWaterContamination_Data_2025.svg" alt ="Arcpy generated Point Feature Data from Ground water contamination, PFAS chemical levels and MNPCA clean up activity sites" style= " width 400px; height: 400px;"></p>
+<ul>
+<li>Multiple Shapefile data sources access programmatically online and converted to points in Arcpy, then mapped with ArcGIS pro</li>
+<li>Shown below is a dashboard of these data for the latest sampling dates where contamination data is grouped by city/township </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-Arcpy?:"><strong>What is Arcpy?:</strong><a class="anchor-link" href="#What-is-Arcpy?:">&#182;</a></h3><p>Reminder: Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
+<ul>
+<li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
+<li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">arcpy</span> <span class="c1"># allows for access to ArcGIS pro geoprocessing tools and workflow automation</span>
+<span class="kn">import</span> <span class="nn">os</span> <span class="c1"># enables interaction with local system resources (paths to folders and files)</span>
+<span class="kn">import</span> <span class="nn">requests</span> <span class="c1"># access data from the web</span>
+<span class="kn">import</span> <span class="nn">zipfile</span> <span class="c1">## need this to process and extract downloaded zipfiles later on</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1">## use to check spreadsheet formatting</span>
+
+
+<span class="n">initial_dir</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="c1"># capture the initial directory before setting environment for arcpy</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial working directory: &quot;</span><span class="p">,</span> <span class="n">initial_dir</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Initial working directory:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-we-did-last-time">What we did last time<a class="anchor-link" href="#What-we-did-last-time">&#182;</a></h3><ul>
+<li>Created a custom function to pull a countytownship shapefile and load dataset into our local geodatabase</li>
+<li>Perform several QC checks on attributes and geometry</li>
+<li>Created a unique key by joining attributes</li>
+<li>Performed Spatial Join within Arcpy</li>
+</ul>
+<h3 id="What-we-will-do-this-time:"><strong>What we will do this time:</strong><a class="anchor-link" href="#What-we-will-do-this-time:">&#182;</a></h3><ul>
+<li>Update Features using Arcpy</li>
+<li>Perform Spatial Analysis within Arcpy taking each water well's latest reading per polygon</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-and-re-use-Custom-Functions-to-Save-time"><strong>Create and re-use Custom Functions to Save time</strong><a class="anchor-link" href="#Create-and-re-use-Custom-Functions-to-Save-time">&#182;</a></h3><ul>
+<li>When you create a python script, the functions within those scripts can be loaded into other scripts</li>
+<li><p>To import your script, do as you would any library in python</p>
+<ul>
+<li><code>python import my_script as ms</code></li>
+</ul>
+</li>
+<li><p>Now the functions within this script are available to use</p>
+<ul>
+<li><code>python ms.my_function()</code></li>
+</ul>
+</li>
+<li>Not used here but when multiple script hold different tools you'd be better served using a package and <code>__init__.py</code> setup</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Let&#39;s load in our custom tool</span>
+<span class="kn">import</span> <span class="nn">custom_arcpy_tools</span> <span class="k">as</span> <span class="nn">cat</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Initial working directory:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># note: importing the custom tool sets a variable called initial_dir to the path of the script</span>
+        <span class="c1"># this is intentionally done to support its functionality i.e., creating folders to store data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cat</span><span class="o">.</span><span class="n">listFC_dataset_Attributes</span><span class="p">()</span>
+
+<span class="c1">## We purposefully caused an error!</span>
+<span class="c1"># Why? To demonstrate that the error is due to workspace not being set in this new notebook or script</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Temp\ipykernel_60452\2419765190.py</span> in <span class="ansi-cyan-fg">&lt;cell line: 0&gt;</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>cat<span class="ansi-yellow-intense-fg ansi-bold">.</span>listFC_dataset_Attributes<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">      2</span> 
+<span class="ansi-green-fg">      3</span> <span class="ansi-red-intense-fg ansi-bold">## We purposefully caused an error!</span>
+<span class="ansi-green-fg">      4</span> <span class="ansi-red-intense-fg ansi-bold"># Why? To demonstrate that the error is due to workspace not being set in this new notebook or script</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\custom_arcpy_tools.py</span> in <span class="ansi-cyan-fg">listFC_dataset_Attributes</span><span class="ansi-blue-intense-fg ansi-bold">(workspace)</span>
+<span class="ansi-green-fg">     92</span>     <span class="ansi-green-intense-fg ansi-bold">if</span> <span class="ansi-green-intense-fg ansi-bold">not</span> arcpy<span class="ansi-yellow-intense-fg ansi-bold">.</span>env<span class="ansi-yellow-intense-fg ansi-bold">.</span>workspace<span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-fg">     93</span> 
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 94</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">raise</span> ValueError<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">&#34;No workspace is set! Please specify a workspace&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">)</span> <span class="ansi-red-intense-fg ansi-bold">#stops the program, calls out this error</span>
+<span class="ansi-green-fg">     95</span> 
+<span class="ansi-green-fg">     96</span> 
+
+<span class="ansi-red-intense-fg ansi-bold">ValueError</span>: No workspace is set! Please specify a workspace</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># See the ValueError? </span>
+<span class="c1">### Don&#39;t remember the arguments for this function? </span>
+<span class="c1">### Use this:</span>
+<span class="c1">#  help(function_name)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">listFC_dataset_Attributes</span><span class="p">)</span> <span class="c1">## use help(function_name) to get the documentation for the function </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Help on function listFC_dataset_Attributes in module custom_arcpy_tools:
+
+listFC_dataset_Attributes(workspace=None)
+    List feature classes in the workspace and checks their key attributes, such as SpatialReference , 
+    geometry type, and coordinate systems
+    Parameters:
+    -----------
+    workspace: str, optional
+        The file path to the workspace (e.g., geodatabase path) containing the feature classes
+        If none, the function will use the current ArcPy workspace
+        If no workspace is set will raise an error telling you to set a a workspace
+    
+    Returns:
+    --------
+    None , if no workspace exists
+    Otherwise,    Prints the details of all feature classes in the wksp , including
+                - Feature Class Name
+                - spatial reference name
+                - spatial reference type
+                - Geometry
+                - Well-known ID of the spatial reference
+                Also, warns if different spatial references or coordinate systems exists in the dataset
+    Raises: 
+    -------
+    Value Error: 
+        If no wksp is set or if not feature classes are found in the workspace
+    Exception:
+        For general errors that may occur during processing
+    
+    Example:
+    # To list fc in a geodatabase
+    &gt;&gt;&gt; listFC_dataset_Attributes(r&#34;c:/Path/To/Your/Workspace.gdb&#34;)
+    
+    # To use the current wksp already set in Arcpy
+    &gt;&gt;&gt; listFC_dataset_Attributes()
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Let&#39;s change the directory to where we have a geodatabase with some feature classes to work with</span>
+<span class="c1"># Note: % is a magic command to access local system file and folders</span>
+<span class="o">%</span><span class="k">cd</span> ./02 Result 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># list the files</span>
+<span class="o">%</span><span class="k">ls</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> Volume in drive C is OS
+ Volume Serial Number is DA19-2472
+
+ Directory of c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result
+
+03/21/2025  10:29 AM    &lt;DIR&gt;          .
+03/27/2025  02:51 PM    &lt;DIR&gt;          ..
+03/27/2025  03:52 PM    &lt;DIR&gt;          MN_WaterContamination.gdb
+               0 File(s)              0 bytes
+               3 Dir(s)  443,118,358,528 bytes free
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## should see a file ending with .gdb. Copy the folder path and add its name below</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Use the gdb name in the folder, and set the path to the gdb</span>
+
+<span class="c1">###======================    Set up file paths</span>
+
+
+<span class="n">gdb_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb&quot;</span>
+
+<span class="c1">##===================== Define the path to script and project folder</span>
+
+<span class="c1"># set the folder path as the working environment, and store it for later use</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">gdb_path</span>
+    <span class="n">wksp</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error setting up the path, </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">, Exception type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># python&#39;s built-in error messaging, {e} prints description and type(e).__name__ category</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Working environment is here&quot;</span><span class="p">,</span><span class="n">wksp</span><span class="p">)</span>
+
+<span class="c1">## Modify the env attribute to allow overwriting output files</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">overwriteOutput</span><span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Working environment is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">wksp</span><span class="p">)</span> <span class="c1">## same as using print statement following if not os.path.exists(gdb_path)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[8]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Now. Retry the function that failed earlier</span>
+
+<span class="n">cat</span><span class="o">.</span><span class="n">listFC_dataset_Attributes</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Workspace is set here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
+
+Feature class: , atlas_contamination_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_area_lines, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites_noca, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_source_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_wells_result_sum, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels, Spatial Reference name :, GCS_North_American_1983, Spatial Ref Type : Geographic, GeometryPoint, WKID: 4269
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels_proj, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels_by_City, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , city_township_unorg, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , overlap_check1, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_WaterContamination_SpatialJoin, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+
+12 Feature classes found in the workspace path
+
+Warning Different wkid detected among feature Classes:  {26915, 4269}
+Warning Different Coordinate Systems types found among Feature Classes:  {&#39;Geographic&#39;, &#39;Projected&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Data-Sources:"><strong><em>Data Sources</em></strong>:<a class="anchor-link" href="#Data-Sources:">&#182;</a></h3><ul>
+<li>Geography: MN</li>
+</ul>
+<table>
+<thead><tr>
+<th>Input Name</th>
+<th>file types</th>
+<th>Coordinate System</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MN PFAS levels</td>
+<td>1 excel file</td>
+<td>GCS: NAD 83</td>
+<td><a href="https://www.pca.state.mn.us/sites/default/files/w-sw4-37.pdf">Report</a></td>
+</tr>
+<tr>
+<td>MN Groundwater contamination atlas</td>
+<td>6 shape files</td>
+<td>PCS: NAD 83 UTM Zone 15N</td>
+<td><a href="https://gisdata.mn.gov/dataset/env-mn-gw-contamination-atlasl">MetaData</a></td>
+</tr>
+<tr>
+<td>MN Cities and townships</td>
+<td>1 shapefile</td>
+<td>PCS: NAD 83 UTM Zone 15N</td>
+<td><a href="https://webgis.dot.state.mn.us/65agsf1/rest/services/sdw_govnt/CITY_TOWNSHIP_UNORG_TERR/FeatureServer">MetaData</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>We have already pulled and done some initial processing of all these datasets in the previous walkthroughs</li>
+<li>Now will go into updating features and analysis</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># quick reminder of where our current workspace is set</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data Folder is here&quot;</span> <span class="p">,</span> <span class="n">wksp</span><span class="p">)</span>
+<span class="c1"># let&#39;s call it gdb for clarity</span>
+<span class="n">gdb</span><span class="o">=</span><span class="n">wksp</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Data Folder is here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="MN-City,Township,-Unorganized-Territory-Dataset">MN City,Township, Unorganized Territory Dataset<a class="anchor-link" href="#MN-City,Township,-Unorganized-Territory-Dataset">&#182;</a></h4><ul>
+<li>Data represents boundaries of cities, townships and unorganized territories(CTU) in Minnesota</li>
+<li>key fields<ul>
+<li>GNIS_Feature_ID: official ID for geographic features that relates them to their Name and location in the GNIS Database</li>
+<li>County_GNIS_Feature_ID: official county ID that relates counties to their Name and Location in the GNIS Database</li>
+<li>FEATURE_NAME: Name of the city, township or unorganized territory location</li>
+</ul>
+</li>
+<li>Source : MN Geospatial Commons: <ul>
+<li>url: <a href="https://gisdata.mn.gov/dataset/11860ca6-9ee4-4ff2-b30b-da9e2f13262a">https://gisdata.mn.gov/dataset/11860ca6-9ee4-4ff2-b30b-da9e2f13262a</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Count initial records</span>
+<span class="c1"># first check the join fc: County/Township/Unorganized territory (CTU)</span>
+
+<span class="n">fc</span><span class="o">=</span> <span class="s2">&quot;city_township_unorg&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total records in </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="s2"> feature class is:  </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">GetCount</span><span class="p">(</span><span class="n">fc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total records in city_township_unorg feature class is:  2743
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## check the target input fc</span>
+
+<span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">(</span><span class="s2">&quot;*wells_result_sum*&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature class: </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="se">\n</span><span class="s2"> Total Record Count: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">GetCount</span><span class="p">(</span><span class="n">fc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Feature class: atlas_contamination_wells_result_sum
+ Total Record Count: 17443
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span><span class="s2">&quot;city_township_unorg&quot;</span>
+<span class="n">cat</span><span class="o">.</span><span class="n">showFieldinfo</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Summary of Fields in Feature Class: city_township_unorg
+
+Name                 Type         Length   Unique_Values
+ OBJECTID             | OID        | 4     | 2743      
+ Shape                | Geometry   | 0     | 2743      
+ GNIS_FEATU           | Integer    | 4     | 2693      
+ FEATURE_NA           | String     | 254   | 2249      
+ CTU_CLASS            | String     | 25    | 3         
+ COUNTY_GNI           | Integer    | 4     | 87        
+ COUNTY_COD           | String     | 2     | 87        
+ COUNTY_NAM           | String     | 100   | 87        
+ POPULATION           | Integer    | 4     | 1312      
+ SHAPE_Leng           | Double     | 8     | 2743      
+ Shape_Length         | Double     | 8     | 2743      
+ Shape_Area           | Double     | 8     | 2743      
+ Combined_GNIS_IDs    | String     | 50    | 2743      
+
+Total Record Count: 2743, Total Geometry Count(by WKT): 2743
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Number of unique geometries or shapes in the layer (polygons in this case) matches total record count</span>
+    <span class="c1"># Each row represents a unique CTU location, as evident by the number of unique geometries and lack of overlap between them</span>
+    <span class="c1"># Combined_GNIS_ID is the corresponding unique attribute field marking each of those unique polygons</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cat</span><span class="o">.</span><span class="n">open_arcgis_documentation</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[15]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="100%"
+            height="600px"
+            src="https://pro.arcgis.com/en/pro-app/latest/help/analysis/geoprocessing/basics/find-geoprocessing-tools.htm"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Approach">Approach<a class="anchor-link" href="#Approach">&#182;</a></h3><ul>
+<li>Add Field --&gt; Summarize Data to get the Latest Sampling Date by well and polygon</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">custom_arcpy_tools</span> <span class="k">as</span> <span class="nn">cat</span>
+<span class="n">cat</span><span class="o">.</span><span class="n">listFC_dataset_Attributes</span><span class="p">(</span><span class="n">wksp</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Workspace is set here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\ArcPY\02 Result\MN_WaterContamination.gdb
+
+Feature class: , atlas_contamination_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_area_lines, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_sites_noca, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_source_areas, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , atlas_contamination_wells_result_sum, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels, Spatial Reference name :, GCS_North_American_1983, Spatial Ref Type : Geographic, GeometryPoint, WKID: 4269
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels_proj, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_PFAS_Levels_by_City, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , city_township_unorg, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , overlap_check1, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , MN_WaterContamination_SpatialJoin, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPoint, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+
+12 Feature classes found in the workspace path
+
+Warning Different wkid detected among feature Classes:  {26915, 4269}
+Warning Different Coordinate Systems types found among Feature Classes:  {&#39;Geographic&#39;, &#39;Projected&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Add-a-Join-Key-Field">Add a Join Key Field<a class="anchor-link" href="#Add-a-Join-Key-Field">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span>
+
+<span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFields</span><span class="p">(</span><span class="n">fc</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>OBJECTID
+Shape
+Join_Count
+TARGET_FID
+facility_c
+facility_i
+facility_t
+facility_n
+sys_loc_co
+loc_name
+loc_type
+loc_type_2
+well_statu
+geologic_u
+depth_of_w
+bottom_of_
+surf_elev
+latest_sam
+number_of_
+result_cou
+non_detect
+detect_bel
+exceedance
+exceedan_1
+exceedan_2
+exceedan_3
+exceedan_4
+exceedan_5
+exceedan_6
+detect_b_1
+detect_b_2
+detect_b_3
+detect_b_4
+detect_b_5
+latitude
+longitude
+eda_url
+data_downl
+GNIS_FEATU
+FEATURE_NA
+CTU_CLASS
+COUNTY_GNI
+COUNTY_COD
+COUNTY_NAM
+POPULATION
+SHAPE_Leng
+Combined_GNIS_IDs
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span>
+<span class="n">newfield</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">newfield</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFields</span><span class="p">(</span><span class="n">fc</span><span class="p">)]:</span>
+
+        <span class="c1">## a new field</span>
+        <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">AddField</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span><span class="n">newfield</span><span class="p">,</span><span class="s2">&quot;TEXT&quot;</span><span class="p">,</span><span class="n">field_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New </span><span class="si">{</span><span class="n">newfield</span><span class="si">}</span><span class="s2"> field added&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">UpdateCursor</span><span class="p">(</span><span class="n">fc</span><span class="p">,[</span><span class="s2">&quot;sys_loc_co&quot;</span><span class="p">,</span><span class="s2">&quot;Combined_GNIS_IDs&quot;</span><span class="p">,</span> <span class="n">newfield</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+                <span class="n">well_id</span><span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">combined_id</span><span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span>  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">well_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">combined_id</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">updateRow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully updated the table for the new field&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">newfield</span><span class="si">}</span><span class="s2"> aleady exists in the target dataset </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span> <span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcpy Error&quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>New JoinKey field added
+Successfully updated the table for the new field
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Summary-Statistics"><strong>Summary Statistics</strong><a class="anchor-link" href="#Summary-Statistics">&#182;</a></h3><h4 id="arcpy.analsysis.Statistics()"><code>arcpy.analsysis.Statistics()</code><a class="anchor-link" href="#arcpy.analsysis.Statistics()">&#182;</a></h4><ul>
+<li>Calculate summary statistics for fields in a table</li>
+<li><strong>arcpy.analysis.Statistics(in_table, out_table, statistics_fields, {case_field}, {concatenation_separator})</strong><ul>
+<li>Key Arguments:<ul>
+<li>in_table: input table with fields to be used to compute statistics</li>
+<li>out_table: output table to store the calculated results</li>
+<li>statistics_field: Field or fields containing attribute values to be used and statistic to be used<ul>
+<li>Null values are excluded</li>
+<li>Can do multiple combinations of statistics and fields</li>
+<li>Format: [[field, {statistic_type}],...]</li>
+</ul>
+</li>
+<li>case_field: Field or combination of  fields that will be used to group the data when calculating statistics<ul>
+<li>if not specified the statistics are calculated for all records</li>
+<li>the output will be a single record</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Calculate summary stats</span>
+
+<span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span>
+<span class="n">newfield</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span> <span class="c1"># Field to be used to summarize or group the data</span>
+<span class="n">statisticfield</span><span class="o">=</span> <span class="s2">&quot;latest_sam&quot;</span> <span class="c1"># date field</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1">### TOOL: arcpy.analysis.Statistics(in_table, out_table, statistics_fields, {case_field}, {concatenation_separator})</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span> <span class="s2">&quot;MN_WaterContamination_Stats&quot;</span><span class="p">,[[</span><span class="n">statisticfield</span><span class="p">,</span><span class="s2">&quot;MAX&quot;</span><span class="p">]],</span> <span class="n">case_field</span><span class="o">=</span> <span class="n">newfield</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Statistics Successfully calculated for&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcy Error&quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Statistics Successfully calculated for MN_WaterContamination_SpatialJoin
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check the number of records we expect in the new table</span>
+<span class="n">cat</span><span class="o">.</span><span class="n">showFieldinfo</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Summary of Fields in Feature Class: MN_WaterContamination_SpatialJoin
+
+Name                 Type         Length   Unique_Values
+ OBJECTID             | OID        | 4     | 17443     
+ Shape                | Geometry   | 0     | 12914     
+ Join_Count           | Integer    | 4     | 2         
+ TARGET_FID           | Integer    | 4     | 17443     
+ facility_c           | String     | 20    | 303       
+ facility_i           | Double     | 8     | 303       
+ facility_t           | String     | 20    | 7         
+ facility_n           | String     | 60    | 303       
+ sys_loc_co           | String     | 20    | 11246     
+ loc_name             | String     | 80    | 3795      
+ loc_type             | String     | 20    | 2         
+ loc_type_2           | String     | 50    | 18        
+ well_statu           | String     | 20    | 6         
+ geologic_u           | String     | 254   | 73        
+ depth_of_w           | Double     | 8     | 1145      
+ bottom_of_           | Double     | 8     | 1202      
+ surf_elev            | String     | 20    | 6199      
+ latest_sam           | Date       | 8     | 2305      
+ number_of_           | Double     | 8     | 106       
+ result_cou           | Double     | 8     | 2167      
+ non_detect           | Double     | 8     | 313       
+ detect_bel           | Double     | 8     | 54        
+ exceedance           | Double     | 8     | 34        
+ exceedan_1           | Double     | 8     | 2098      
+ exceedan_2           | String     | 10    | 1806      
+ exceedan_3           | String     | 254   | 945       
+ exceedan_4           | String     | 254   | 1156      
+ exceedan_5           | String     | 254   | 4778      
+ exceedan_6           | String     | 254   | 4742      
+ detect_b_1           | String     | 254   | 2971      
+ detect_b_2           | String     | 254   | 3190      
+ detect_b_3           | String     | 254   | 6499      
+ detect_b_4           | String     | 254   | 5210      
+ detect_b_5           | String     | 10    | 2086      
+ latitude             | Double     | 8     | 12313     
+ longitude            | Double     | 8     | 12595     
+ eda_url              | String     | 80    | 11246     
+ data_downl           | String     | 121   | 11246     
+ GNIS_FEATU           | Integer    | 4     | 276       
+ FEATURE_NA           | String     | 254   | 269       
+ CTU_CLASS            | String     | 25    | 3         
+ COUNTY_GNI           | Integer    | 4     | 73        
+ COUNTY_COD           | String     | 2     | 73        
+ COUNTY_NAM           | String     | 100   | 73        
+ POPULATION           | Integer    | 4     | 262       
+ SHAPE_Leng           | Double     | 8     | 277       
+ Combined_GNIS_IDs    | String     | 50    | 277       
+ JoinKey              | String     | 50    | 11275     
+
+Total Record Count: 17443, Total Geometry Count(by WKT): 12914
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### We expect 11275 records in the summary stats table because their are 11275 unique joinkey values</span>
+<span class="c1">### The data is grouped to the level of unique wells for each county/township polygon</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">arcpy</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="s2">&quot;MN_WaterContamination_Stats&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[38]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_Stats&quot;</span>
+<span class="n">record_count</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">GetCount</span><span class="p">(</span><span class="n">fc</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Record Count&quot;</span><span class="p">,</span> <span class="n">record_count</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Record Count 11275
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span>  <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span> 
+
+<span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFields</span><span class="p">(</span><span class="n">fc</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>OBJECTID
+Shape
+Join_Count
+TARGET_FID
+facility_c
+facility_i
+facility_t
+facility_n
+sys_loc_co
+loc_name
+loc_type
+loc_type_2
+well_statu
+geologic_u
+depth_of_w
+bottom_of_
+surf_elev
+latest_sam
+number_of_
+result_cou
+non_detect
+detect_bel
+exceedance
+exceedan_1
+exceedan_2
+exceedan_3
+exceedan_4
+exceedan_5
+exceedan_6
+detect_b_1
+detect_b_2
+detect_b_3
+detect_b_4
+detect_b_5
+latitude
+longitude
+eda_url
+data_downl
+GNIS_FEATU
+FEATURE_NA
+CTU_CLASS
+COUNTY_GNI
+COUNTY_COD
+COUNTY_NAM
+POPULATION
+SHAPE_Leng
+Combined_GNIS_IDs
+JoinKey
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Join-Statistics-Table-to-Spatial-Data-Layer"><strong>Join Statistics Table to Spatial Data Layer</strong><a class="anchor-link" href="#Join-Statistics-Table-to-Spatial-Data-Layer">&#182;</a></h3><h4 id="arcpy.management.AddJoin()"><code>arcpy.management.AddJoin()</code><a class="anchor-link" href="#arcpy.management.AddJoin()">&#182;</a></h4><ul>
+<li>Join a layer to another layer or to a table based on a common field<ul>
+<li>supports Feature layers, table views, and raster layers with attribute tables</li>
+<li>Result is temporary and must be saved  (e.g., CopyFeatures, ExportFeatures, ExportTable)</li>
+</ul>
+</li>
+<li>arcpy.management.AddJoin(in_layer_or_view, in_field, join_table, join_field, {join_type}, {index_join_fields}, {rebuild_index}, {join_operation})</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Join two tables based on a common field and its values</span>
+
+<span class="n">in_fc</span><span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span> <span class="c1"># input table</span>
+<span class="n">in_join_key</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span>
+
+<span class="n">join_table</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_Stats&quot;</span> <span class="c1"># Join table</span>
+<span class="n">join_table_key</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1">### TOOL: arcpy.management.AddJoin(in_layer_or_view, in_field, join_table, join_field, {join_type}, {index_join_fields}, {rebuild_index}, {join_operation})</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">AddJoin</span><span class="p">(</span><span class="n">in_fc</span><span class="p">,</span><span class="n">in_join_key</span><span class="p">,</span> <span class="n">join_table</span><span class="p">,</span> <span class="n">join_table_key</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully Joined </span><span class="si">{</span><span class="n">in_fc</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">join_table</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcy Error: &quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Successfully Joined MN_WaterContamination_SpatialJoin and MN_WaterContamination_Stats
+Start Time: Friday, March 28, 2025 4:56:50 PM
+Succeeded at Friday, March 28, 2025 4:56:50 PM (Elapsed Time: 0.06 seconds)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Select-the-latest-water-sampling-dates-using-Select-By-Attributes"><strong>Select the latest water sampling dates using Select By Attributes</strong><a class="anchor-link" href="#Select-the-latest-water-sampling-dates-using-Select-By-Attributes">&#182;</a></h3><h4 id="arcpy.management.SelectLayerByAttribute()"><code>arcpy.management.SelectLayerByAttribute()</code><a class="anchor-link" href="#arcpy.management.SelectLayerByAttribute()">&#182;</a></h4><ul>
+<li>Adds updates, or removes a selection based on an attribute query</li>
+<li><strong><em>Only works on feature layers or table views!</em></strong></li>
+<li>If the query is present only those features will be used in downstream processes</li>
+<li>arcpy.management.SelectLayerByAttribute(in_layer_or_view, {selection_type}, {where_clause}, {invert_where_clause})</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">in_fc</span><span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span> <span class="c1"># input table</span>
+<span class="n">out_lyr</span><span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_joined_layer&quot;</span>
+<span class="c1"># </span>
+<span class="c1">### Join two tables based on a common field and its values</span>
+<span class="n">in_join_key</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span>
+
+<span class="n">join_table</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_Stats&quot;</span> <span class="c1"># Join table</span>
+<span class="n">join_table_key</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1">### TOOL: arcpy.management.AddJoin(in_layer_or_view, in_field, join_table, join_field, {join_type}, {index_join_fields}, {rebuild_index}, {join_operation})</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">MakeFeatureLayer</span><span class="p">(</span><span class="n">in_fc</span><span class="p">,</span> <span class="n">out_lyr</span><span class="p">)</span>
+    
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">AddJoin</span><span class="p">(</span><span class="n">out_lyr</span><span class="p">,</span><span class="n">in_join_key</span><span class="p">,</span> <span class="n">join_table</span><span class="p">,</span> <span class="n">join_table_key</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully Joined </span><span class="si">{</span><span class="n">out_lyr</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">join_table</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">where_c</span> <span class="o">=</span> <span class="s2">&quot;latest_sam = MAX_latest_sam&quot;</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">SelectLayerByAttribute</span><span class="p">(</span><span class="n">out_lyr</span><span class="p">,</span> <span class="s2">&quot;NEW_SELECTION&quot;</span><span class="p">,</span> <span class="n">where_c</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully selected features in </span><span class="si">{</span><span class="n">out_lyr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">CopyFeatures</span><span class="p">(</span><span class="n">out_lyr</span><span class="p">,</span> <span class="s2">&quot;MN_latest_WaterSamples_Joined_lyr&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully copied features in </span><span class="si">{</span><span class="n">out_lyr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcy Error: &quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Successfully Joined MN_WaterContamination_joined_layer and MN_WaterContamination_Stats
+Start Time: Friday, March 28, 2025 7:13:36 PM
+Succeeded at Friday, March 28, 2025 7:13:36 PM (Elapsed Time: 0.07 seconds)
+Successfully selected features in MN_WaterContamination_joined_layer
+Start Time: Friday, March 28, 2025 7:13:37 PM
+Succeeded at Friday, March 28, 2025 7:13:37 PM (Elapsed Time: 0.52 seconds)
+Successfully copied features in MN_WaterContamination_joined_layer
+Start Time: Friday, March 28, 2025 7:13:37 PM
+Succeeded at Friday, March 28, 2025 7:13:38 PM (Elapsed Time: 1.24 seconds)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+ 
+
+</body>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://www.spc.noaa.gov/products/outlook/day1otlk.html">NOAA Storm Prediction Center</a></li>
+                            <li><a href="https://www.weather.gov/">Active Weather Hazards</a></li>
+                            <li><a href="https://github.com/estevezb">My Github Page</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://x.com/bestevez100">Twitter/X</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

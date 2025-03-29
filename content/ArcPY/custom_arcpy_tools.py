@@ -7,7 +7,8 @@ import os # enables interaction with local system resources (paths to folders an
 import requests # access data from the web
 import zipfile ## need this to process and extract downloaded zipfiles later on
 import pandas as pd ## use to check spreadsheet formatting
-
+import webbrowser
+from IPython.display import IFrame
 
 ###################################################################################################################################################################
 #  BE SURE TO INSTALL MAGIC LIBRARY: 
@@ -43,6 +44,11 @@ import magic ## to validate file type requested from web, custom shapefile downl
     ## To load all shapefiles in a user specified path into a geodatabase
     # cat.loadShapefilesToGDB(gdb_path, shapefile_inputs)
 
+    ## To access the ArcGIS Documentation from with a notebook or a stand-alone script as a new browser window
+    # cat.open_arcgis_documentation(notebook=True)
+
+
+    
 #====================================================================================================================================================
 ###====================== TOOL1:  Check Feature Classes that exist in the workspace and their Characteristics
 
@@ -123,7 +129,7 @@ def listFC_dataset_Attributes(workspace=None): # accepts a workspace path parame
         arcpy.GetMessages(2)
 
 
-###====================== TOOL2: Takes an input feature class and lists detailed info for the field names, type, length, and unique value counts
+###====================== TOOL2: Takes an input feature class and lists detailed info for the field names, type, length, and unique value and unique geometry (WKT) counts
 
 def showFieldinfo(fc):
     """
@@ -135,7 +141,7 @@ def showFieldinfo(fc):
     - Field length (applicable for Text fields)
     - Count of unique values for each field
     
-    Additionally, it prints the total record count for the Feature Class.
+    Additionally, it prints counts of total records and total unique Geometries (by Well-Known Text String) for the Feature Class
 
     Args:
     -----
@@ -156,22 +162,28 @@ def showFieldinfo(fc):
     OBJECTID             OID          -       100          
     Name                 String       50      24           
     Total Record Count:  100
+    Total Geometry Count:100
     """
     record_count = arcpy.management.GetCount(fc)
     
     print(f"Summary of Fields in Feature Class: {fc}\n")
     print("Name                 Type         Length   Unique_Values")
 
+
+    geometry_set = set()
+    with arcpy.da.SearchCursor(fc,["SHAPE@WKT"]) as cursor:
+        for row in cursor:
+            geometry_set.add(row[0])
     for field in arcpy.ListFields(fc):
         unique_ids = set()
         field_name= str(field.name)
-        with arcpy.da.SearchCursor(fc,field_name) as cursor:
+        with arcpy.da.SearchCursor(fc,[field_name]) as cursor:
             for row in cursor:
                 if row[0] is not None:
                     unique_ids.add(row[0])
         print( f" {field.name:20} | {field.type:10} | {str(field.length):5} | {str(len(unique_ids)):10}")
         
-    print(f"\nTotal Record Count: {record_count}")
+    print(f"\nTotal Record Count: {record_count}, Total Geometry Count(by WKT): {len(geometry_set)}")
     return
 
 
@@ -374,3 +386,39 @@ def loadShapefilesToGDB(gdb_path, shapefile_inputs):
     except arcpy.ExecuteError:
         print("Arcpy Error: ", arcpy.GetMessages(2)) 
 
+
+###===================  TOOL6: Access the ArcGIS Pro documentation from with a notebook or a stand-alone script as a new window
+
+
+
+def open_arcgis_documentation(notebook=True):
+    """
+    Displays or opens the ArcGIS geoprocessing tools documentation.
+
+    This function points directly to the ArcGIS Pro documentation URL
+    for geoprocessing tools. It will either display the URL in an iframe
+    (when running in Jupyter Notebook) or open the URL in the user's
+    default web browser (when running as a standalone script).
+
+    Args:
+        notebook (bool, optional): 
+            - If True, displays the documentation in a Jupyter Notebook using an iframe.
+            - If False, opens the documentation in the default web browser.
+            Defaults to True.
+
+    Returns:
+        None
+    """
+    # Fixed URL for ArcGIS geoprocessing tools documentation
+    tool_url = "https://pro.arcgis.com/en/pro-app/latest/help/analysis/geoprocessing/basics/find-geoprocessing-tools.htm"
+    
+    try:
+        if notebook:
+            # Display documentation in Jupyter Notebook iframe
+            return IFrame(tool_url, width="100%", height="600px")
+        else:
+            # Open documentation in the web browser
+            webbrowser.open(tool_url)
+            print(f"Opening documentation in web browser: {tool_url}")
+    except Exception as e:
+        print(f"Error accessing documentation: {e}")
