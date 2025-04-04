@@ -144,12 +144,10 @@ def showFieldinfo(fc):
     Additionally, it prints counts of total records and total unique Geometries (by Well-Known Text String) for the Feature Class
 
     Args:
-    -----
     fc (str): 
         The path to the Feature Class to be analyzed. Must be accessible within the current ArcPy workspace.
     
     Returns:
-    --------
     None
         This function prints the summary information directly to the console. 
         It does not return any values.
@@ -157,16 +155,31 @@ def showFieldinfo(fc):
     Example:
     --------
     >>> showFieldinfo("C:/Path/To/YourGDB.gdb/YourFeatureClass")
-    Summary of Fields in Feature Class: YourFeatureClass
+    *Summary*
+    Fields in the Polygon Feature Class: city_township_unorg
+
     Name                 Type         Length   Unique_Values
-    OBJECTID             OID          -       100          
-    Name                 String       50      24           
-    Total Record Count:  100
-    Total Geometry Count:100
+    OBJECTID             | OID        | 4     | 2744      
+    Shape                | Geometry   | 0     | 2743      
+    GNIS_FEATU           | Integer    | 4     | 2693      
+    FEATURE_NA           | String     | 254   | 2249      
+    CTU_CLASS            | String     | 25    | 3         
+    COUNTY_GNI           | Integer    | 4     | 87        
+    COUNTY_COD           | String     | 2     | 87        
+    COUNTY_NAM           | String     | 100   | 87        
+    POPULATION           | Integer    | 4     | 1312      
+    SHAPE_Leng           | Double     | 8     | 2743      
+    Shape_Length         | Double     | 8     | 2743      
+    Shape_Area           | Double     | 8     | 2743      
+    Combined_GNIS_IDs    | String     | 50    | 2743      
+
+    Total Record Count: 2744, Total Geometry Count(by WKT): 2743
+    Warning 1 Potential Duplicate Features Detected in the Feature Class
     """
-    record_count = arcpy.management.GetCount(fc)
-    
-    print(f"Summary of Fields in Feature Class: {fc}\n")
+    record_count = arcpy.management.GetCount(fc)[0]
+    shape_type = arcpy.Describe(fc).shapeType
+      
+    print(f"*Summary*\n Fields in the {shape_type} Feature Class: {fc}\n")
     print("Name                 Type         Length   Unique_Values")
 
 
@@ -184,6 +197,9 @@ def showFieldinfo(fc):
         print( f" {field.name:20} | {field.type:10} | {str(field.length):5} | {str(len(unique_ids)):10}")
         
     print(f"\nTotal Record Count: {record_count}, Total Geometry Count(by WKT): {len(geometry_set)}")
+
+    if record_count != len(geometry_set):
+        print(f"Warning {(int(record_count)-len(geometry_set))} Potential Duplicate Features Detected in the Feature Class")
     return
 
 
@@ -253,7 +269,7 @@ def get_path_mkfolder(make_folder=False,folder_name=None):
  # Note: If the user does not specify the folder for storing the data, this function uses a previous function to get the user's script path
  # uses your scripts folder to create the target folder for storing data
     # fyi, this is the function that will get used if the user does not specify a path: get_path_mkfolder(True, "01 Data"). 
-    #  why importing all tools, and not just a single one, is highly recommended
+    #  thus, importing all tools in 'cat' script, and not just a single one, is highly recommended
 
 def downloadShapefile(url, target_folder=None):
     """Access and download a shapefile from a url pointing to the shapefile
@@ -422,3 +438,73 @@ def open_arcgis_documentation(notebook=True):
             print(f"Opening documentation in web browser: {tool_url}")
     except Exception as e:
         print(f"Error accessing documentation: {e}")
+
+
+###===================  TOOL7: Detect Ovelapping Features within a Feature Class using PairwiseIntersect
+
+
+def check_Fc_NonselfOverlap(input_fc, output_fc_name):
+    """ Detects overlapping features within a feature class using PairwiseIntersect.
+        Returns duplicate pair object ID and count
+    Args:
+        input_fc (str): Full path or name of the feature class
+        output_fc_name: output feature class name for PairwiseIntersect results
+    Returns:
+        count (int) : number of overlapping features 
+        overlap_ids (list):  list of Object IDs of overlapping features 
+        output_fc (str) : Name of the output overlap feature class 
+    Example:
+    --------
+    fc = "city_township_unorg"
+    input_fc = fc 
+    output_fc_name = "overlap_check2"
+
+    >>> check_Fc_NonselfOverlap(input_fc, output_fc_name)
+        Successfully completed PairwiseIntersect Analysis
+        Successfully filtered PairwiseIntersect features
+        PairwiseIntersect detected 1 overlaps for the following objects Ids: 
+        [2745]
+        (1, [2745], 'overlap_check2')
+    """
+    # Check for overlap within a feature class of CTU polygons
+
+    base_name = os.path.basename(input_fc)
+    safe_name= arcpy.ValidateTableName(base_name) 
+    field_name= f"FID_{safe_name}"
+    field_name_1= f"FID_{safe_name}_1"
+    where_c = f"{field_name} > {field_name_1}"
+    out_fc = output_fc_name
+    overlapping_ids_list= set()
+
+    try:
+    ### TOOL: arcpy.analysis.PairwiseIntersect(in_features, out_feature_class, {join_attributes}, {cluster_tolerance}, {output_type})
+        arcpy.analysis.PairwiseIntersect([input_fc, input_fc], out_fc, join_attributes="ONLY_FID") # We only want FID to track which of the original ObjectIDs overlap
+        print("Successfully completed PairwiseIntersect Analysis")
+
+        with arcpy.da.SearchCursor(out_fc,[field_name],where_clause=where_c) as cursor:
+            for row in cursor:
+                dup_id = row[0]
+                overlapping_ids_list.add(dup_id)
+
+    ### =========================   Filter for actual overlaps (not self-intersections)
+    ### Step1: Create a temporary layer from the pairwise overlap feature class
+    ### Step2: Select those paired features whose FID values do not match, overlapping features
+    ### Step3: Count the number of those overlapping features
+
+        ### TOOL: arcpy.management.MakeFeatureLayer(in_features, out_layer, {where_clause}, {workspace}, {field_info})
+        arcpy.management.MakeFeatureLayer(out_fc, "overlap_lyr")
+
+    ### TOOL: arcpy.management.SelectLayerByAttribute(in_layer_or_view, {selection_type}, {where_clause}, {invert_where_clause})
+        arcpy.management.SelectLayerByAttribute("overlap_lyr", "NEW_SELECTION",
+                                            where_c) # keep only one intersection of the pair (A->B) to clearly mark one overlap 
+        print("Successfully filtered PairwiseIntersect features")
+        
+        count = int(arcpy.management.GetCount("overlap_lyr")[0])
+        print(f" PairwiseIntersect detected {count} overlaps for the following objects Ids: \n{list(overlapping_ids_list)}")
+
+        return count, list(overlapping_ids_list), out_fc
+
+    except Exception as e:
+        print("Error Occurred", e, type(e).__name__)
+    except arcpy.ExecuteError:
+        print("ArcPy Error", arcpy.GetMessages(2))
