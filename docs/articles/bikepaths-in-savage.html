@@ -1,0 +1,3016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>Bike Paths in Savage</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+        <meta name="description" content="Multiple Shapefile data sources access programmatically online and loaded into a geodatabase in Arcpy, The polygon and line feature data were..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">Savage, MN GIS</a></h1>
+                <nav><ul>
+                    <li><a href="../pages/home.html">Welcome</a></li>
+                    <li><a href="../pages/about-me.html">About Me</a></li>
+                    <li><a href="../category/arcpy.html">ArcPY</a></li>
+                    <li><a href="../category/drones.html">Drones</a></li>
+                    <li class="active"><a href="../category/gis.html">GIS</a></li>
+                    <li><a href="../category/python-examples.html">Python Examples</a></li>
+                    <li><a href="../category/tornados.html">Tornados</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="../articles/bikepaths-in-savage.html" rel="bookmark"
+           title="Permalink to Bike Paths in Savage">Bike Paths in Savage</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2025-02-05T00:00:00-06:00">
+                Published: Wed 05 February 2025
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/gis.html">GIS</a>.</p>
+
+</footer><!-- /.post-info -->      <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
+.ansibold {
+  font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
+  border-color: #ababab;
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
+}
+@media print {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+div.output_area .mglyph > img {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+
+
+
+.rendered_html pre,
+
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
+ .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
+ .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
+ .highlight pre  .o { color: #666666 } /* Operator */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+ .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
+ .highlight pre  .ge { font-style: italic } /* Generic.Emph */
+ .highlight pre  .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
+ .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
+ .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+ .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
+ .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+ .highlight pre  .gt { color: #0044DD } /* Generic.Traceback */
+ .highlight pre  .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+ .highlight pre  .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+ .highlight pre  .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+ .highlight pre  .kp { color: #008000 } /* Keyword.Pseudo */
+ .highlight pre  .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+ .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
+ .highlight pre  .m { color: #666666 } /* Literal.Number */
+ .highlight pre  .s { color: #BA2121 } /* Literal.String */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
+ .highlight pre  .nb { color: #008000 } /* Name.Builtin */
+ .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+ .highlight pre  .no { color: #880000 } /* Name.Constant */
+ .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+ .highlight pre  .nf { color: #0000FF } /* Name.Function */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
+ .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+ .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
+ .highlight pre  .nv { color: #19177C } /* Name.Variable */
+ .highlight pre  .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+ .highlight pre  .w { color: #bbbbbb } /* Text.Whitespace */
+ .highlight pre  .mb { color: #666666 } /* Literal.Number.Bin */
+ .highlight pre  .mf { color: #666666 } /* Literal.Number.Float */
+ .highlight pre  .mh { color: #666666 } /* Literal.Number.Hex */
+ .highlight pre  .mi { color: #666666 } /* Literal.Number.Integer */
+ .highlight pre  .mo { color: #666666 } /* Literal.Number.Oct */
+ .highlight pre  .sa { color: #BA2121 } /* Literal.String.Affix */
+ .highlight pre  .sb { color: #BA2121 } /* Literal.String.Backtick */
+ .highlight pre  .sc { color: #BA2121 } /* Literal.String.Char */
+ .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
+ .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+ .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
+ .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
+ .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
+ .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
+ .highlight pre  .fm { color: #0000FF } /* Name.Function.Magic */
+ .highlight pre  .vc { color: #19177C } /* Name.Variable.Class */
+ .highlight pre  .vg { color: #19177C } /* Name.Variable.Global */
+ .highlight pre  .vi { color: #19177C } /* Name.Variable.Instance */
+ .highlight pre  .vm { color: #19177C } /* Name.Variable.Magic */
+ .highlight pre  .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style><body>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src= "../images/cycle-14512_256.gif" alt ="Image of person riding a bicycle" style= " width 256px; height: 256px;"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src= "../images/savageMN_BicyclePaths.png" alt ="Arcpy generated Map output from programmatically accessed polygon and line feature class data" style= " width 400px; height: 400px;"></p>
+<ul>
+<li>Multiple Shapefile data sources access programmatically online and loaded into a geodatabase in Arcpy, </li>
+<li>The polygon and line feature data were programatically loaded onto an existing project map aprx file</li>
+<li>Shown is the resulting map of this process zoomed into the city of Savage,MN</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-Arcpy?:"><strong>What is Arcpy?:</strong><a class="anchor-link" href="#What-is-Arcpy?:">&#182;</a></h3><p>Reminder: Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
+<ul>
+<li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
+<li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">arcpy</span> <span class="c1"># allows for access to ArcGIS pro geoprocessing tools and workflow automation</span>
+<span class="kn">import</span> <span class="nn">os</span> <span class="c1"># enables interaction with local system resources (paths to folders and files)</span>
+<span class="kn">import</span> <span class="nn">requests</span> <span class="c1"># access data from the web</span>
+<span class="kn">import</span> <span class="nn">zipfile</span> <span class="c1">## need this to process and extract downloaded zipfiles later on</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1">## use to check spreadsheet formatting</span>
+
+
+<span class="n">initial_dir</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="c1"># capture the initial directory before setting environment for arcpy</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial working directory: &quot;</span><span class="p">,</span> <span class="n">initial_dir</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Initial working directory:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### BE SURE TO INSTALL MAGIC LIBRARY FIRST for filetype validation example below : </span>
+<span class="c1"># step1 activate arcgispro-py3 environment: conda activate &quot;C:\Program Files\ArcGIS\Pro\bin\Python\envs\arcgispro-py3&quot;</span>
+<span class="c1"># step2 install library: pip install python-magic-bin on windows, for unix system use conda install -c conda-forge python-magic</span>
+
+<span class="kn">import</span> <span class="nn">magic</span> <span class="c1">## to validate file type requested from web</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-we-will-do-this-time:"><strong>What we will do this time:</strong><a class="anchor-link" href="#What-we-will-do-this-time:">&#182;</a></h3><ul>
+<li>Use custom functions to list feature classes, download and load shapefile programmatically, etc</li>
+<li>Create new functions (e.g.,using the request library to pull shape file from MN GeoCommons)</li>
+<li>Automate loading of new data onto a map of an existing ArcGIS project</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Create-and-re-use-Custom-Functions-to-Save-time"><strong>Create and re-use Custom Functions to Save time</strong><a class="anchor-link" href="#Create-and-re-use-Custom-Functions-to-Save-time">&#182;</a></h3><ul>
+<li>When you create a python script, the functions within those scripts can be loaded into other scripts</li>
+<li>To import your script, do as you would any library in python</li>
+<li><p>if your script is called my_script.py, then:</p>
+<ul>
+<li><code>python import my_script as ms</code></li>
+</ul>
+</li>
+<li><p>Now the functions within this script are available to use</p>
+<ul>
+<li><code>python ms.my_function()</code></li>
+</ul>
+</li>
+<li>If you would like these tools to test or follow along download the script file here: <a href="https://github.com/estevezb/GIS-Tools/blob/main/ArcGISPro/Arcpy/custom_arcpy_tools.py">Download</a> </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## We have such a script to use</span>
+<span class="c1"># So, let&#39;s load in our custom tool</span>
+<span class="kn">import</span> <span class="nn">custom_arcpy_tools</span> <span class="k">as</span> <span class="nn">cat</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Initial working directory:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cat</span><span class="o">.</span><span class="n">listFC_dataset_Attributes</span><span class="p">()</span>
+
+<span class="c1">## We purposefully caused an error</span>
+<span class="c1"># The error is due to workspace not being set in this new notebook or script</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">~\AppData\Local\Temp\ipykernel_55452\4143424007.py</span> in <span class="ansi-cyan-fg">&lt;cell line: 0&gt;</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>cat<span class="ansi-yellow-intense-fg ansi-bold">.</span>listFC_dataset_Attributes<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">      2</span> 
+<span class="ansi-green-fg">      3</span> <span class="ansi-red-intense-fg ansi-bold">## We purposefully caused an error</span>
+<span class="ansi-green-fg">      4</span> <span class="ansi-red-intense-fg ansi-bold"># The error is due to workspace not being set in this new notebook or script</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\custom_arcpy_tools.py</span> in <span class="ansi-cyan-fg">listFC_dataset_Attributes</span><span class="ansi-blue-intense-fg ansi-bold">(workspace)</span>
+<span class="ansi-green-fg">     92</span>     <span class="ansi-green-intense-fg ansi-bold">if</span> <span class="ansi-green-intense-fg ansi-bold">not</span> arcpy<span class="ansi-yellow-intense-fg ansi-bold">.</span>env<span class="ansi-yellow-intense-fg ansi-bold">.</span>workspace<span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-fg">     93</span> 
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 94</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">raise</span> ValueError<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">&#34;No workspace is set! Please specify a workspace&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">)</span> <span class="ansi-red-intense-fg ansi-bold">#stops the program, calls out this error</span>
+<span class="ansi-green-fg">     95</span> 
+<span class="ansi-green-fg">     96</span> 
+
+<span class="ansi-red-intense-fg ansi-bold">ValueError</span>: No workspace is set! Please specify a workspace</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Don&#39;t remember the arguments for this function? </span>
+<span class="c1">### Use function_name?? </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">listFC_dataset_Attributes</span><span class="p">)</span> <span class="c1">## use help(function_name) to get the documentation for the function </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Help on function listFC_dataset_Attributes in module custom_arcpy_tools:
+
+listFC_dataset_Attributes(workspace=None)
+    List feature classes in the workspace and checks their key attributes, such as SpatialReference , 
+    geometry type, and coordinate systems
+    Parameters:
+    -----------
+    workspace: str, optional
+        The file path to the workspace (e.g., geodatabase path) containing the feature classes
+        If none, the function will use the current ArcPy workspace
+        If no workspace is set will raise an error telling you to set a a workspace
+    
+    Returns:
+    --------
+    None , if no workspace exists
+    Otherwise,    Prints the details of all feature classes in the wksp , including
+                - Feature Class Name
+                - spatial reference name
+                - spatial reference type
+                - Geometry
+                - Well-known ID of the spatial reference
+                Also, warns if different spatial references or coordinate systems exists in the dataset
+    Raises: 
+    -------
+    Value Error: 
+        If no wksp is set or if not feature classes are found in the workspace
+    Exception:
+        For general errors that may occur during processing
+    
+    Example:
+    # To list fc in a geodatabase
+    &gt;&gt;&gt; listFC_dataset_Attributes(r&#34;c:/Path/To/Your/Workspace.gdb&#34;)
+    
+    # To use the current wksp already set in Arcpy
+    &gt;&gt;&gt; listFC_dataset_Attributes()
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Can use magic commmands in the notebook to get file paths</span>
+<span class="c1">## </span>
+<span class="o">%</span><span class="k">lsmagic</span> ## lists out all magic commands
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[8]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Available line magics:
+%alias  %alias_magic  %autoawait  %autocall  %automagic  %autosave  %bookmark  %cd  %clear  %cls  %colors  %conda  %config  %connect_info  %copy  %ddir  %debug  %dhist  %dirs  %doctest_mode  %echo  %ed  %edit  %env  %gui  %hist  %history  %killbgscripts  %ldir  %less  %load  %load_ext  %loadpy  %logoff  %logon  %logstart  %logstate  %logstop  %ls  %lsmagic  %macro  %magic  %matplotlib  %mkdir  %more  %notebook  %page  %pastebin  %pdb  %pdef  %pdoc  %pfile  %pinfo  %pinfo2  %pip  %popd  %pprint  %precision  %prun  %psearch  %psource  %pushd  %pwd  %pycat  %pylab  %qtconsole  %quickref  %recall  %rehashx  %reload_ext  %ren  %rep  %rerun  %reset  %reset_selective  %rmdir  %run  %save  %sc  %set_env  %store  %sx  %system  %tb  %time  %timeit  %unalias  %unload_ext  %who  %who_ls  %whos  %xdel  %xmode
+
+Available cell magics:
+%%!  %%HTML  %%SVG  %%bash  %%capture  %%cmd  %%debug  %%file  %%html  %%javascript  %%js  %%latex  %%markdown  %%perl  %%prun  %%pypy  %%python  %%python2  %%python3  %%ruby  %%script  %%sh  %%svg  %%sx  %%system  %%time  %%timeit  %%writefile
+
+Automagic is ON, % prefix IS NOT needed for line magics.</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## will use %pwd </span>
+<span class="c1"># to check our working directory and look for the geodatabase name</span>
+<span class="o">%</span><span class="k">pwd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[9]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;c:\\Projects\\my_git_pages_website\\Py-and-Sky-Labs\\content\\GIS&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># list the files in the current folder</span>
+<span class="o">%</span><span class="k">ls</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> Volume in drive C is OS
+ Volume Serial Number is DA19-2472
+
+ Directory of c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+
+04/06/2025  10:02 AM    &lt;DIR&gt;          .
+04/02/2025  09:38 AM    &lt;DIR&gt;          ..
+04/06/2025  10:02 AM    &lt;DIR&gt;          __pycache__
+04/06/2025  10:01 AM            55,590 BikePaths.ipynb
+02/19/2025  12:25 PM                78 category.md
+04/02/2025  09:48 AM            23,301 custom_arcpy_tools.py
+03/20/2025  10:51 PM            38,607 Disaster Mapping.md
+02/19/2025  11:20 AM            12,312 folium_map.ipynb
+02/19/2025  11:21 AM             9,048 folium_map2.ipynb
+03/06/2025  03:35 PM    &lt;DIR&gt;          InputData
+02/26/2025  12:02 AM               567 resize_pngImage.py
+03/04/2025  04:18 PM    &lt;DIR&gt;          Tools
+               7 File(s)        139,503 bytes
+               5 Dir(s)  418,605,436,928 bytes free
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Not here</span>
+<span class="c1">## Change the directory to the folder with the gdb</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">cd</span> ./02 Result 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[WinError 2] The system cannot find the file specified: &#39;./02 Result&#39;
+c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Folders for the Processed Results and Output Map doesn&#39;t exist, make some folders</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">mkdir</span> &quot;./02 Result&quot; &quot;./03 Map&quot;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># list the files again</span>
+<span class="o">%</span><span class="k">ls</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> Volume in drive C is OS
+ Volume Serial Number is DA19-2472
+
+ Directory of c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+
+04/06/2025  10:08 AM    &lt;DIR&gt;          .
+04/02/2025  09:38 AM    &lt;DIR&gt;          ..
+04/06/2025  10:02 AM    &lt;DIR&gt;          __pycache__
+04/06/2025  10:05 AM    &lt;DIR&gt;          02 Result
+04/06/2025  10:05 AM    &lt;DIR&gt;          03 Map
+04/06/2025  10:05 AM            55,718 BikePaths.ipynb
+02/19/2025  12:25 PM                78 category.md
+04/02/2025  09:48 AM            23,301 custom_arcpy_tools.py
+03/20/2025  10:51 PM            38,607 Disaster Mapping.md
+02/19/2025  11:20 AM            12,312 folium_map.ipynb
+02/19/2025  11:21 AM             9,048 folium_map2.ipynb
+03/06/2025  03:35 PM    &lt;DIR&gt;          InputData
+02/26/2025  12:02 AM               567 resize_pngImage.py
+03/04/2025  04:18 PM    &lt;DIR&gt;          Tools
+               7 File(s)        139,631 bytes
+               7 Dir(s)  418,627,325,952 bytes free
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## custom function to create sub-folder within the folder where your script exists</span>
+<span class="c1">### Project Folder/</span>
+<span class="c1">##  |---Script.py</span>
+<span class="c1">##      |---Subfolder</span>
+
+<span class="c1">## check where the script is and make a folder</span>
+<span class="k">def</span> <span class="nf">get_path_mkfolder</span><span class="p">(</span><span class="n">make_folder</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">folder_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the path to your script or notebook and optionally creates a folder in at the same level</span>
+<span class="sd">        rootFolder/</span>
+<span class="sd">        |--ScriptFolder/</span>
+<span class="sd">            |---Script.py</span>
+<span class="sd">            |---New Folder</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        make_folder (bool, optional): Set to True to make a new folder. Defaults to False.</span>
+<span class="sd">        folder_name (str, optional): Name of the Folder to be created. Defaults to None.</span>
+<span class="sd">    Return:</span>
+<span class="sd">        str: The path of the created folder, or the script directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">script_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running a python script file here: &quot;</span><span class="p">,</span> <span class="n">script_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">make_folder</span> <span class="ow">and</span> <span class="n">folder_name</span><span class="p">:</span>
+            <span class="n">subfolder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_path</span><span class="p">,</span><span class="n">folder_name</span><span class="p">)</span>
+
+            <span class="c1">#check if the folder exists </span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exist</span><span class="p">(</span><span class="n">subfolder_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">subfolder_path</span><span class="p">)</span><span class="c1"># make the folder</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created subfolder at: &quot;</span><span class="p">,</span> <span class="n">subfolder_path</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Folder already exists: &quot;</span><span class="p">,</span><span class="n">subfolder_path</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">subfolder_path</span> <span class="c1"># return subfolder path</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Script in this folder: &quot;</span><span class="p">,</span> <span class="n">script_path</span><span class="p">)</span>
+        <span class="k">return</span>  <span class="n">script_path</span> <span class="c1"># return script path</span>
+    
+    <span class="c1"># handle typos, undefined paths</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="c1"># handle cases where __file__ is not available , user is in a notebook</span>
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">initial_dir</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running in a notebook here: &quot;</span><span class="p">,</span> <span class="n">script_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">make_folder</span> <span class="ow">and</span> <span class="n">folder_name</span><span class="p">:</span>
+            <span class="n">subfolder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_path</span><span class="p">,</span><span class="n">folder_name</span><span class="p">)</span>
+            <span class="c1"># check if folder exists</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">subfolder_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">subfolder_path</span><span class="p">)</span> <span class="c1"># create the folder</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created subfolder at: &quot;</span><span class="p">,</span> <span class="n">subfolder_path</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Folder already exists: &quot;</span><span class="p">,</span> <span class="n">subfolder_path</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">subfolder_path</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Script in this folder: &quot;</span><span class="p">,</span> <span class="n">script_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">script_path</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">folder_path</span> <span class="o">=</span><span class="n">get_path_mkfolder</span><span class="p">(</span><span class="n">make_folder</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s2">&quot;01 Data&quot;</span><span class="p">)</span> <span class="c1"># if following along, for consistency with later parts, change to &quot;01 Data&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Folder path to use&quot;</span><span class="p">,</span> <span class="n">folder_path</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Running in a notebook here:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+Created subfolder at:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data
+Folder path to use c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Now we can use this folder to store new inputs, and manage the folder organization</span>
+<span class="c1">## Here the project already had a defined folder layout, and we could have re-used the 01 Data folder to store new inputs</span>
+<span class="c1">## rootFolder:</span>
+<span class="c1">#   |---Script.ipynb   </span>
+<span class="c1">#   |---01 Data Folder</span>
+<span class="c1">#       |--- .shp files  </span>
+<span class="c1">#   |---02 Results Folder</span>
+<span class="c1">#       |--- .gdb</span>
+<span class="c1">#   |--03 Map</span>
+<span class="c1">#   |--04 TestFolder</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># prefixing with ! and using cd.. &amp; tree will run system command tree to get a tree like view of the project folder</span>
+<span class="o">!</span><span class="w"> </span>tree
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Folder PATH listing for volume OS
+Volume serial number is DA19-2472
+C:.
++---01 Data
++---02 Result
++---03 Map
++---InputData
++---Tools
++---__pycache__
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Data-Sources-:"><strong><em>Data Sources</em></strong> :<a class="anchor-link" href="#Data-Sources-:">&#182;</a></h3><ul>
+<li>Geography: MN</li>
+</ul>
+<table>
+<thead><tr>
+<th>Input Name</th>
+<th>file types</th>
+<th>Coordinate System</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bikeways in Minnesota</td>
+<td>1 shapefile</td>
+<td>PCS: NAD 83 UTM Zone 15N</td>
+<td><a href="https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_dot/trans_bikeway/metadata/metadata.html">MetaData</a></td>
+</tr>
+<tr>
+<td>MN Cities and townships</td>
+<td>1 shapefile</td>
+<td>PCS: NAD 83 UTM Zone 15N</td>
+<td><a href="https://webgis.dot.state.mn.us/65agsf1/rest/services/sdw_govnt/CITY_TOWNSHIP_UNORG_TERR/FeatureServer">MetaData</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Now will retrieve the bikepaths and cities and townships data</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-online-data-with-the-Requests-library"><strong>Get online data with the Requests library</strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="requests.get(url,-params=-None,-**kwargs)"><code>requests.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#requests.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
+<li>Required argument : url (url to send the request to)</li>
+<li>params(optional, default is None), allows you to pass in query parameters that filter, modify or sort the data you're requesting<ul>
+<li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params ={key:value})</li>
+</ul>
+</li>
+<li>**kwargs: keyword arguments. A way to pass additional arguments to the request function as a dictionary<ul>
+<li>can pass optional keyword arguments, headers, timeout</li>
+</ul>
+</li>
+<li>Use-case: make customized requests to web pages, API or get files<ul>
+<li>Example request with parameters: </li>
+<li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params={"State":"Minnesota"}, headers="User-Agent":"my-app")</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">###===================   Automate ShapeFile dataset download: access, download and store new input shapefile dataset from a url </span>
+
+<span class="c1"># Ofcourse, we can always navigate to MN Geocommons or elsewhere, click, download and place the zipfile into our data input folder</span>
+<span class="c1"># Would have to do this every time, i.e., creating folders, navigating to extracted folder, extracting files</span>
+<span class="c1"># The downloadShapefile Function below accomplishes all this automatically using only the target url, and optional target folder</span>
+    <span class="c1"># Note: it re-uses are previous function to get the script path and use that to create the target folder for storing data</span>
+
+
+<span class="k">def</span> <span class="nf">downloadShapefile</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">target_folder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Access and download a shapefile from a url pointing to the shapefile</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url (str): Url of the Shapefile. Uses the  requests library to access the file header </span>
+<span class="sd">            handles large file size by not streaming all content into memory if the file is above 200 megabytes</span>
+<span class="sd">            downloads the zip file and then extracts to a local path</span>
+<span class="sd">        target_folder(str, optional): path to the folder where files should be stored. </span>
+<span class="sd">            target_folder defaults to &quot;01 Data&quot; which is created in the same folder where the script exists</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple of File paths, str:  Returns the path to the downloaded zip file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Set up folders where data will be stored</span>
+        <span class="n">data_folder</span> <span class="o">=</span> <span class="n">target_folder</span> <span class="k">if</span> <span class="n">target_folder</span> <span class="k">else</span> <span class="n">get_path_mkfolder</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;01 Data&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Subfolder will be created within: &quot;</span><span class="p">,</span> <span class="n">data_folder</span><span class="p">)</span>
+
+        <span class="c1"># Create folders for the zipfile download and to hold the extracted files</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;ShapeFile_Inputs\downloadedData.zip&quot;</span><span class="p">)</span>
+        <span class="n">extracted_zipFolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;ShapeFile_Inputs\ExtractedZip&quot;</span><span class="p">)</span> 
+        
+        <span class="c1"># Check folders exist</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span> <span class="c1"># make the folder to hold the download if it does not exists</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set the path for the download to: &quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">extracted_zipFolder</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extracted_zipFolder</span><span class="p">)</span> <span class="c1"># make the folder to hold the extracted files if it does not exists</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Set the path for Extracted zip files to&quot;</span><span class="p">,</span> <span class="n">extracted_zipFolder</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extracted Zip folder exists, please validate the output exists: &quot;</span><span class="p">,</span> <span class="n">extracted_zipFolder</span><span class="p">)</span>
+                
+            <span class="c1"># get the file size</span>
+            <span class="n">response_head</span><span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s1">&#39;Content-Length&#39;</span> <span class="ow">in</span> <span class="n">response_head</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                <span class="n">response_header</span><span class="o">=</span> <span class="n">response_head</span><span class="o">.</span><span class="n">headers</span>
+
+                <span class="n">file_size</span> <span class="o">=</span> <span class="n">response_header</span><span class="p">[</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">]</span>
+
+                <span class="n">file_size_mb</span><span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">file_size</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">))</span> <span class="c1"># convert bytes to megabytes</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shapefile Data File size ~: </span><span class="si">{</span><span class="n">file_size_mb</span><span class="si">}</span><span class="s2"> megabytes&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Content length header not found in response. Proceeding with download&quot;</span><span class="p">)</span>
+
+            <span class="c1"># check file size</span>
+            <span class="k">if</span> <span class="n">file_size_mb</span> <span class="o">&lt;</span><span class="mi">200</span><span class="p">:</span>
+                <span class="c1"># Download file</span>
+                <span class="n">response</span><span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># Download file in chunks</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">65536</span><span class="p">):</span> <span class="c1"># chunk size to load into memory from the response</span>
+                        <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
+                            <span class="n">chunk</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Download Successful&quot;</span><span class="p">)</span>
+
+            <span class="c1">## Validate the filetype is zip</span>
+            <span class="k">if</span> <span class="n">magic</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;application/zip&quot;</span><span class="p">:</span> <span class="c1"># extracts, checks the filetype</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extracting data from zip file...&quot;</span><span class="p">)</span>
+                <span class="c1"># read the zip file</span>
+                <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_f</span><span class="p">:</span>
+                    <span class="n">zip_f</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">extracted_zipFolder</span><span class="p">)</span> <span class="c1"># extract the zipfile to the target folder</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extraction complete. Files extracted to&quot;</span><span class="p">,</span> <span class="n">extracted_zipFolder</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error : Downloaded file is not a valid zip file&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            
+            <span class="k">return</span> <span class="n">extracted_zipFolder</span><span class="p">,</span> <span class="n">file_path</span> <span class="c1"># note it returns a tuple that needs to be unpacked for the first element [0]</span>
+        
+    <span class="c1"># handle url request errors</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error occurred during the Download</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="c1"># handle general errors</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unexpected error&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">urls</span> <span class="o">=</span><span class="p">[</span><span class="s2">&quot;https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_dot/bdry_mn_city_township_unorg/shp_bdry_mn_city_township_unorg.zip&quot;</span><span class="p">,</span><span class="s2">&quot;https://resources.gisdata.mn.gov/pub/gdrs/data/pub/us_mn_state_dot/trans_bikeway/shp_trans_bikeway.zip&quot;</span><span class="p">]</span>
+
+<span class="c1"># returns a tuple of paths that are useful for easily accessing the extracted shapefiles and zipfile download itself</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
+        <span class="n">extracted_zipFolder</span> <span class="o">=</span> <span class="n">downloadShapefile</span><span class="p">(</span><span class="n">url</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># take the first item in the tuple to store the location of the shapefiles</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Running in a notebook here:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+Folder already exists:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data
+Subfolder will be created within:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data
+Extracted Zip folder exists, please validate the output exists:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data\ShapeFile_Inputs\ExtractedZip
+Shapefile Data File size ~: 5 megabytes
+Download Successful
+Extracting data from zip file...
+Extraction complete. Files extracted to c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data\ShapeFile_Inputs\ExtractedZip
+Running in a notebook here:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+Folder already exists:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data
+Subfolder will be created within:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data
+Extracted Zip folder exists, please validate the output exists:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data\ShapeFile_Inputs\ExtractedZip
+Shapefile Data File size ~: 16 megabytes
+Download Successful
+Extracting data from zip file...
+Extraction complete. Files extracted to c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data\ShapeFile_Inputs\ExtractedZip
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">extracted_zipFolder</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\01 Data\ShapeFile_Inputs\ExtractedZip
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We now have the dataset stored locally, if done regularly could modify this download to occur on a regular schedule </span>
+    <span class="c1"># example: download shapefile dataset from a url weekly, daily</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Change the folder to store the result</span>
+<span class="o">%</span><span class="k">cd</span> &quot;./02 Result&quot;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Use the path of the Result folder and Create new GDB</span>
+
+<span class="n">outfolder</span><span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result&quot;</span>
+<span class="n">gdb_name</span><span class="o">=</span> <span class="s2">&quot;savageMN_BikePaths.gdb&quot;</span>
+<span class="n">gdb_path</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outfolder</span><span class="p">,</span> <span class="n">gdb_name</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">):</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">CreateFileGDB</span><span class="p">(</span><span class="n">outfolder</span><span class="p">,</span><span class="n">gdb_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully created Geodatabase&quot;</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Geodatabase already exists&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Successfully created Geodatabase
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gdb_path</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outfolder</span><span class="p">,</span> <span class="n">gdb_name</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Geodatabase Full path is here: &quot;</span><span class="p">,</span> <span class="n">gdb_path</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Geodatabase Full path is here:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result\savageMN_BikePaths.gdb
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Set workspace to geodatabase </span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">gdb_path</span>
+<span class="n">wksp</span> <span class="o">=</span> <span class="n">gdb_path</span>
+
+<span class="n">arcpy</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">overwriteOutput</span><span class="o">=</span> <span class="kc">True</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># quick reminder of where our current workspace is set</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GeoDatabase is here: &quot;</span> <span class="p">,</span> <span class="n">wksp</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>GeoDatabase is here:  c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result\savageMN_BikePaths.gdb
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Bulk-importing-shapefiles-into-a-Geodatabase"><strong>Bulk importing shapefiles into a Geodatabase</strong><a class="anchor-link" href="#Bulk-importing-shapefiles-into-a-Geodatabase">&#182;</a></h3><h4 id="FeatureClassToGeodatabase()"><code>FeatureClassToGeodatabase()</code><a class="anchor-link" href="#FeatureClassToGeodatabase()">&#182;</a></h4><ul>
+<li>arcpy.conversion.FeatureClassToGeodatabase(Input_Features, Output_Geodatabase)</li>
+<li>can take a single input or a list of inputs</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Search the documentation for arcpy.conversion.FeatureClassToGeodatabase()</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span> <span class="c1"># a module for controlling notebook outputs, allows you to embed images, video, webpages with the Iframe function</span>
+
+<span class="c1"># ArcGIS Pro documentation URL for a specific tool</span>
+<span class="n">tool_url</span> <span class="o">=</span> <span class="s2">&quot;https://pro.arcgis.com/en/pro-app/latest/tool-reference/conversion/feature-class-to-geodatabase.htm&quot;</span>
+
+<span class="c1"># Display the documentation inside Jupyter Notebook</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="n">tool_url</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;600px&quot;</span><span class="p">)</span> <span class="c1"># iframe can be used to display local or online webpages, documents, reports, visualizations , videos</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[36]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="100%"
+            height="600px"
+            src="https://pro.arcgis.com/en/pro-app/latest/tool-reference/conversion/feature-class-to-geodatabase.htm"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">###==========================    Load all the shapefiles into a GDB</span>
+
+
+
+<span class="k">def</span> <span class="nf">loadShapefilesToGDB</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">,</span> <span class="n">shapefile_inputs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads all shapefiles in a folder into a geodatabase</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        gdb_path (str): Path to the geodatabase</span>
+<span class="sd">        shapefile_inputs (str): Path to the folder holding the shapefiles</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Returns  a list of shapefile paths that were used for loading into the GDB, or an emtpy list if no shapefiles were processed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># use extracted zipfiles if the path exists, otherise use the specified path to the files</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">shapefile_inputs</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">shapefile_inputs</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid path to shapefile folder provided&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span> <span class="c1"># return empty list</span>
+        
+        <span class="c1"># Loop through the folder with extracted files and compile a list of all the shape file paths</span>
+        <span class="n">shapefile_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># start an empty list to hold .shp files</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">shapefile_inputs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.shp&quot;</span><span class="p">):</span>
+                <span class="n">full_shp_path</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">shapefile_inputs</span><span class="p">,</span><span class="n">f</span><span class="p">)</span> <span class="c1"># get the full path for each file</span>
+                <span class="n">shapefile_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_shp_path</span><span class="p">)</span> <span class="c1"># add to a list</span>
+
+        <span class="c1">###================================  Batch Convert shapefile to Feature classes in the Gdb</span>
+        <span class="c1"># check the list of shp files exists</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">shapefile_list</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no shape files found for extraction&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+        <span class="c1">## Load the shapefiles into the gdb</span>
+            <span class="c1">### TOOL: arcpy.conversion.FeatureClassToGeodatabase(Input_Features, Output_Geodatabase)</span>
+            <span class="n">arcpy</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">FeatureClassToGeodatabase</span><span class="p">(</span><span class="n">shapefile_list</span><span class="p">,</span><span class="n">gdb_path</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Successfully Loaded shapefiles into into the </span><span class="si">{</span><span class="n">gdb_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">return</span> <span class="n">shapefile_list</span>
+    
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error Loading Shapefiles into the GDB &quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcpy Error: &quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># we do not need the input shapefile paths, but for demonstration the list is extracted</span>
+<span class="n">loaded_shapefiles</span><span class="o">=</span><span class="n">loadShapefilesToGDB</span><span class="p">(</span><span class="n">wksp</span><span class="p">,</span><span class="n">extracted_zipFolder</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These files were loaded into the GDB&quot;</span><span class="p">,</span> <span class="n">loaded_shapefiles</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> Successfully Loaded shapefiles into into the c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result\savageMN_BikePaths.gdb
+These files were loaded into the GDB [&#39;c:\\Projects\\my_git_pages_website\\Py-and-Sky-Labs\\content\\GIS\\01 Data\\ShapeFile_Inputs\\ExtractedZip\\Bikeways_in_Minnesota.shp&#39;, &#39;c:\\Projects\\my_git_pages_website\\Py-and-Sky-Labs\\content\\GIS\\01 Data\\ShapeFile_Inputs\\ExtractedZip\\city_township_unorg.shp&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Check the gdb </span>
+
+<span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[46]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Bikeways_in_Minnesota&#39;, &#39;city_township_unorg&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## We successfully programmatically retrieved datasets from MN GeoCommons and loaded them into a Geodatabase in ArcGIS Pro</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##  Use the Describe Object to access properties of a Feature class like its Spatial Reference</span>
+
+<span class="c1">## Get all the fc classes from the gdb</span>
+<span class="n">list_fc</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">list_fc</span><span class="p">:</span>
+    <span class="n">desc</span><span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">Describe</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+    <span class="n">sr</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">SpatialReference</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature class: , </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="s2">, Spatial Reference name :, </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, Spatial Ref Type : </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">, Geometry</span><span class="si">{</span><span class="n">desc</span><span class="o">.</span><span class="n">shapetype</span><span class="si">}</span><span class="s2">, WKID: </span><span class="si">{</span><span class="n">sr</span><span class="o">.</span><span class="n">factorycode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">150</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># add line and space between prints</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Feature class: , Bikeways_in_Minnesota, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , city_township_unorg, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We already have a custom function that gathers key feature class attributes and prints the workspace to avoid repetitive coding</span>
+<span class="n">cat</span><span class="o">.</span><span class="n">listFC_dataset_Attributes</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Workspace is set here c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result\savageMN_BikePaths.gdb
+
+Feature class: , Bikeways_in_Minnesota, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolyline, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+Feature class: , city_township_unorg, Spatial Reference name :, NAD_1983_UTM_Zone_15N, Spatial Ref Type : Projected, GeometryPolygon, WKID: 26915
+------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+
+2 Feature classes found in the workspace path
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Programmtically-Working-with-Maps"><strong>Programmtically Working with Maps</strong><a class="anchor-link" href="#Programmtically-Working-with-Maps">&#182;</a></h3><ul>
+<li>We can automate the display of new data using arcpy.mp module
+#### <code>arcpy.mp.ArcGISProject()</code></li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## check the current path</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pwd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[49]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;c:\\Projects\\my_git_pages_website\\Py-and-Sky-Labs\\content\\GIS\\02 Result&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### check directory structrue, change the path to the map file</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cd..<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>tree
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Folder PATH listing for volume OS
+Volume serial number is DA19-2472
+C:.
++---01 Data
+�   +---ShapeFile_Inputs
+�       +---ExtractedZip
+�           +---metadata
++---02 Result
+�   +---savageMN_BikePaths.gdb
++---03 Map
+�   +---Index
+�       +---savage_bicyclePaths_index
+�           +---Connections
+�           +---savage_bicyclePaths
+�           +---Thumbnail
++---Tools
++---__pycache__
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">cd</span> ..
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">cd</span> &quot;./03 Map&quot;
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\03 Map
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pwd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[65]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;c:\\Projects\\my_git_pages_website\\Py-and-Sky-Labs\\content\\GIS\\03 Map&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>dir
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> Volume in drive C is OS
+ Volume Serial Number is DA19-2472
+
+ Directory of c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\03 Map
+
+04/06/2025  10:43 AM    &lt;DIR&gt;          .
+04/06/2025  10:18 AM    &lt;DIR&gt;          ..
+04/06/2025  10:42 AM    &lt;DIR&gt;          Index
+04/06/2025  10:43 AM           569,122 savage_bicyclePaths.aprx
+               1 File(s)        569,122 bytes
+               3 Dir(s)  422,354,165,760 bytes free
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Set the path to the folder and file holding the map </span>
+<span class="n">map_folder</span><span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\03 Map&quot;</span>
+<span class="n">aprx_name</span> <span class="o">=</span> <span class="s2">&quot;TemplateProject.aprx&quot;</span>
+<span class="n">aprx_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">map_folder</span><span class="p">,</span><span class="n">aprx_name</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">aprx_path</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Project path does not exist&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">aprx_path</span><span class="p">))</span>
+
+<span class="c1"># Output .aprx with new name to avoid locks or read issues</span>
+<span class="n">new_aprx_name</span><span class="o">=</span> <span class="s2">&quot;savage_bikePaths_edit.aprx&quot;</span>
+<span class="n">new_aprx_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">map_folder</span><span class="p">,</span><span class="n">new_aprx_name</span><span class="p">)</span> 
+
+
+<span class="c1">## Set gdb path</span>
+<span class="n">outfolder</span><span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result&quot;</span>
+<span class="n">gdb_name</span><span class="o">=</span> <span class="s2">&quot;savageMN_BikePaths.gdb&quot;</span>
+<span class="n">gdb_path</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outfolder</span><span class="p">,</span> <span class="n">gdb_name</span><span class="p">)</span>
+
+
+
+<span class="c1"># Load the ArcGIS Pro project</span>
+<span class="n">aprx</span> <span class="o">=</span>  <span class="n">arcpy</span><span class="o">.</span><span class="n">mp</span><span class="o">.</span><span class="n">ArcGISProject</span><span class="p">(</span><span class="n">aprx_path</span><span class="p">)</span>
+
+<span class="c1">## Print map names choose the map to add layers to</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">aprx</span><span class="o">.</span><span class="n">listMaps</span><span class="p">()])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Pick the map to load</span>
+<span class="n">map_object</span> <span class="o">=</span> <span class="n">aprx</span><span class="o">.</span><span class="n">listMaps</span><span class="p">(</span><span class="s2">&quot;Project Map&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">## Use arcpy.listMaps(&quot;MapName&quot;)[0] if you only have one map</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">feature_classes</span> <span class="o">=</span>  <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+
+<span class="k">try</span><span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">feature_classes</span><span class="p">:</span>
+        <span class="n">fc_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">,</span><span class="n">fc</span><span class="p">)</span> <span class="c1"># store that path to the fc</span>
+        <span class="n">map_object</span><span class="o">.</span><span class="n">addDataFromPath</span><span class="p">(</span><span class="n">fc_path</span><span class="p">)</span>
+
+
+    <span class="c1"># Save the changes to the project file</span>
+    <span class="n">aprx</span><span class="o">.</span><span class="n">saveACopy</span><span class="p">(</span><span class="n">new_aprx_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully loaded the layers onto the project and saved the map&quot;</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured: &quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcpy Error occured: &quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># optional delete to avoid locks to the project</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">del</span> <span class="n">aprx</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;Project Map&#39;, &#39;PCS_EqualEarth&#39;, &#39;NAD83&#39;, &#39;Mercator&#39;, &#39;Robinson&#39;, &#39;Albers&#39;, &#39;GCS_WGS84&#39;]
+
+
+[&#39;Bikeways_in_Minnesota&#39;, &#39;city_township_unorg&#39;]
+
+
+c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result\savageMN_BikePaths.gdb
+
+
+Successfully loaded the layers onto the project and saved the map
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+ 
+
+</body>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://www.spc.noaa.gov/products/outlook/day1otlk.html">NOAA Storm Prediction Center</a></li>
+                            <li><a href="https://www.weather.gov/">Active Weather Hazards</a></li>
+                            <li><a href="https://github.com/estevezb">My Github Page</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://x.com/bestevez100">Twitter/X</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

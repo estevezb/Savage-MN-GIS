@@ -1,0 +1,481 @@
+<metadata xml:lang="en">
+	<Esri>
+		<CreaDate>20250331</CreaDate>
+		<CreaTime>09463700</CreaTime>
+		<ArcGISFormat>1.0</ArcGISFormat>
+		<SyncOnce>FALSE</SyncOnce>
+		<DataProperties>
+			<lineage>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\CreateFeatureclass" Date="20250220" Time="151204">CreateFeatureclass C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde BIKEWAY Polyline # No Yes "PROJCS["NAD_1983_UTM_Zone_15N",GEOGCS["GCS_North_American_1983",DATUM["D_North_American_1983",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",-93.0],PARAMETER["Scale_Factor",0.9996],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]];-5120900 -9998100 10000;-100000 10000;-100000 10000;0.001;0.001;0.001;IsHighPrecision" SDW 0 0 0 Bikeway</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151212">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY UNIQUE_ID Text # # 36 "Feature Unique ID" NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151217">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY BKWYNAME Text # # 150 "Bikeway Name" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151222">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY BKWYSYSTEM Text # # 150 "Bikeway System Name" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151227">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY SHAREDNAME Text # # 150 "Bikeway Shared Name" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151232">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY FACTYPE Text # # 100 "Bikeway Facility Type" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151238">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY FED_SYS Text # # 10 "Federal System" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151242">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY NATION_SYS Text # # 10 "National Designation" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151248">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY STATE_SYS Text # # 10 "State System" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151253">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY REGION_SYS Text # # 10 "Regional System" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151258">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY COUNTY_SYS Text # # 10 "County System" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151303">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY LOCAL_SYS Text # # 10 "Local System" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151308">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY TRIBAL_SYS Text # # 10 "Tribal System" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151314">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY PRIV_SYS Text # # 10 "Private System" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151319">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY LANDOWNER Text # # 150 Landowner NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151324">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY OWNERTYPE Text # # 50 "Landowner Type" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151329">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY ORGNAME Text # # 150 "Managing Organization" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151334">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY ORGTYPE Text # # 50 "Managing Organization Type" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151338">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY BKWYSTATUS Text # # 50 "Bikeway Status" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151343">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY BKWYSURF Text # # 50 "Bikeway Surface Type" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151349">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY YEAR_PRGRM "Short (small integer)" # # # "Year Programmed" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151353">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY YEAR_OPEN "Short (small integer)" # # # "Year Open" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151358">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY WIDTH_FT "Double  (double precision)" # # # "Width in Feet" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151403">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY SEASNL_ACC Text # # 20 "Seasonal Accessibility" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151408">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY DIRECTION Text # # 20 "Bikeway Direction" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151414">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY PVMNTMARKS Text # # 10 "Pavement Markings" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151422">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY LIGHTING Text # # 10 Lighting NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151427">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY SIGNING Text # # 10 Signing NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151433">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY SEPARATION Text # # 100 "Separation Type" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151437">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY ROAD_BR Text # # 100 "Roadside Barrier Type" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151443">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY RMBL_STRIPS Text # # 10 "Rumble Strips" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151448">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY RMBL_TYPE Text # # 100 "Rumble Strip Type" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151452">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY RMBL_PLACE Text # # 100 "Rumble Strip Placement" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151457">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY BKWY_URL Text # # 255 "Bikeway URL" NULLABLE NON_REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151503">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY DATASOURCE Text # # 50 "Data Source" NON_NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151507">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY EDIT_ORG Text # # 100 "Editing Organization" NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151512">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY EDIT_DATE Date # # # "Edit Date" NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\AddField" Date="20250220" Time="151517">AddField C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY COMMENTS Text # # 255 Comments NULLABLE REQUIRED #</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\ChangePrivileges" Date="20250220" Time="151523">ChangePrivileges C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY SDW_TRANS_MEAS_READ_ONLY_01 "Grant view privileges" "Do not change edit privileges"</Process>
+				<Process ToolSource="c:\program files\arcgis\pro\Resources\ArcToolbox\toolboxes\Data Management Tools.tbx\ChangePrivileges" Date="20250220" Time="151528">ChangePrivileges C:\Users\butz1ben\AppData\Local\Temp\tmpc58sfrmo\fcConn.sde\BIKEWAY SDW_TRANS_READ_ONLY_01 "Grant view privileges" "Do not change edit privileges"</Process>
+				<Process ToolSource="c:\program files (x86)\arcgis\desktop10.7\ArcToolbox\Toolboxes\Data Management Tools.tbx\Copy" Date="20250331" Time="094642">Copy "Database Connections\TGP_11g.sde\SDW_TRANS.BIKEWAY" "\\GISFS\gdrs\MnDOT to MnGEO\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota" FeatureClass</Process>
+				<Process ToolSource="c:\program files\arcgis\server\framework\runtime\arcgis\Resources\ArcToolbox\toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20250403" Time="000052">FeatureClassToFeatureClass /var/ftp/gdrs_temp/update/us_mn_state_dot/trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota /var/ftp/gdrs_temp/update/us_mn_state_dot/trans_bikeway\shp Bikeways_in_Minnesota.shp # "UNIQUE_ID "Feature Unique ID" true true true 36 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,UNIQUE_ID,0,35;BKWYNAME "Bikeway Name" true true false 150 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,BKWYNAME,0,149;BKWYSYSTEM "Bikeway System Name" true true false 150 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,BKWYSYSTEM,0,149;SHAREDNAME "Bikeway Shared Name" true true false 150 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,SHAREDNAME,0,149;FACTYPE "Bikeway Facility Type" true false true 100 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,FACTYPE,0,99;FED_SYS "Federal System" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,FED_SYS,0,9;NATION_SYS "National Designation" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,NATION_SYS,0,9;STATE_SYS "State System" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,STATE_SYS,0,9;REGION_SYS "Regional System" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,REGION_SYS,0,9;COUNTY_SYS "County System" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,COUNTY_SYS,0,9;LOCAL_SYS "Local System" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,LOCAL_SYS,0,9;TRIBAL_SYS "Tribal System" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,TRIBAL_SYS,0,9;PRIV_SYS "Private System" true false true 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,PRIV_SYS,0,9;LANDOWNER "Landowner" true true false 150 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,LANDOWNER,0,149;OWNERTYPE "Landowner Type" true true false 50 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,OWNERTYPE,0,49;ORGNAME "Managing Organization" true true false 150 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,ORGNAME,0,149;ORGTYPE "Managing Organization Type" true true false 50 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,ORGTYPE,0,49;BKWYSTATUS "Bikeway Status" true true false 50 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,BKWYSTATUS,0,49;BKWYSURF "Bikeway Surface Type" true true false 50 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,BKWYSURF,0,49;YEAR_PRGRM "Year Programmed" true true false 2 Short 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,YEAR_PRGRM,-1,-1;YEAR_OPEN "Year Open" true true false 2 Short 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,YEAR_OPEN,-1,-1;WIDTH_FT "Width in Feet" true true false 8 Double 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,WIDTH_FT,-1,-1;SEASNL_ACC "Seasonal Accessibility" true true false 20 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,SEASNL_ACC,0,19;DIRECTION "Bikeway Direction" true true false 20 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,DIRECTION,0,19;PVMNTMARKS "Pavement Markings" true true false 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,PVMNTMARKS,0,9;LIGHTING "Lighting" true true false 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,LIGHTING,0,9;SIGNING "Signing" true true false 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,SIGNING,0,9;SEPARATION "Separation Type" true true false 100 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,SEPARATION,0,99;ROAD_BR "Roadside Barrier Type" true true false 100 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,ROAD_BR,0,99;RMBL_STRIPS "Rumble Strips" true true false 10 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,RMBL_STRIPS,0,9;RMBL_TYPE "Rumble Strip Type" true true false 100 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,RMBL_TYPE,0,99;RMBL_PLACE "Rumble Strip Placement" true true false 100 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,RMBL_PLACE,0,99;BKWY_URL "Bikeway URL" true true false 255 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,BKWY_URL,0,254;DATASOURCE "Data Source" true false true 50 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,DATASOURCE,0,49;EDIT_ORG "Editing Organization" true true true 100 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,EDIT_ORG,0,99;EDIT_DATE "Edit Date" true true true 8 Date 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,EDIT_DATE,-1,-1;COMMENTS "Comments" true true true 255 Text 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,COMMENTS,0,254;SHAPE_Length "SHAPE_Length" false true true 8 Double 0 0,First,#,\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\fgdb\trans_bikeway.gdb\Bikeways_in_Minnesota,SHAPE_Length,-1,-1" #</Process>
+			</lineage>
+			<itemProps>
+				<itemLocation>
+					<linkage Sync="TRUE">file://\\G46PPLGDRFTP03\Z$\var\ftp\gdrs_temp\update\us_mn_state_dot\trans_bikeway\shp\Bikeways_in_Minnesota.shp</linkage>
+					<protocol Sync="TRUE">Local Area Network</protocol>
+				</itemLocation>
+				<itemName Sync="TRUE">Bikeways_in_Minnesota</itemName>
+				<imsContentType Sync="TRUE">002</imsContentType>
+				<itemSize Sync="TRUE">0.000</itemSize>
+			</itemProps>
+			<coordRef>
+				<type Sync="TRUE">Projected</type>
+				<geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn>
+				<csUnits Sync="TRUE">Linear Unit: Meter (1.000000)</csUnits>
+				<projcsn Sync="TRUE">NAD_1983_UTM_Zone_15N</projcsn>
+				<peXml Sync="TRUE">&lt;ProjectedCoordinateSystem xsi:type='typens:ProjectedCoordinateSystem' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:typens='http://www.esri.com/schemas/ArcGIS/3.3.0'&gt;&lt;WKT&gt;PROJCS[&amp;quot;NAD_1983_UTM_Zone_15N&amp;quot;,GEOGCS[&amp;quot;GCS_North_American_1983&amp;quot;,DATUM[&amp;quot;D_North_American_1983&amp;quot;,SPHEROID[&amp;quot;GRS_1980&amp;quot;,6378137.0,298.257222101]],PRIMEM[&amp;quot;Greenwich&amp;quot;,0.0],UNIT[&amp;quot;Degree&amp;quot;,0.0174532925199433]],PROJECTION[&amp;quot;Transverse_Mercator&amp;quot;],PARAMETER[&amp;quot;False_Easting&amp;quot;,500000.0],PARAMETER[&amp;quot;False_Northing&amp;quot;,0.0],PARAMETER[&amp;quot;Central_Meridian&amp;quot;,-93.0],PARAMETER[&amp;quot;Scale_Factor&amp;quot;,0.9996],PARAMETER[&amp;quot;Latitude_Of_Origin&amp;quot;,0.0],UNIT[&amp;quot;Meter&amp;quot;,1.0],AUTHORITY[&amp;quot;EPSG&amp;quot;,26915]]&lt;/WKT&gt;&lt;XOrigin&gt;-5120900&lt;/XOrigin&gt;&lt;YOrigin&gt;-9998100&lt;/YOrigin&gt;&lt;XYScale&gt;450445547.3910538&lt;/XYScale&gt;&lt;ZOrigin&gt;-100000&lt;/ZOrigin&gt;&lt;ZScale&gt;10000&lt;/ZScale&gt;&lt;MOrigin&gt;-100000&lt;/MOrigin&gt;&lt;MScale&gt;10000&lt;/MScale&gt;&lt;XYTolerance&gt;0.001&lt;/XYTolerance&gt;&lt;ZTolerance&gt;0.001&lt;/ZTolerance&gt;&lt;MTolerance&gt;0.001&lt;/MTolerance&gt;&lt;HighPrecision&gt;true&lt;/HighPrecision&gt;&lt;WKID&gt;26915&lt;/WKID&gt;&lt;LatestWKID&gt;26915&lt;/LatestWKID&gt;&lt;/ProjectedCoordinateSystem&gt;</peXml>
+			</coordRef>
+		</DataProperties>
+		<ArcGISstyle>FGDC CSDGM Metadata</ArcGISstyle>
+		<SyncDate>20250403</SyncDate>
+		<SyncTime>00004400</SyncTime>
+		<ModDate>20250403</ModDate>
+		<ModTime>00004400</ModTime>
+	</Esri>
+	<dataIdInfo>
+		<envirDesc Sync="TRUE">Microsoft Windows 10 Version 10.0 (Build 18362) ; Esri ArcGIS 13.3.0.51575</envirDesc>
+		<dataLang>
+			<languageCode value="eng" Sync="TRUE"/>
+			<countryCode value="USA" Sync="TRUE"/>
+		</dataLang>
+		<idCitation>
+			<resTitle Sync="TRUE">Bikeways_in_Minnesota</resTitle>
+			<presForm>
+				<PresFormCd value="005" Sync="TRUE"/>
+			</presForm>
+		</idCitation>
+		<spatRpType>
+			<SpatRepTypCd value="001" Sync="TRUE"/>
+		</spatRpType>
+	</dataIdInfo>
+	<mdLang>
+		<languageCode value="eng" Sync="TRUE"/>
+		<countryCode value="USA" Sync="TRUE"/>
+	</mdLang>
+	<distInfo>
+		<distFormat>
+			<formatName Sync="TRUE">Shapefile</formatName>
+		</distFormat>
+		<distTranOps>
+			<transSize Sync="TRUE">0.000</transSize>
+		</distTranOps>
+	</distInfo>
+	<mdHrLv>
+		<ScopeCd value="005" Sync="TRUE"/>
+	</mdHrLv>
+	<mdHrLvName Sync="TRUE">dataset</mdHrLvName>
+	<refSysInfo>
+		<RefSystem>
+			<refSysID>
+				<identCode code="26915" Sync="TRUE"/>
+				<idCodeSpace Sync="TRUE">EPSG</idCodeSpace>
+				<idVersion Sync="TRUE">6.11(3.0.1)</idVersion>
+			</refSysID>
+		</RefSystem>
+	</refSysInfo>
+	<spatRepInfo>
+		<VectSpatRep>
+			<geometObjs Name="Bikeways_in_Minnesota">
+				<geoObjTyp>
+					<GeoObjTypCd value="002" Sync="TRUE"/>
+				</geoObjTyp>
+				<geoObjCnt Sync="TRUE">0</geoObjCnt>
+			</geometObjs>
+			<topLvl>
+				<TopoLevCd value="001" Sync="TRUE"/>
+			</topLvl>
+		</VectSpatRep>
+	</spatRepInfo>
+	<spdoinfo>
+		<ptvctinf>
+			<esriterm Name="Bikeways_in_Minnesota">
+				<efeatyp Sync="TRUE">Simple</efeatyp>
+				<efeageom code="3" Sync="TRUE"/>
+				<esritopo Sync="TRUE">FALSE</esritopo>
+				<efeacnt Sync="TRUE">0</efeacnt>
+				<spindex Sync="TRUE">FALSE</spindex>
+				<linrefer Sync="TRUE">TRUE</linrefer>
+			</esriterm>
+		</ptvctinf>
+	</spdoinfo>
+	<eainfo>
+		<detailed Name="Bikeways_in_Minnesota">
+			<enttyp>
+				<enttypl Sync="TRUE">Bikeways_in_Minnesota</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt>
+				<enttypc Sync="TRUE">0</enttypc>
+			</enttyp>
+			<attr>
+				<attrlabl Sync="TRUE">FID</attrlabl>
+				<attalias Sync="TRUE">FID</attalias>
+				<attrtype Sync="TRUE">OID</attrtype>
+				<attwidth Sync="TRUE">4</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+				<attrdef Sync="TRUE">Internal feature number.</attrdef>
+				<attrdefs Sync="TRUE">Esri</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">Shape</attrlabl>
+				<attalias Sync="TRUE">Shape</attalias>
+				<attrtype Sync="TRUE">Geometry</attrtype>
+				<attwidth Sync="TRUE">0</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+				<attrdef Sync="TRUE">Feature geometry.</attrdef>
+				<attrdefs Sync="TRUE">Esri</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Coordinates defining the features.</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">UNIQUE_ID</attrlabl>
+				<attalias Sync="TRUE">UNIQUE_ID</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">36</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">BKWYNAME</attrlabl>
+				<attalias Sync="TRUE">BKWYNAME</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">150</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">BKWYSYSTEM</attrlabl>
+				<attalias Sync="TRUE">BKWYSYSTEM</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">150</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">SHAREDNAME</attrlabl>
+				<attalias Sync="TRUE">SHAREDNAME</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">150</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">FACTYPE</attrlabl>
+				<attalias Sync="TRUE">FACTYPE</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">100</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">FED_SYS</attrlabl>
+				<attalias Sync="TRUE">FED_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">NATION_SYS</attrlabl>
+				<attalias Sync="TRUE">NATION_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">STATE_SYS</attrlabl>
+				<attalias Sync="TRUE">STATE_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">REGION_SYS</attrlabl>
+				<attalias Sync="TRUE">REGION_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">COUNTY_SYS</attrlabl>
+				<attalias Sync="TRUE">COUNTY_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">LOCAL_SYS</attrlabl>
+				<attalias Sync="TRUE">LOCAL_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">TRIBAL_SYS</attrlabl>
+				<attalias Sync="TRUE">TRIBAL_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">PRIV_SYS</attrlabl>
+				<attalias Sync="TRUE">PRIV_SYS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">LANDOWNER</attrlabl>
+				<attalias Sync="TRUE">LANDOWNER</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">150</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">OWNERTYPE</attrlabl>
+				<attalias Sync="TRUE">OWNERTYPE</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">50</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ORGNAME</attrlabl>
+				<attalias Sync="TRUE">ORGNAME</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">150</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ORGTYPE</attrlabl>
+				<attalias Sync="TRUE">ORGTYPE</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">50</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">BKWYSTATUS</attrlabl>
+				<attalias Sync="TRUE">BKWYSTATUS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">50</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">BKWYSURF</attrlabl>
+				<attalias Sync="TRUE">BKWYSURF</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">50</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">YEAR_PRGRM</attrlabl>
+				<attalias Sync="TRUE">YEAR_PRGRM</attalias>
+				<attrtype Sync="TRUE">Integer</attrtype>
+				<attwidth Sync="TRUE">5</attwidth>
+				<atprecis Sync="TRUE">5</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">YEAR_OPEN</attrlabl>
+				<attalias Sync="TRUE">YEAR_OPEN</attalias>
+				<attrtype Sync="TRUE">Integer</attrtype>
+				<attwidth Sync="TRUE">5</attwidth>
+				<atprecis Sync="TRUE">5</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">WIDTH_FT</attrlabl>
+				<attalias Sync="TRUE">WIDTH_FT</attalias>
+				<attrtype Sync="TRUE">Double</attrtype>
+				<attwidth Sync="TRUE">19</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">SEASNL_ACC</attrlabl>
+				<attalias Sync="TRUE">SEASNL_ACC</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">20</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">DIRECTION</attrlabl>
+				<attalias Sync="TRUE">DIRECTION</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">20</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">PVMNTMARKS</attrlabl>
+				<attalias Sync="TRUE">PVMNTMARKS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">LIGHTING</attrlabl>
+				<attalias Sync="TRUE">LIGHTING</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">SIGNING</attrlabl>
+				<attalias Sync="TRUE">SIGNING</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">SEPARATION</attrlabl>
+				<attalias Sync="TRUE">SEPARATION</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">100</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ROAD_BR</attrlabl>
+				<attalias Sync="TRUE">ROAD_BR</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">100</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">RMBL_STRIP</attrlabl>
+				<attalias Sync="TRUE">RMBL_STRIP</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">10</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">RMBL_TYPE</attrlabl>
+				<attalias Sync="TRUE">RMBL_TYPE</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">100</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">RMBL_PLACE</attrlabl>
+				<attalias Sync="TRUE">RMBL_PLACE</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">100</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">BKWY_URL</attrlabl>
+				<attalias Sync="TRUE">BKWY_URL</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">254</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">DATASOURCE</attrlabl>
+				<attalias Sync="TRUE">DATASOURCE</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">50</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">EDIT_ORG</attrlabl>
+				<attalias Sync="TRUE">EDIT_ORG</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">100</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">EDIT_DATE</attrlabl>
+				<attalias Sync="TRUE">EDIT_DATE</attalias>
+				<attrtype Sync="TRUE">Date</attrtype>
+				<attwidth Sync="TRUE">8</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">COMMENTS</attrlabl>
+				<attalias Sync="TRUE">COMMENTS</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">254</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">SHAPE_Leng</attrlabl>
+				<attalias Sync="TRUE">SHAPE_Leng</attalias>
+				<attrtype Sync="TRUE">Double</attrtype>
+				<attwidth Sync="TRUE">19</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+			</attr>
+		</detailed>
+	</eainfo>
+	<mdDateSt Sync="TRUE">20250403</mdDateSt>
+</metadata>
