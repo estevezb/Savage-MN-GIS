@@ -2,6 +2,7 @@ Title: Disaster Mapping in Loubiere, Dominica
 Date: 2025-02-19
 Tags: Disaster, Hurricanes, GIS, Drones
 Slug: disaster-mapping
+Category: Disasters
 Image_URL: static/images/tornado_icon.png
 Author: Brian Estevez
 
