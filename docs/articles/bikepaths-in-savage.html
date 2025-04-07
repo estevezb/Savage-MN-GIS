@@ -16,6 +16,7 @@
                     <li><a href="../pages/home.html">Welcome</a></li>
                     <li><a href="../pages/about-me.html">About Me</a></li>
                     <li><a href="../category/arcpy.html">ArcPY</a></li>
+                    <li><a href="../category/disasters.html">Disasters</a></li>
                     <li><a href="../category/drones.html">Drones</a></li>
                     <li class="active"><a href="../category/gis.html">GIS</a></li>
                     <li><a href="../category/python-examples.html">Python Examples</a></li>
@@ -1207,7 +1208,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src= "../images/savageMN_BicyclePaths.png" alt ="Arcpy generated Map output from programmatically accessed polygon and line feature class data" style= " width 400px; height: 400px;"></p>
+<p><img src= "../images/savageMN_BicyclePaths1.png" alt ="Arcpy generated Map output from programmatically accessed polygon and line feature class data" style= " width 400px; height: 400px;"></p>
 <ul>
 <li>Multiple Shapefile data sources access programmatically online and loaded into a geodatabase in Arcpy, </li>
 <li>The polygon and line feature data were programatically loaded onto an existing project map aprx file</li>
@@ -2603,9 +2604,26 @@ Feature class: , city_township_unorg, Spatial Reference name :, NAD_1983_UTM_Zon
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Programmtically-Working-with-Maps"><strong>Programmtically Working with Maps</strong><a class="anchor-link" href="#Programmtically-Working-with-Maps">&#182;</a></h3><ul>
-<li>We can automate the display of new data using arcpy.mp module
-#### <code>arcpy.mp.ArcGISProject()</code></li>
+<h3 id="Accessing-ArcGIS-Pro-Projects"><strong>Accessing ArcGIS Pro Projects</strong><a class="anchor-link" href="#Accessing-ArcGIS-Pro-Projects">&#182;</a></h3><ul>
+<li>We can automate the modification and display of data within existing project files using <code>arcpy.mp</code> module</li>
+<li>Use arcpy.mp to modify objects in existing projects (.aprx) or layer files (.lyr or .lyrx)</li>
+<li>Example use cases:<ul>
+<li>Replace a layer's data source</li>
+<li>Iterate through a series of extents, find and replace text values, and export the page layout to PDF</li>
+<li>Build a complete map book by appending PDF documents into a final product</li>
+</ul>
+</li>
+</ul>
+<h4 id="arcpy.mp.ArcGISProject()"><code>arcpy.mp.ArcGISProject()</code><a class="anchor-link" href="#arcpy.mp.ArcGISProject()">&#182;</a></h4><ul>
+<li>Provides a reference to an ArcGIS project (.aprx) stored on disk or to the project currently loaded in ArcGIS Pro</li>
+<li>Two input arguments : path or CURRENT<ul>
+<li>path: full path the project file</li>
+<li>CURRENT: keyword that sets the project to the one currently loaded in ArcGIS Pro<ul>
+<li>Must be run from within ArcGIS Pro(e.g., python window or a geoprocessing script tool)</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -2662,57 +2680,10 @@ Feature class: , city_township_unorg, Spatial Reference name :, NAD_1983_UTM_Zon
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### check directory structrue, change the path to the map file</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## change the directory </span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cd..<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>tree
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Folder PATH listing for volume OS
-Volume serial number is DA19-2472
-C:.
-+---01 Data
-�   +---ShapeFile_Inputs
-�       +---ExtractedZip
-�           +---metadata
-+---02 Result
-�   +---savageMN_BikePaths.gdb
-+---03 Map
-�   +---Index
-�       +---savage_bicyclePaths_index
-�           +---Connections
-�           +---savage_bicyclePaths
-�           +---Thumbnail
-+---Tools
-+---__pycache__
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -2750,6 +2721,19 @@ C:.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Set the directory to the 03 Map folder (where the .aprx ArcGIS Project exists)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
@@ -2781,81 +2765,7 @@ C:.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pwd</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[65]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;c:\\Projects\\my_git_pages_website\\Py-and-Sky-Labs\\content\\GIS\\03 Map&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>dir
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre> Volume in drive C is OS
- Volume Serial Number is DA19-2472
-
- Directory of c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\03 Map
-
-04/06/2025  10:43 AM    &lt;DIR&gt;          .
-04/06/2025  10:18 AM    &lt;DIR&gt;          ..
-04/06/2025  10:42 AM    &lt;DIR&gt;          Index
-04/06/2025  10:43 AM           569,122 savage_bicyclePaths.aprx
-               1 File(s)        569,122 bytes
-               3 Dir(s)  422,354,165,760 bytes free
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Set the path to the folder and file holding the map </span>
@@ -2878,25 +2788,130 @@ C:.
 
 
 
-<span class="c1"># Load the ArcGIS Pro project</span>
+<span class="c1"># Load the ArcGIS Pro project object to give us access to the contents of that project</span>
 <span class="n">aprx</span> <span class="o">=</span>  <span class="n">arcpy</span><span class="o">.</span><span class="n">mp</span><span class="o">.</span><span class="n">ArcGISProject</span><span class="p">(</span><span class="n">aprx_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">aprx</span><span class="o">.</span><span class="n">isReadOnly</span><span class="p">)</span>
+</pre></div>
 
-<span class="c1">## Print map names choose the map to add layers to</span>
-<span class="nb">print</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">aprx</span><span class="o">.</span><span class="n">listMaps</span><span class="p">()])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    </div>
+</div>
+</div>
 
-<span class="c1"># Pick the map to load</span>
-<span class="n">map_object</span> <span class="o">=</span> <span class="n">aprx</span><span class="o">.</span><span class="n">listMaps</span><span class="p">(</span><span class="s2">&quot;Project Map&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">## Use arcpy.listMaps(&quot;MapName&quot;)[0] if you only have one map</span>
+<div class="output_wrapper">
+<div class="output">
 
-<span class="nb">print</span><span class="p">(</span><span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>False
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Note that the project file is read only if referenced more than once (e.g., script is run multiple times)</span>
+    <span class="c1"># Most of the time project file will be read-only --- not allowing it to be saved after making changes </span>
+    <span class="c1"># More reliable to save it by making a copy of the initial project file</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Use listMaps function on the ArcGISProject object to get a python list of the available maps in the project</span>
+
+
+<span class="c1"># Set the map in the project file that you want to work on</span>
+<span class="n">my_proj_map</span> <span class="o">=</span> <span class="s2">&quot;Project Map&quot;</span>
+
+
+
+<span class="c1"># Store all map names in the project file</span>
+<span class="n">proj_maps</span><span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">aprx</span><span class="o">.</span><span class="n">listMaps</span><span class="p">()]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Available maps in the project file: &quot;</span><span class="p">,</span> <span class="n">proj_maps</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">my_proj_map</span> <span class="ow">in</span> <span class="n">proj_maps</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">my_proj_map</span><span class="si">}</span><span class="s2"> found</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Pick the map to load</span>
+    <span class="n">map_object</span> <span class="o">=</span> <span class="n">aprx</span><span class="o">.</span><span class="n">listMaps</span><span class="p">(</span><span class="n">my_proj_map</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">## Use arcpy.listMaps(&quot;MapName&quot;)[0] i.e., use an index value of 0 on the list to access the specific map object</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully loaded the map&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">my_proj_map</span><span class="si">}</span><span class="s2"> not found in </span><span class="si">{</span><span class="nb">map</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Available maps in the project file:  [&#39;Project Map&#39;, &#39;PCS_EqualEarth&#39;, &#39;NAD83&#39;, &#39;Mercator&#39;, &#39;Robinson&#39;, &#39;Albers&#39;, &#39;GCS_WGS84&#39;]
+Project Map found
+
+Successfully loaded the map
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Add-data-to-a-to-map"><strong>Add data to a to map</strong><a class="anchor-link" href="#Add-data-to-a-to-map">&#182;</a></h3><h4 id="map.addDataFromPath()"><code>map.addDataFromPath()</code><a class="anchor-link" href="#map.addDataFromPath()">&#182;</a></h4><ul>
+<li>Allows you to add data to a map in a project</li>
+<li>addDataFromPath (data_path, {web_service_type}, {custom_parameters})<ul>
+<li>can provide a feature class name, local path, or URL</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[123]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Store the fc in from the workspace</span>
 <span class="n">feature_classes</span> <span class="o">=</span>  <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gdb_path</span><span class="p">)</span> <span class="c1"># validate the path is the one you expect</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-
+<span class="c1">### Load the fc onto the project map</span>
 <span class="k">try</span><span class="p">:</span>
 
     <span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">feature_classes</span><span class="p">:</span>
@@ -2932,16 +2947,308 @@ C:.
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;Project Map&#39;, &#39;PCS_EqualEarth&#39;, &#39;NAD83&#39;, &#39;Mercator&#39;, &#39;Robinson&#39;, &#39;Albers&#39;, &#39;GCS_WGS84&#39;]
-
-
-[&#39;Bikeways_in_Minnesota&#39;, &#39;city_township_unorg&#39;]
-
-
-c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result\savageMN_BikePaths.gdb
+<pre>c:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS\02 Result\savageMN_BikePaths.gdb
 
 
 Successfully loaded the layers onto the project and saved the map
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Analysis-of-bike-paths"><strong>Analysis of bike paths</strong><a class="anchor-link" href="#Analysis-of-bike-paths">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Let&#39;s see if we can determine the total length of all bike paths </span>
+
+<span class="n">fc_list</span> <span class="o">=</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFeatureClasses</span><span class="p">()</span>
+
+<span class="c1"># Get the fc using a shortened name </span>
+<span class="c1"># helpful if we cannot remember the full fc name</span>
+
+<span class="k">for</span> <span class="n">fc</span> <span class="ow">in</span> <span class="n">fc_list</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;bike&quot;</span> <span class="ow">in</span> <span class="n">fc</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="n">bikepaths</span><span class="o">=</span><span class="n">fc</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bikepaths</span><span class="si">}</span><span class="s2"> Feature Class Found&quot;</span><span class="p">)</span>
+    
+    <span class="k">elif</span> <span class="s2">&quot;city&quot;</span> <span class="ow">in</span> <span class="n">fc</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+        <span class="n">ctu</span><span class="o">=</span><span class="n">fc</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctu</span><span class="si">}</span><span class="s2"> Feature Class Found&quot;</span><span class="p">)</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature Class not found&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Bikeways_in_Minnesota Feature Class Found
+city_township_unorg Feature Class Found
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Check the fields for the bikepaths layer</span>
+
+<span class="n">cat</span><span class="o">.</span><span class="n">showFieldinfo</span><span class="p">(</span><span class="n">bikepaths</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>*Summary*
+ Fields in the Polyline Feature Class: Bikeways_in_Minnesota
+
+Name                 Type         Length   Unique_Values
+ OBJECTID             | OID        | 4     | 46735     
+ Shape                | Geometry   | 0     | 46427     
+ UNIQUE_ID            | String     | 36    | 46735     
+ BKWYNAME             | String     | 150   | 2698      
+ BKWYSYSTEM           | String     | 150   | 231       
+ SHAREDNAME           | String     | 150   | 510       
+ FACTYPE              | String     | 100   | 20        
+ FED_SYS              | String     | 10    | 3         
+ NATION_SYS           | String     | 10    | 3         
+ STATE_SYS            | String     | 10    | 3         
+ REGION_SYS           | String     | 10    | 3         
+ COUNTY_SYS           | String     | 10    | 3         
+ LOCAL_SYS            | String     | 10    | 3         
+ TRIBAL_SYS           | String     | 10    | 3         
+ PRIV_SYS             | String     | 10    | 3         
+ LANDOWNER            | String     | 150   | 143       
+ OWNERTYPE            | String     | 50    | 11        
+ ORGNAME              | String     | 150   | 233       
+ ORGTYPE              | String     | 50    | 13        
+ BKWYSTATUS           | String     | 50    | 11        
+ BKWYSURF             | String     | 50    | 9         
+ YEAR_PRGRM           | Integer    | 4     | 67        
+ YEAR_OPEN            | Integer    | 4     | 72        
+ WIDTH_FT             | Double     | 8     | 35        
+ SEASNL_ACC           | String     | 20    | 5         
+ DIRECTION            | String     | 20    | 5         
+ PVMNTMARKS           | String     | 10    | 4         
+ LIGHTING             | String     | 10    | 4         
+ SIGNING              | String     | 10    | 4         
+ SEPARATION           | String     | 100   | 6         
+ ROAD_BR              | String     | 100   | 4         
+ RMBL_STRIP           | String     | 10    | 3         
+ RMBL_TYPE            | String     | 100   | 2         
+ RMBL_PLACE           | String     | 100   | 2         
+ BKWY_URL             | String     | 254   | 97        
+ DATASOURCE           | String     | 50    | 7         
+ EDIT_ORG             | String     | 100   | 55        
+ EDIT_DATE            | Date       | 8     | 51        
+ COMMENTS             | String     | 254   | 680       
+ SHAPE_Leng           | Double     | 8     | 46414     
+ Shape_Length         | Double     | 8     | 46418     
+
+Total Record Count: 46735, Total Geometry Count(by WKT): 46431
+Warning 304 Potential Duplicate Features Detected in the Feature Class
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Shape Length field is useful here</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Search and sum the bike layer feature length for all features</span>
+
+<span class="n">total_pathLength</span><span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">SearchCursor</span><span class="p">(</span><span class="n">bikepaths</span><span class="p">,[</span><span class="s2">&quot;Shape_Length&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">total_pathLength</span> <span class="o">+=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total bike path length across the state is: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">total_pathLength</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> meters or </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">total_pathLength</span><span class="o">*</span><span class="w"> </span><span class="mf">0.00062137</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> miles&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total bike path length across the state is: 20925649.04 meters or 13002.57 miles
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[115]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cat</span><span class="o">.</span><span class="n">showFieldinfo</span><span class="p">(</span><span class="n">ctu</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>*Summary*
+ Fields in the Polygon Feature Class: city_township_unorg
+
+Name                 Type         Length   Unique_Values
+ OBJECTID             | OID        | 4     | 2743      
+ Shape                | Geometry   | 0     | 2743      
+ GNIS_FEATU           | Integer    | 4     | 2693      
+ FEATURE_NA           | String     | 254   | 2249      
+ CTU_CLASS            | String     | 25    | 3         
+ COUNTY_GNI           | Integer    | 4     | 87        
+ COUNTY_COD           | String     | 2     | 87        
+ COUNTY_NAM           | String     | 100   | 87        
+ POPULATION           | Integer    | 4     | 1312      
+ SHAPE_Leng           | Double     | 8     | 2743      
+ Shape_Length         | Double     | 8     | 2743      
+ Shape_Area           | Double     | 8     | 2743      
+
+Total Record Count: 2743, Total Geometry Count(by WKT): 2743
+Warning 0 Potential Duplicate Features Detected in the Feature Class
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[124]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Find the total bike paths lengths within a specific city</span>
+
+<span class="c1"># We can use the field FEATURE_NA to access a specific city</span>
+<span class="c1"># Then create layers to enable use to select bike paths by locations</span>
+<span class="c1"># search and sum the bike layer feature length for all features</span>
+
+
+
+<span class="n">ctu_lyr</span><span class="o">=</span> <span class="s2">&quot;ctu_layer&quot;</span>
+<span class="n">bike_lyr</span> <span class="o">=</span> <span class="s2">&quot;bike_layer&quot;</span>
+<span class="n">ctu_name</span><span class="o">=</span>  <span class="s2">&quot;Savage&quot;</span>
+<span class="c1"># Select specific ctu</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">MakeFeatureLayer</span><span class="p">(</span><span class="n">ctu</span><span class="p">,</span><span class="n">ctu_lyr</span><span class="p">,</span><span class="n">where_clause</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;FEATURE_NA = &#39;</span><span class="si">{</span><span class="n">ctu_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+<span class="c1"># select bike paths that intersect the ctu</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">MakeFeatureLayer</span><span class="p">(</span><span class="n">bikepaths</span><span class="p">,</span><span class="n">bike_lyr</span><span class="p">)</span>
+
+
+<span class="c1">### arcpy.management.SelectLayerByLocation(in_layer, {overlap_type}, {select_features}, {search_distance}, {selection_type}, {invert_spatial_relationship})</span>
+<span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">SelectLayerByLocation</span><span class="p">(</span><span class="n">bike_lyr</span><span class="p">,</span><span class="s2">&quot;INTERSECT&quot;</span><span class="p">,</span><span class="n">ctu_lyr</span><span class="p">)</span>
+
+
+
+<span class="n">ctu_pathLength</span><span class="o">=</span> <span class="mi">0</span>
+<span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">SearchCursor</span><span class="p">(</span><span class="n">bike_lyr</span><span class="p">,[</span><span class="s2">&quot;Shape_Length&quot;</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ctu_pathLength</span> <span class="o">+=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total bike path length across the state is: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">ctu_pathLength</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> meters or </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">ctu_pathLength</span><span class="o">*</span><span class="w"> </span><span class="mf">0.00062137</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> miles&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total bike path length across the state is: 183180.46 meters or 113.82 miles
 </pre>
 </div>
 </div>

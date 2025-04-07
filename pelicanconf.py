@@ -84,10 +84,10 @@ I18N_TEMPLATES_LANG = 'en'
 
 BOOTSTRAP_THEME = 'flatly'
 PYGMENTS_STYLE = 'monokai'
-FAVICON = 'static/images/favicon-48x48.png'
+FAVICON = 'static/images/favicon.ico.png'
 
 EXTRA_PATH_METADATA = {
-    'static/images/favicon-48x48.png': {'path': 'favicon-48x48.png'}
+    'static/images/favicon.ico.png': {'path': 'favicon.ico.png'}
 }
 
 
