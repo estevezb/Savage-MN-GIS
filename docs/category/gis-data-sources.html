@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>Savage, MN GIS - GIS Data Sources</title>
+        <link rel="stylesheet" href="../theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="../">Savage, MN GIS</a></h1>
+                <nav><ul>
+                    <li><a href="../pages/home.html">Welcome</a></li>
+                    <li><a href="../pages/about-me.html">About Me</a></li>
+                    <li><a href="../category/arcpy.html">ArcPY</a></li>
+                    <li><a href="../category/disasters.html">Disasters</a></li>
+                    <li><a href="../category/drones.html">Drones</a></li>
+                    <li><a href="../category/gis.html">GIS</a></li>
+                    <li class="active"><a href="../category/gis-data-sources.html">GIS Data Sources</a></li>
+                    <li><a href="../category/python-examples.html">Python Examples</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="../articles/trusted-gis-data-sources.html">Trusted GIS Data Sources</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-07-11T00:00:00-05:00">
+                Published: Thu 11 July 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/gis-data-sources.html">GIS Data Sources</a>.</p>
+<p>tags: <a href="../tag/gis.html">GIS</a> <a href="../tag/data.html">data</a> <a href="../tag/search.html">search</a> <a href="../tag/brython.html">brython</a> </p>
+</footer><!-- /.post-info --><p><img src= "../images/GIS_DataSources.png" alt ="Data Sources Used in Geographic Information Sciences" style= " width 350px; height: 350px;"></p>
+<h2><strong>Disaster in Dominica</strong></h2>
+<p>This page provides an interactive interface to search and filter a curated collection of trusted GIS data sources. Use the search box to find sources by name, description, or tags (e.g., "Hydrology", "Minnesota", "National").</p>
+<div id="search-container">
+  <input id="search-input" type="text" placeholder="Type to search GIS sources..." style="width: 100%; padding: 8px; margin-bottom: 1em;" />
+  <div id="search-results"></div>
+  <!-- Hidden container (optional) to keep raw data if needed -->
+  <div id="data-container" style="display: none;"></div>
+</div>
+
+<!-- Include Brython libraries -->
+<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython_stdlib.js"></script>
+
+<!-- Brython code to load data, perform fuzzy search via difflib, and render results -->
+<script type="text/python">
+from browser import document, ajax, console, html
+import json, difflib
+
+# Global variable to hold our GIS data sources
+gis_sources = []
+
+def load_data(ev):
+    def on_complete(req):
+        if req.status in (200, 0):
+            try:
+                global gis_sources
+                gis_sources = json.loads(req.text)
+                console.log("GIS data loaded successfully!")
+            except Exception as e:
+                console.log("Error parsing JSON data:", e)
+        else:
+            console.log("Failed to load GIS data, status code:", req.status)
+    req = ajax.Ajax()
+    req.bind('complete', on_complete)
+    # Ensure the path here correctly points to the JSON file relative to your site's root.
+    req.open('GET', '/GIS_Data_Sources/data/gis_sources.json', True)
+    req.send()
+
+def render_results(matches):
+    results_div = document['search-results']
+    results_div.clear()
+    # Display up to a maximum of 10 results at a time.
+    for source in matches[:10]:
+        entry = html.DIV()
+        entry.innerHTML = (
+            f"<strong>{source['name']}</strong>: {source.get('description', 'No description available.')}"
+            f" <br> <a href='{source['url']}' target='_blank'>Visit</a>"
+        )
+        if 'tags' in source:
+            tags_str = ", ".join(source['tags'])
+            entry.innerHTML += f"<br><em>Tags:</em> {tags_str}"
+        entry.style.marginBottom = "1em"
+        results_div <= entry
+
+def search(ev):
+    query = document['search-input'].value.lower().strip()
+    if not query:
+        document['search-results'].clear()
+        return
+
+    # Use difflib to attempt fuzzy matching on source names
+    names = [source['name'].lower() for source in gis_sources]
+    close_matches = difflib.get_close_matches(query, names, n=10, cutoff=0.3)
+    matches = [source for source in gis_sources if source['name'].lower() in close_matches]
+
+    # Additionally, check if the query is present in any tags or descriptions.
+    for source in gis_sources:
+        # Search within tags
+        if 'tags' in source and any(query in tag.lower() for tag in source['tags']):
+            if source not in matches:
+                matches.append(source)
+        # Search within the description text
+        if 'description' in source and query in source['description'].lower():
+            if source not in matches:
+                matches.append(source)
+
+    render_results(matches)
+
+# Initialize the data loading and bind the search event to the input.
+load_data(None)
+document['search-input'].bind('input', search)
+</script>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://www.spc.noaa.gov/products/outlook/day1otlk.html">NOAA Storm Prediction Center</a></li>
+                            <li><a href="https://www.weather.gov/">Active Weather Hazards</a></li>
+                            <li><a href="https://github.com/estevezb">My Github Page</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://x.com/bestevez100">Twitter/X</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -76,9 +76,9 @@ IPYNB_MARKUP_USE_FIRST_CELL = True
 
 
 
-
-
-STATIC_PATHS = ['static', 'images']
+### By default pelican does not process every file inside the content folder
+## Tells pelican to copy these files over to the final build
+STATIC_PATHS = ['static', 'images', 'GIS_Data_Sources/data'] 
 
 I18N_TEMPLATES_LANG = 'en'
 

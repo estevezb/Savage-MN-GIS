@@ -1,0 +1,152 @@
+[
+    {
+      "name": "National Map",
+      "url": "https://nationalmap.gov",
+      "description": "A comprehensive portal for U.S. vector and raster geospatial datasets across multiple themes (elevation, hydrography, transportation, boundaries).",
+      "tags": ["national", "vector", "raster", "government"]
+    },
+    {
+      "name": "USGS",
+      "url": "https://usgs.gov",
+      "description": "United States Geological Survey: federal science agency offering hydrology, geology, topography, remote sensing and mapping data.",
+      "tags": ["USGS", "federal", "geospatial", "remote sensing"]
+    },
+    {
+      "name": "USDA Forest Service Geodata",
+      "url": "https://data.fs.usda.gov/geodata/",
+      "description": "Provides vector data on forest and grassland features, biota, boundaries, environmental structures, transportation routes, and cadastral planning.",
+      "tags": ["USDA", "forest", "vector", "federal"]
+    },
+    {
+      "name": "USDA NRCS Geospatial Data Gateway",
+      "url": "https://datagateway.nrcs.usda.gov/",
+      "description": "Online portal for soil and conservation data, including SSURGO and other soil survey datasets at county and national scales.",
+      "tags": ["USDA", "soil", "conservation", "vector"]
+    },
+    {
+      "name": "USDA Farm Service Agency (NAIP)",
+      "url": "https://datagateway.nrcs.usda.gov/",
+      "description": "National Agriculture Imagery Program (NAIP): 1-m aerial photography collected on a three-year cycle, available as county mosaics.",
+      "tags": ["USDA", "imagery", "raster", "agriculture"]
+    },
+    {
+      "name": "Bureau of Land Management Navigator",
+      "url": "https://navigator.blm.gov/home",
+      "description": "Interactive platform for public land management data, including cadastral surveys, boundaries, grazing allotments, and oil & gas wells.",
+      "tags": ["BLM", "cadastral", "vector", "federal"]
+    },
+    {
+      "name": "US Fish and Wildlife Service Wetlands",
+      "url": "https://www.fws.gov/wetlands/",
+      "description": "Wetlands Mapper with data on location and condition of U.S. wetlands at a 1:24,000 scale.",
+      "tags": ["USFWS", "wetlands", "vector", "environment"]
+    },
+    {
+      "name": "US Census TIGER",
+      "url": "https://www.census.gov/programs-surveys/geography/guidance/tiger-data-products-guide.html",
+      "description": "Topologically Integrated Geographic Encoding and Referencing system: boundaries, roads, railroads, water features, and demographic statistics.",
+      "tags": ["Census", "boundaries", "transportation", "demographics"]
+    },
+    {
+      "name": "FEMA National Flood Hazard Layer",
+      "url": "https://www.fema.gov/national-flood-hazard-layer-nfhl",
+      "description": "Flood hazard zones, base flood elevations, high water marks, and associated structure data.",
+      "tags": ["FEMA", "flood", "hazard", "vector"]
+    },
+    {
+      "name": "USGS Landsat Analysis Ready Data",
+      "url": "https://www.usgs.gov/land-resources/nli/landsat/us-landsat-analysis-ready-data",
+      "description": "Landsat satellite imagery at 30 m resolution with 16-day revisit cycle, pre-processed for analysis-ready use.",
+      "tags": ["USGS", "satellite", "imagery", "raster"]
+    },
+    {
+      "name": "USGS EarthExplorer",
+      "url": "https://earthexplorer.usgs.gov/",
+      "description": "Search, preview, and download USGS satellite, aerial, and digital elevation data.",
+      "tags": ["USGS", "satellite", "imagery", "download"]
+    },
+    {
+      "name": "USGS GloVis",
+      "url": "https://glovis.usgs.gov/",
+      "description": "Map-based browser for quickly browsing and downloading satellite imagery and aerial photography.",
+      "tags": ["USGS", "satellite", "imagery", "browser"]
+    },
+    {
+      "name": "USGS National Hydrography Dataset (NHD)",
+      "url": "https://www.usgs.gov/core-science-systems/ngp/national-hydrography",
+      "description": "Comprehensive dataset of surface water features including lakes, ponds, streams, rivers, and man-made pipelines.",
+      "tags": ["USGS", "hydrography", "vector", "water"]
+    },
+    {
+      "name": "USGS 3D Elevation Program (3DEP)",
+      "url": "https://viewer.nationalmap.gov/basic/?category=nedsrc",
+      "description": "High-resolution LIDAR and DEM data nationwide, meeting Level 2 accuracy standards for elevation analysis.",
+      "tags": ["USGS", "elevation", "lidar", "raster"]
+    },
+    {
+      "name": "NOAA OneStop",
+      "url": "https://data.noaa.gov/onestop/",
+      "description": "High-resolution coastal and ocean bathymetry integrated with land topography (10 m resolution DEMs).",
+      "tags": ["NOAA", "elevation", "bathymetry", "raster"]
+    },
+    {
+      "name": "MRLC National Land Cover Database",
+      "url": "https://www.mrlc.gov/",
+      "description": "30 m resolution land cover raster dataset categorizing U.S. land into 16 classes (e.g., urban, water, forest).",
+      "tags": ["land cover", "raster", "environment"]
+    },
+    {
+      "name": "Natural Earth",
+      "url": "http://www.naturalearthdata.com/",
+      "description": "Public domain global vector and raster map data at multiple scales, ideal for cartographic and GIS applications.",
+      "tags": ["global", "vector", "raster", "public domain"]
+    },
+    {
+      "name": "OpenTopography",
+      "url": "https://opentopography.org/",
+      "description": "High-resolution topographic data and processing tools (LIDAR point clouds, DEMs) served in an academic portal.",
+      "tags": ["topography", "lidar", "raster", "academic"]
+    },
+    {
+      "name": "List of GIS data sources - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/List_of_GIS_data_sources",
+      "description": "Crowdsourced directory of global GIS data sources covering vector, raster, and thematic datasets.",
+      "tags": ["global", "directory", "wiki", "open"]
+    },
+    {
+      "name": "Esri ArcGIS Online",
+      "url": "https://www.arcgis.com/",
+      "description": "Cloud-based GIS platform for data sharing, spatial analysis, mapping, and collaboration.",
+      "tags": ["Esri", "cloud", "vector", "raster", "platform"]
+    },
+    {
+      "name": "Minnesota Geospatial Commons",
+      "url": "https://gisdata.mn.gov",
+      "description": "Statewide open data portal providing Minnesota-specific geospatial datasets from state, regional, and local agencies.",
+      "tags": ["Minnesota", "state", "open data", "vector", "raster"]
+    },
+    {
+      "name": "Minnesota DNR Data Deli",
+      "url": "https://deli.dnr.state.mn.us",
+      "description": "Department of Natural Resources portal offering GIS layers for land cover, water resources, ecological data, and wildlife habitat in Minnesota.",
+      "tags": ["Minnesota", "DNR", "ecology", "water", "vector", "raster"]
+    },
+    {
+      "name": "Metropolitan Council Open Data",
+      "url": "https://metrocouncil.org/Data-and-Maps",
+      "description": "Regional data portal for the Twin Cities Metropolitan Council offering GIS datasets on transportation, demographics, land use, and planning.",
+      "tags": ["Minnesota", "regional", "transportation", "demographics", "vector"]
+    },
+    {
+      "name": "MnDOT GIS Data",
+      "url": "https://gisdata.mn.gov/dataset?tags=Transportation",
+      "description": "Minnesota Department of Transportation GIS portal providing road networks, traffic volumes, crash data, and transportation planning layers.",
+      "tags": ["Minnesota", "transportation", "roads", "traffic", "vector"]
+    },
+    {
+      "name": "eBird",
+      "url": "https://ebird.org/data/download",
+      "description": "Global avian observation database from the Cornell Lab of Ornithology, providing species occurrence data (including owl sightings) and occurrence maps accessible via download and API.",
+      "tags": ["biodiversity", "avian", "observations", "API"]
+    }
+  ]

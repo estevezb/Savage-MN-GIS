@@ -18,6 +18,7 @@
                     <li><a href="../category/disasters.html">Disasters</a></li>
                     <li><a href="../category/drones.html">Drones</a></li>
                     <li><a href="../category/gis.html">GIS</a></li>
+                    <li><a href="../category/gis-data-sources.html">GIS Data Sources</a></li>
                     <li><a href="../category/python-examples.html">Python Examples</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
@@ -385,6 +386,47 @@ Altogether, training the USA building footprint model with our imagery improved 
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="../articles/trusted-gis-data-sources.html" rel="bookmark"
+                           title="Permalink to Trusted GIS Data Sources">Trusted GIS Data Sources</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-07-11T00:00:00-05:00">
+                Published: Thu 11 July 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/gis-data-sources.html">GIS Data Sources</a>.</p>
+<p>tags: <a href="../tag/gis.html">GIS</a> <a href="../tag/data.html">data</a> <a href="../tag/search.html">search</a> <a href="../tag/brython.html">brython</a> </p>
+</footer><!-- /.post-info -->                <p><img src= "../images/GIS_DataSources.png" alt ="Data Sources Used in Geographic Information Sciences" style= " width 350px; height: 350px;"></p>
+<h2><strong>Disaster in Dominica</strong></h2>
+<p>This page provides an interactive interface to search and filter a curated collection of trusted GIS data sources. Use the search box to find sources by name, description, or tags (e.g., "Hydrology", "Minnesota", "National").</p>
+<div id="search-container">
+  <input id="search-input" type="text" placeholder="Type to search GIS sources..." style="width: 100%; padding: 8px; margin-bottom: 1em;" />
+  <div id="search-results"></div>
+  <!-- Hidden container (optional) to keep raw data if needed -->
+  <div id="data-container" style="display: none;"></div>
+</div>
+
+<!-- Include Brython libraries -->
+<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython_stdlib.js"></script>
+
+<!-- Brython code to load data, perform fuzzy search via difflib, and render results -->
+<script type="text/python">
+from browser import document, ajax, console, html
+import json, difflib
+
+# Global variable …</script>
+                <a class="readmore" href="../articles/trusted-gis-data-sources.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
