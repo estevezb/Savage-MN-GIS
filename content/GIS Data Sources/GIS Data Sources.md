@@ -10,7 +10,7 @@ Author: Brian Estevez
 <img src= "{static}/images/GIS_DataSources.png" alt ="Data Sources Used in Geographic Information Sciences" style= " width 350px; height: 350px;">
 
 
-## **Disaster in Dominica**
+## **Query Data Sources Below**
 
 This page provides an interactive interface to search and filter a curated collection of trusted GIS data sources. Use the search box to find sources by name, description, or tags (e.g., "Hydrology", "Minnesota", "National").
 
@@ -24,7 +24,10 @@ This page provides an interactive interface to search and filter a curated colle
 <!-- Include Brython libraries -->
 <script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython_stdlib.js"></script>
-
+<script>
+  // run Brython as soon as the page loads
+  window.addEventListener('load', () => brython());
+</script>
 <!-- Brython code to load data, perform fuzzy search via difflib, and render results -->
 <script type="text/python">
 from browser import document, ajax, console, html
@@ -47,7 +50,7 @@ def load_data(ev):
     req = ajax.Ajax()
     req.bind('complete', on_complete)
     # Ensure the path here correctly points to the JSON file relative to your site's root.
-    req.open('GET', '/GIS_Data_Sources/data/gis_sources.json', True)
+    req.open('GET', '/static/data/gis_sources.json', True)
     req.send()
 
 def render_results(matches):

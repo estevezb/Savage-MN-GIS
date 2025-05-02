@@ -27,6 +27,47 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="../articles/arcpy-qc-and-join.html" rel="bookmark"
+                           title="Permalink to QC and Join data in Arcpy">QC and Join data in Arcpy</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-11-01T00:00:00-05:00">
+                Published: Fri 01 November 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/arcpy.html">ArcPY</a>.</p>
+
+</footer><!-- /.post-info -->                
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="images/ArcPY_QC_FlowChart.svg" alt="Obsidian-generated flow chart depicting steps of an Arcpy spatial data QC and join" style=" width 400px; height: 400px;"></p>
+<ul>
+<li>Flow chart of a workflow to prepare two datasets for spatial join</li>
+<li>The analysis includes checks for unique ID fields and duplicate geometry </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-Arcpy?:"><strong>What is Arcpy?:</strong><a class="anchor-link" href="#What-is-Arcpy?:">&#182;</a></h3><p>Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
+<ul>
+<li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
+<li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
+                <a class="readmore" href="../articles/arcpy-qc-and-join.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="../articles/what-is-arcpy-part3.html" rel="bookmark"
                            title="Permalink to What is ArcPY? Part3">What is ArcPY? Part3</a></h1>
                 </header>
@@ -151,7 +192,7 @@
 <p>In <a href="../category/gis-data-sources.html">GIS Data Sources</a>.</p>
 <p>tags: <a href="../tag/gis.html">GIS</a> <a href="../tag/data.html">data</a> <a href="../tag/search.html">search</a> <a href="../tag/brython.html">brython</a> </p>
 </footer><!-- /.post-info -->                <p><img src= "../images/GIS_DataSources.png" alt ="Data Sources Used in Geographic Information Sciences" style= " width 350px; height: 350px;"></p>
-<h2><strong>Disaster in Dominica</strong></h2>
+<h2><strong>Query Data Sources Below</strong></h2>
 <p>This page provides an interactive interface to search and filter a curated collection of trusted GIS data sources. Use the search box to find sources by name, description, or tags (e.g., "Hydrology", "Minnesota", "National").</p>
 <div id="search-container">
   <input id="search-input" type="text" placeholder="Type to search GIS sources..." style="width: 100%; padding: 8px; margin-bottom: 1em;" />
@@ -163,45 +204,10 @@
 <!-- Include Brython libraries -->
 <script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython_stdlib.js"></script>
-
-<!-- Brython code to load data, perform fuzzy search via difflib, and render results -->
-<script type="text/python">
-from browser import document, ajax, console, html
-import json, difflib
-
-# Global variable …</script>
+<script>
+  // run Brython as soon as the page loads
+  window.addEventListener('load' …</script>
                 <a class="readmore" href="../articles/trusted-gis-data-sources.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="../articles/group-filter-pandas-plotly.html" rel="bookmark"
-                           title="Permalink to Grouping, filtering with Pandas and plotly">Grouping, filtering with Pandas and plotly</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-07-08T00:00:00-05:00">
-                Published: Mon 08 July 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="../category/python-examples.html">Python Examples</a>.</p>
-<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/data-analysis.html">Data Analysis</a> <a href="../tag/plotly.html">Plotly</a> </p>
-</footer><!-- /.post-info -->                
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Grouping"><strong>Grouping</strong><a class="anchor-link" href="#Grouping">&#182;</a></h3><ul>
-<li>Grouping is a way to break data into subsets for further analysis</li>
-<li><strong><em>Why do we group data?</em></strong> grouping data -and making comparisons between groups- is usually the only way to identify interesting patterns and trends</li>
-<li>By grouping data you effectively create a 'new' grouped data structure</li>
-<li>You may recognize that by taking an input and making a new data structure from it, we keep the original data intact, aligning with functional programming concepts <ul>
-<li>i.e., we always want to maintain the integrity of the original data and keep things clear and concise</li>
-                <a class="readmore" href="../articles/group-filter-pandas-plotly.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

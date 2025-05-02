@@ -78,7 +78,7 @@ IPYNB_MARKUP_USE_FIRST_CELL = True
 
 ### By default pelican does not process every file inside the content folder
 ## Tells pelican to copy these files over to the final build
-STATIC_PATHS = ['static', 'images', 'GIS_Data_Sources/data'] 
+STATIC_PATHS = ['static', 'images', 'GIS Data Sources/data'] 
 
 I18N_TEMPLATES_LANG = 'en'
 
@@ -92,7 +92,7 @@ EXTRA_PATH_METADATA = {
 
 
 
-IGNORE_FILES = ["map.html", "map_template.html"]
+IGNORE_FILES = ["map.html", "map_template.html", "C:\Projects\my_git_pages_website\Py-and-Sky-Labs\content\GIS Data Sources/data" ]
 
 # Disable the default blog index
 # INDEX_SAVE_AS = 'index.html' # disabled to prevent recent blog page format being created
