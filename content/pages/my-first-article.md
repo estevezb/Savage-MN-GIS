@@ -10,6 +10,13 @@ Hello! My name is Brian Estevez. I really enjoy using and learning about Python 
 
 This site is a place to share in the exploration of these topics.
 
-# **What is Python programming?**
+## Key GIS projects:
 
-Python is a popular computer programming language. Python programming is the practice of writing scripts or code that enable you to control, communicate with and connects to computers. Python programming is more than stringing code into apps; it’s a way to explore the unknown, test ideas and solve real problems. Many fields (e.g., Atmospheric Sciences, Computer vision, and GIS) use python for software development, data analysis, and applications in artificial intelligence. 
+- **UAV Asset Mapping** – Used drone imagery and Pix4DMatic , ArcGIS Pro to map assets (road lines, parking stalls, manholes, drains)
+- **Groundwater Contamination Dashboard** – Integrated state well data with ArcGIS Pro and Python [Link](https://www.arcgis.com/apps/dashboards/e53b8dee993d458c858cb53a1ed56b99)
+
+- **Custom ArcPy Tools** – Developed scripts and workflows for automating geoprocessing [Link](https://github.com/estevezb/GIS-Tools/tree/main/ArcGISPro/Arcpy) 
+
+- **Disaster Damage Assessment** – Applied ArcGIS Deep Learning for hurricane damage mapping [Link](https://estevezb.github.io/Savage-MN-GIS/category/disasters.html) and online map here: [AGOL](https://www.arcgis.com/home/item.html?id=a98ff2773b7c4e3eb36b6a1a7f1288ef)
+
+- **Search Database for GIS Data** - Developed an search engine web app allows users to query for trusted GIS databases: [Link](https://estevezb.github.io/Savage-MN-GIS/category/gis-data-sources.html)

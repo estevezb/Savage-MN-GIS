@@ -7,7 +7,7 @@ Authors: Savage, MN GIS
 Summary: Explore Python, GIS and drone technology!
 
 
-Welcome to Savage, MN GIS, where we explore  **Python programming**,  **geographic information systems (GIS)**, and **Unmanned Aerial Vehicles** or **Drones** technology
+Welcome to Savage, MN GIS, where we explore  **Python programming**,  **geographic information systems (GIS)**, and **Unmanned Aerial Vehicles** or **Drone** technology
 
 ## Who is This Site For?
 

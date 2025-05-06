@@ -2137,7 +2137,7 @@ C:.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Get-online-data-with-the-Requests-library"><strong>Get online data with the Requests library</strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="requests.get(url,-params=-None,-**kwargs)"><code>requests.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#requests.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
+<h3 id="Get-online-data-with-the-Requests-library"><strong>Get online data with the Requests library</strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="response.get(url,-params=-None,-**kwargs)"><code>response.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#response.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
 <li>Required argument : url (url to send the request to)</li>
 <li>params(optional, default is None), allows you to pass in query parameters that filter, modify or sort the data you're requesting<ul>
 <li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params ={key:value})</li>
@@ -2167,7 +2167,7 @@ C:.
 <span class="c1"># Ofcourse, we can always navigate to MN Geocommons or elsewhere, click, download and place the zipfile into our data input folder</span>
 <span class="c1"># Would have to do this every time, i.e., creating folders, navigating to extracted folder, extracting files</span>
 <span class="c1"># The downloadShapefile Function below accomplishes all this automatically using only the target url, and optional target folder</span>
-    <span class="c1"># Note: it re-uses are previous function to get the script path and use that to create the target folder for storing data</span>
+    <span class="c1"># Note: it re-uses a previous function to get the script path and use that to create the target folder for storing the downloaded data</span>
 
 
 <span class="k">def</span> <span class="nf">downloadShapefile</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">target_folder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
