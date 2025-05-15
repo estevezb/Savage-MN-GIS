@@ -8,12 +8,13 @@ Summary: Hello!
 
 Hello! My name is Brian Estevez. My background is as an academic rare blood disease cell and molecular pharmacologist. Came into Geospatial data by accident while working as a life science consultant making simple maps of medical claims volume and hospitals treating rare diseases. 
 
-I enjoy Python programming, Unmanned aerial Vehicle (UAV) or Drone technology, and Geographical Information Systems (GIS).
+I enjoy Python programming, Unmanned Aerial Vehicle (UAV) or Drone technology, and Geographical Information Systems (GIS).
 This site is a place to share in the exploration of these topics.
 
 ## Key projects:
 
-- **UAV Asset Mapping** – Used drone imagery, Pix4D, and ArcGIS Pro to map assets (3D animation example and map below)
+- **UAV-Based Road Mapping and Infrastructure Extraction**
+This project demonstrates how UAV imagery can be used to map and assess road conditions and adjacent infrastructure. I collected imagery with a drone, processed the imagery into a point cloud using Pix4Dmatic, then imported it into Pix4Dsurvey to automatically detect road centerlines, manholes, storm drains, and lamp posts. These features were exported as shapefiles and finalized in ArcGIS Pro, symbology added and integrated with the orthomosaic for presentation. This workflow demonstrates how UAVs and intelligent extraction tools can support efficient, repeatable infrastructure mapping for local governments. (3D animation example and map below)
 <video width="600" controls>
   <source src="{static}/videos/CitySavage_Road.webm" type="video/webm">
   Your browser does not support the video tag.
@@ -21,10 +22,18 @@ This site is a place to share in the exploration of these topics.
 
 <img src= "{static}/images/CitySavageRoadsExample.svg" alt ="UAV images processed in Pix4DMatic with objects automatically detected in Pix4DSurvey. Mapping in ArcGIS Pro" style= " width 350px; height: 350px;">
 
-- **Groundwater Contamination Dashboard** – Integrated state well data with ArcGIS Pro and Python [Link](https://www.arcgis.com/apps/dashboards/e53b8dee993d458c858cb53a1ed56b99)
 
-- **Custom ArcPy Tools** – Developed scripts and workflows for automating geoprocessing [Link](https://github.com/estevezb/GIS-Tools/tree/main/ArcGISPro/Arcpy) 
+- **Scott County Food Resource Map (ArcGIS Experience Builder)**
+Inspired by Hennepin County’s public food resource map, this project expands Scott County’s internal dataset into a public-facing tool. I discovered, through volunteering with Meals on Wheels, that local service areas like Savage weren’t fully represented. I extended their dataset, aligned my edits to their schema, resolved symbology, and published an interactive map using Experience Builder. A local .gdb copy preserves source attribution for future collaboration. [Link](https://experience.arcgis.com/experience/734735727e6741f59f0efe021dcbc89c/)
 
-- **Disaster Damage Assessment** – Applied ArcGIS Deep Learning for hurricane damage mapping [Link](https://estevezb.github.io/Savage-MN-GIS/category/disasters.html) and online map here: [AGOL](https://www.arcgis.com/home/item.html?id=a98ff2773b7c4e3eb36b6a1a7f1288ef)
+- **Groundwater Contamination Dashboard** 
+Integrated state well data with ArcGIS Pro and Python [Link](https://www.arcgis.com/apps/dashboards/e53b8dee993d458c858cb53a1ed56b99)
 
-- **Search Database for GIS Data** - Developed a search engine web app allows users to query for trusted GIS databases: [Link](https://estevezb.github.io/Savage-MN-GIS/category/gis-data-sources.html)
+- **Custom ArcPy Tools** 
+Developed scripts and workflows for automating geoprocessing [Link](https://github.com/estevezb/GIS-Tools/tree/main/ArcGISPro/Arcpy) 
+
+- **Disaster Damage Assessment**
+ Applied ArcGIS Deep Learning for hurricane damage mapping [Link](https://estevezb.github.io/Savage-MN-GIS/category/disasters.html) and online map here: [AGOL](https://www.arcgis.com/home/item.html?id=a98ff2773b7c4e3eb36b6a1a7f1288ef)
+
+- **Search Database for GIS Data** 
+Developed a search engine web app allows users to query for trusted GIS databases: [Link](https://estevezb.github.io/Savage-MN-GIS/category/gis-data-sources.html)
