@@ -2247,7 +2247,7 @@ JoinKey
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Summary-Statistics"><strong>Summary Statistics</strong><a class="anchor-link" href="#Summary-Statistics">&#182;</a></h3><h4 id="arcpy.analsysis.Statistics()"><code>arcpy.analsysis.Statistics()</code><a class="anchor-link" href="#arcpy.analsysis.Statistics()">&#182;</a></h4><ul>
+<h3 id="Summary-Statistics"><strong>Summary Statistics</strong><a class="anchor-link" href="#Summary-Statistics">&#182;</a></h3><h4 id="arcpy.analysis.Statistics()"><code>arcpy.analysis.Statistics()</code><a class="anchor-link" href="#arcpy.analysis.Statistics()">&#182;</a></h4><ul>
 <li>Calculate summary statistics for fields in a table</li>
 <li><strong>arcpy.analysis.Statistics(in_table, out_table, statistics_fields, {case_field}, {concatenation_separator})</strong><ul>
 <li>Key Arguments:<ul>
@@ -2419,7 +2419,61 @@ JoinKey
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Join two tables based on a common field and its values</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## We have already spatially joined a point layer of ground water well sites and a polygon layer of CTU locations</span>
+<span class="c1"># Next identify unique well sites within each CTU </span>
+<span class="c1"># Define a unique well:</span>
+<span class="c1">#   A spatially unique well is a unique combination of CTU Feature ID (GNIS_FEATURE_ID) + County ID (COUNY_GNIS_ID) + Well ID (sys_loc_co)</span>
+
+<span class="c1">## We need to </span>
+<span class="c1"># 1) Create a new field that will mark each each spatially unique well within each polygon of the CTU layer</span>
+<span class="c1"># 2) Join modified CTU layer with the Wells Data</span>
+<span class="c1"># 3) Create a table or view of the joined dataset that selects only the most recent sampling date for each unique well</span>
+
+
+<span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span>
+<span class="n">newfield</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">newfield</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ListFields</span><span class="p">(</span><span class="n">fc</span><span class="p">)]:</span>
+
+        <span class="c1">## a new field</span>
+        <span class="n">arcpy</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">AddField</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span><span class="n">newfield</span><span class="p">,</span><span class="s2">&quot;TEXT&quot;</span><span class="p">,</span><span class="n">field_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New </span><span class="si">{</span><span class="n">newfield</span><span class="si">}</span><span class="s2"> field added&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">da</span><span class="o">.</span><span class="n">UpdateCursor</span><span class="p">(</span><span class="n">fc</span><span class="p">,[</span><span class="s2">&quot;sys_loc_co&quot;</span><span class="p">,</span><span class="s2">&quot;Combined_GNIS_IDs&quot;</span><span class="p">,</span> <span class="n">newfield</span><span class="p">])</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+                <span class="n">well_id</span><span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">combined_id</span><span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span>  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">well_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">combined_id</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">updateRow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully updated the table for the new field&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">newfield</span><span class="si">}</span><span class="s2"> aleady exists in the target dataset </span><span class="si">{</span><span class="n">fc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span> <span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcpy Error&quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+
+<span class="c1">## Calculate summary stats</span>
+
+<span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span>
+<span class="n">newfield</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span> <span class="c1"># Field to be used to summarize or group the data</span>
+<span class="n">statisticfield</span><span class="o">=</span> <span class="s2">&quot;latest_sam&quot;</span> <span class="c1"># date field</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1">### TOOL: arcpy.analysis.Statistics(in_table, out_table, statistics_fields, {case_field}, {concatenation_separator})</span>
+    <span class="n">arcpy</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="n">fc</span><span class="p">,</span> <span class="s2">&quot;MN_WaterContamination_Stats&quot;</span><span class="p">,[[</span><span class="n">statisticfield</span><span class="p">,</span><span class="s2">&quot;MAX&quot;</span><span class="p">]],</span> <span class="n">case_field</span><span class="o">=</span> <span class="n">newfield</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Statistics Successfully calculated for&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">ExecuteError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcy Error&quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1">### 11275 is the count of records for unique wells within each CTU by their most recent sampling date</span>
+    <span class="c1"># This is the level or grain our datasets needs to be in to map well water site contamination by CTU </span>
+    <span class="c1"># one row = a unique well within a unique CTU for the most recent sampling date</span>
+<span class="c1">### Join two tables based on a common field and its values</span>
 
 <span class="n">in_fc</span><span class="o">=</span> <span class="s2">&quot;MN_WaterContamination_SpatialJoin&quot;</span> <span class="c1"># input table</span>
 <span class="n">in_join_key</span><span class="o">=</span> <span class="s2">&quot;JoinKey&quot;</span>
@@ -2438,6 +2492,9 @@ JoinKey
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Arcy Error: &quot;</span><span class="p">,</span> <span class="n">arcpy</span><span class="o">.</span><span class="n">GetMessages</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="c1">### We added the Max Date from the stats table to our joined data, now we will use this to refine our joined dataset</span>
+    <span class="c1"># if the Joined Layer has different dates for each well, then we should be able to filter it using this max date field</span>
+    <span class="c1"># would give us the grain of data we need: one row is one unique well within one unique CTU for the latest sampling date</span>
 </pre></div>
 
     </div>

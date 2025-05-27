@@ -2544,7 +2544,7 @@ MULTIPOLYGON 1
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Use-PairwiseIntersect-to-dected-overlapping-Features"><strong>Use PairwiseIntersect to dected overlapping Features</strong><a class="anchor-link" href="#Use-PairwiseIntersect-to-dected-overlapping-Features">&#182;</a></h3><h4 id="arcpy.analysis.PairwiseIntersect()"><code>arcpy.analysis.PairwiseIntersect()</code><a class="anchor-link" href="#arcpy.analysis.PairwiseIntersect()">&#182;</a></h4><ul>
+<h3 id="Use-PairwiseIntersect-to-detect-overlapping-Features"><strong>Use PairwiseIntersect to detect overlapping Features</strong><a class="anchor-link" href="#Use-PairwiseIntersect-to-detect-overlapping-Features">&#182;</a></h3><h4 id="arcpy.analysis.PairwiseIntersect()"><code>arcpy.analysis.PairwiseIntersect()</code><a class="anchor-link" href="#arcpy.analysis.PairwiseIntersect()">&#182;</a></h4><ul>
 <li>arcpy.analysis.PairwiseIntersect(in_features, out_feature_class, {join_attributes}, {cluster_tolerance}, {output_type})</li>
 <li><p>Computes all possible pairings</p>
 <ul>
@@ -9075,9 +9075,9 @@ Succeeded at Wednesday, March 26, 2025 11:09:17 PM (Elapsed Time: 1.35 seconds)
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Result">Result<a class="anchor-link" href="#Result">&#182;</a></h3><p><img src= "../images/SpatialJoinResult_JoinCount0.png" alt ="ArcGIS showing Map of Spatial Join Result for well sites enriched with county/township location attributes" style= " width 400px; height: 400px;"></p>
 <ul>
-<li>This is the result of joining the Water Contamination Water Contamination Monitoring Point Feature Class and County Township Unorganized (CTU) Territory Polygon Feature class</li>
+<li>This is the result of joining the Water Contamination Monitoring Point Feature Class and County Township Unorganized (CTU) Territory Polygon Feature class</li>
 <li>This new Feature class shows Join_Count = 1 for all features except one , meaning all but one water monitoring site was matched to a CTU location  <ul>
-<li>Makes sense for this one to not have matched since their is no CTU polygon in Iowa (where the well sample site is located)</li>
+<li>Makes sense for this one to not have matched since there is no CTU polygon in Iowa (where the well sample site is located)</li>
 <li>All fields for the unmatched out-of-state well show Null values for all the added CTU attribute fields, as expected</li>
 <li>If needed, we can remove the non-MN state well sampling site from the dataset</li>
 </ul>

@@ -27,6 +27,46 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="../articles/arcpy-update-and-analysis.html" rel="bookmark"
+                           title="Permalink to Update Features and Analysis in Arcpy">Update Features and Analysis in Arcpy</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2025-01-20T00:00:00-06:00">
+                Published: Mon 20 January 2025
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/arcpy.html">ArcPY</a>.</p>
+
+</footer><!-- /.post-info -->                
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="images/MN_GroundWaterContamination_Data_2025.svg" alt="Arcpy generated Point Feature Data from Ground water contamination, PFAS chemical levels and MNPCA clean up activity sites" style=" width 400px; height: 400px;"></p>
+<ul>
+<li>Multiple Shapefile data sources access programmatically online and converted to points in Arcpy, then mapped with ArcGIS pro</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-Arcpy?:"><strong>What is Arcpy?:</strong><a class="anchor-link" href="#What-is-Arcpy?:">&#182;</a></h3><p>Arcpy is a Python library for automating GIS tasks in Arc GIS Pro</p>
+<ul>
+<li>Collection of modules, functions, and classes from the ArcGIS toolbox</li>
+<li>It allows you to perform geoprocessing, analysis, data management and mapping automation using python</li>
+                <a class="readmore" href="../articles/arcpy-update-and-analysis.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="../articles/arcpy-qc-and-join.html" rel="bookmark"
                            title="Permalink to QC and Join data in Arcpy">QC and Join data in Arcpy</a></h1>
                 </header>
@@ -171,54 +211,6 @@
 <ul>
 <li><em>Conciseness:</em> Reduces the amount of code needed compared to traditional loops, making the code cleaner and easier to read</li>
                 <a class="readmore" href="../articles/List-comprehension-cartopy2.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="../articles/trusted-gis-data-sources.html" rel="bookmark"
-                           title="Permalink to Trusted GIS Data Sources">Trusted GIS Data Sources</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-07-11T00:00:00-05:00">
-                Published: Thu 11 July 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="../category/gis-data-sources.html">GIS Data Sources</a>.</p>
-<p>tags: <a href="../tag/gis.html">GIS</a> <a href="../tag/data.html">data</a> <a href="../tag/search.html">search</a> <a href="../tag/brython.html">brython</a> </p>
-</footer><!-- /.post-info -->                <p><img alt="Data Sources" src="../images/GIS_DataSources.png" style="width:350px; height:350px;"></p>
-<h2>Query Data Sources Below</h2>
-<div id="search-container">
-  <input id="search-input" type="text" placeholder="Type to search…" style="width:100%;padding:8px;margin-bottom:1em;" />
-  <div id="search-results"></div>
-</div>
-
-<!-- Brython runtime -->
-<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython_stdlib.js"></script>
-
-<!-- Your Python code -->
-<script type="text/python">
-from browser import document, ajax, console, html
-import json, difflib
-
-gis_sources = []
-
-def load_data(ev):
-    def on_complete(req):
-        if req.status in (200,0):
-            gis_sources[:] = json.loads(req.text)
-            console.log(f"Loaded {len(gis_sources)} sources")
-        else:
-            console.log("Fetch failed", req.status)
-    req = ajax.Ajax()
-    req …</script>
-                <a class="readmore" href="../articles/trusted-gis-data-sources.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

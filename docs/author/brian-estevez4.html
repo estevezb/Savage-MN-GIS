@@ -27,6 +27,54 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="../articles/trusted-gis-data-sources.html" rel="bookmark"
+                           title="Permalink to Trusted GIS Data Sources">Trusted GIS Data Sources</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-07-11T00:00:00-05:00">
+                Published: Thu 11 July 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
+        </address>
+<p>In <a href="../category/gis-data-sources.html">GIS Data Sources</a>.</p>
+<p>tags: <a href="../tag/gis.html">GIS</a> <a href="../tag/data.html">data</a> <a href="../tag/search.html">search</a> <a href="../tag/brython.html">brython</a> </p>
+</footer><!-- /.post-info -->                <p><img alt="Data Sources" src="../images/GIS_DataSources.png" style="width:350px; height:350px;"></p>
+<h2>Query Data Sources Below</h2>
+<div id="search-container">
+  <input id="search-input" type="text" placeholder="Type to search…" style="width:100%;padding:8px;margin-bottom:1em;" />
+  <div id="search-results"></div>
+</div>
+
+<!-- Brython runtime -->
+<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython_stdlib.js"></script>
+
+<!-- Your Python code -->
+<script type="text/python">
+from browser import document, ajax, console, html
+import json, difflib
+
+gis_sources = []
+
+def load_data(ev):
+    def on_complete(req):
+        if req.status in (200,0):
+            gis_sources[:] = json.loads(req.text)
+            console.log(f"Loaded {len(gis_sources)} sources")
+        else:
+            console.log("Fetch failed", req.status)
+    req = ajax.Ajax()
+    req …</script>
+                <a class="readmore" href="../articles/trusted-gis-data-sources.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="../articles/group-filter-pandas-plotly.html" rel="bookmark"
                            title="Permalink to Grouping, filtering with Pandas and plotly">Grouping, filtering with Pandas and plotly</a></h1>
                 </header>
@@ -162,37 +210,6 @@
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
                 <a class="readmore" href="../articles/maps-with-folium-drones.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="../articles/maps-with-folium-gis.html" rel="bookmark"
-                           title="Permalink to Introduction to Folium Maps GIS">Introduction to Folium Maps GIS</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-07-05T00:00:00-05:00">
-                Published: Fri 05 July 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="../author/brian-estevez.html">Brian Estevez</a>
-        </address>
-<p>In <a href="../category/gis.html">GIS</a>.</p>
-<p>tags: <a href="../tag/python.html">Python</a> <a href="../tag/maps.html">Maps</a> </p>
-</footer><!-- /.post-info -->                
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Make-a-folium-map-of-drone-data">Make a folium map of drone data<a class="anchor-link" href="#Make-a-folium-map-of-drone-data">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-                <a class="readmore" href="../articles/maps-with-folium-gis.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

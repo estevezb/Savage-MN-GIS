@@ -2137,10 +2137,10 @@ C:.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Get-online-data-with-the-Requests-library"><strong>Get online data with the Requests library</strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="response.get(url,-params=-None,-**kwargs)"><code>response.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#response.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
+<h3 id="Get-online-data-with-the-Requests-library"><strong>Get online data with the Requests library</strong><a class="anchor-link" href="#Get-online-data-with-the-Requests-library">&#182;</a></h3><h4 id="requests.get(url,-params=-None,-**kwargs)"><code>requests.get(url, params= None, **kwargs)</code><a class="anchor-link" href="#requests.get(url,-params=-None,-**kwargs)">&#182;</a></h4><ul>
 <li>Required argument : url (url to send the request to)</li>
 <li>params(optional, default is None), allows you to pass in query parameters that filter, modify or sort the data you're requesting<ul>
-<li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params ={key:value})</li>
+<li>response = requests.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params ={key:value})</li>
 </ul>
 </li>
 <li>**kwargs: keyword arguments. A way to pass additional arguments to the request function as a dictionary<ul>
@@ -2149,7 +2149,7 @@ C:.
 </li>
 <li>Use-case: make customized requests to web pages, API or get files<ul>
 <li>Example request with parameters: </li>
-<li>response = response.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params={"State":"Minnesota"}, headers="User-Agent":"my-app")</li>
+<li>response = requests.get("<a href="https://some.example.com/data">https://some.example.com/data</a>", params={"State":"Minnesota"}, headers="User-Agent":"my-app")</li>
 </ul>
 </li>
 </ul>
