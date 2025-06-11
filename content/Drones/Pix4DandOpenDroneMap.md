@@ -24,15 +24,12 @@ Here we walk through an example where we collected ground control points with a 
 
 ## Coordinate System Handling in OpenDroneMap  (ODM) vs Pix4D
 
-### ODM Default Coordinate System
-Achieving precise georeferencing can be impacted by the nature of the ODM photogrammetry workflow. ODM uses WGS84-based coordinates by default for georeferencing. This is an Earth-centered global coordinate reference system. UAV photos have embedded geotags set to the WGS84 datum, this globally-aligned coordinate reference system used by most navigational devices. When you process images without ground control points(GCPs), ODM will automatically choose the appropriate WGS84-based UTM Zone for the output coordinate system. For example, running ODM on imagery from project in Minnesota without GCPs would produce outputs (orthomosaic, Digital Surface Model, Point Cloud) in WGS84/UTM Zone 15N by default. Similarly, if you do provide ground control points, as described further below, ODM will reproject them to WGS84 UTM  for the reconstruction. The key point is that ODM does not provide a direct option to change the output datum or projection in its command-line or WebODM interface. ODM always defaults to producing outputs in WGS84.
-
 
 ### ODM's Default Coordinate System
 
 Achieving precise georeferencing of images in photogrammetry requires some understanding of how the software handles coordinate reference systems. OpenDroneMap defaults to WGS84-based coordinate systems. This makes sense because most UAV imagery uses this global framework. WGS84 is an Earth-centered geodetic system. It is the standard used by the GPS network and is built into most navigational devices. 
 
-When you process the images with out GCPs ODM automatically chooses the correct WGS84-based UTM. If you are in Minnesota the data (orthomosaic, Digital Surface Model, Point Cloud) will be output in WGS84 UTM Zone 15N. Even if you supply GCPs, ODM reprojects them to WGS84. This 'one-size fits all' setting, ensures that every piece of data fed into ODM's photogrammetry processing pipeline (i.e., GCPs and UAV GPS data) resides in a common globally recognized spatial reference system.
+When you process the images with out GCPs ODM automatically chooses the correct WGS84-based UTM. If you are in Minnesota the data (orthomosaic, Digital Surface Model, Point Cloud) will be output in WGS84 UTM Zone 15N. Even if you supply GCPs in a different CS (e.g., NAD83), ODM reprojects them to WGS84. This 'one-size fits all' setting, ensures that every piece of data fed into ODM's photogrammetry processing pipeline (i.e., GCPs and UAV GPS data) resides in a common globally recognized spatial reference system.
 
 Although having all data conform to WGS84 is useful for global data integration and navigation, many mapping projects require alignment with locally referenced datasets such as land parcel and infrastructure maps. These datasets are based on regional datums.
 In North America, the North American Datum of 1983 (NAD83) is a common standard. NAD83 is specifically calibrates for North America, improving local georeferencing accuracy compared to the global WGS84 model. Small differences between WGS84 and NAD83 -about 1 meter or less- can have a big impact if you are integrating your UAV-based map with data that requires high spatial precision, such as land surveying or construction. So, after processing imagery in ODM, if your workflow requires alignment with locally referenced datasets, you need to reproject the output from WGS84 to NAD83. This can be done using tools such as ArcGIS Pro. This ensures your UAV-based map aligns correctly with local data layers.
@@ -133,10 +130,25 @@ Then will be guided with choices, including to point ArcGIS Pro to the folder co
 ### Extract the pixel coordinates of the GCP Centers
 Now that you have your images of interest you will need the GCP center as x and y pixel coordinates. This can be done manually by opening each file in something as simple as Microsoft Paint (Windows), hover over the GCP centers, and jot down the pixel coordinates for each photo in the correct row of your spreadsheet. Repeat for all 20-25 images. Now the gcp_list spreadsheet is complete. Paste everything into NotePad, except the headers, and save the file as gcp_list.txt within your images folder. If you have ODM installed, run ODM with it pointed to this file and your images folder, as described above, and it will process all your images into an orthomosaic with adjustments to the georeferencing of your model to account for these points.
 
+### Custom Python application with GUI to guide extraction of GCP pixel coordinates
+If you have followed up to this point -thank you for your patience. You might be thinking, 'OK, this is fine, but how do I get the pixel coordinates now that I have all these files from ArcGIS Pro where my GCPs appear?' As mentioned earlier, you have the option to open your UAV photos with GCPs in any program that displays the image pixel coordinates as you hover over the image. Microsoft Paint is the simplest application I can think of that does this and is free. I would not recommend this approach because while we are trying to save on cost, having to go through 20 or more images in MS Paint and record those coordinates is brutally tedious and an error-prone approach.
 
+Instead I built a simple python application with a GUI that will allow you to open and view photos in your folder of UAV images. Use this app to pan, and zoom to the GCP centers. You then click on them to mark the position and repeat for all images. The GUI has specific keyboard commands to navigate to the next image and save the output. This app will save all the GCP pixel coordinates in a csv file with their corresponding file name. This is exactly what you need to feed ODM along with their real-world coordinates. Now you have built final gcp.txt file for ODM to reference during image processing as shown in the command above.
+
+<video width="600" controls>
+<source src = "https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/ExtractPixelCoords.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+
+
+```
+run "C:\Users\beste\Desktop\DroneData\LocalRoadway4" --gcp "C:\Users\beste\Desktop\DroneData\LocalRoadway4\images\gcp_list.txt" --orthophoto-resolution 2 --dtm --dsm
+
+```
 
 ## Sources
-- 1 [OpenDroneMap Github Repository](https://github.com/OpenDroneMap/ODM)
-- 2 [WGS84 and GCPs in ODM](https://community.opendronemap.org/t/gcp-editor-pro-and-gcp-with-nad83/6902)
-- 3 [OpenDroneMap Windows Installation](https://github.com/OpenDroneMap/ODM/releases)
-- 4 [ArcGIS Pro OrthoMapping Workspace](https://pro.arcgis.com/en/pro-app/latest/help/data/imagery/create-an-ortho-mapping-workspace.htm)
+- 1. [OpenDroneMap Github Repository](https://github.com/OpenDroneMap/ODM)
+- 2. [WGS84 and GCPs in ODM](https://community.opendronemap.org/t/gcp-editor-pro-and-gcp-with-nad83/6902)
+- 3. [OpenDroneMap Windows Installation](https://github.com/OpenDroneMap/ODM/releases)
+- 4. [ArcGIS Pro OrthoMapping Workspace](https://pro.arcgis.com/en/pro-app/latest/help/data/imagery/create-an-ortho-mapping-workspace.htm)
