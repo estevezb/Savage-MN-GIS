@@ -40,6 +40,16 @@ This project demonstrates how UAV imagery can be used to map and assess road con
 
 <p><img src= "../images/CitySavageRoadsExample.svg" alt ="UAV images processed in Pix4DMatic with objects automatically detected in Pix4DSurvey. Mapping in ArcGIS Pro" style= " width 350px; height: 350px;"></p>
 <ul>
+<li><strong>UAV-Based Road Mapping with Open-Source Photogrammetry Software</strong>
+This project is a variation of the road infrastructure mapping one above. I flew the same mission flight path but this time also layed down and surveyed ground control points using a GNSS receiver. Another key difference was the image processing pipeline. Here OpenDroneMap command line version was used to construct the orthomosaic and georeference the photos. This workflow demonstrates two main points: First, ODM uses WGS84-based referencing as the default, which is not configurable, so results must be projected to the local CS. Second, it is possible to achieve high-quality and potentially survey-grade mapping results (here ~4 cm absolute horizontal error) using open-source photogrammetry software and ground control points.</li>
+</ul>
+<p><img src= "../images/ODM_GCP_Corrected_NAD83Example.svg" alt ="Orthomosaic created in OpenDroneMap with Ground Control Points and projected in ArcGIS Pro to NAD83 UTM Zone15" style= " width 350px; height: 350px;"></p>
+<video width="600" controls>
+<source src = "../videos/ODM_QualityReport_Example.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<ul>
 <li>
 <p><strong>Scott County Food Resource Map (ArcGIS Experience Builder)</strong>
 Inspired by Hennepin County’s public food resource map, this project expands Scott County’s internal dataset into a public-facing tool. I discovered, through volunteering with Meals on Wheels, that local service areas like Savage weren’t fully represented. I extended their dataset, aligned my edits to their schema, resolved symbology, and published an interactive map using Experience Builder. A local .gdb copy preserves source attribution for future collaboration. <a href="https://experience.arcgis.com/experience/734735727e6741f59f0efe021dcbc89c/">Link</a></p>
@@ -50,8 +60,17 @@ Integrated state well data with ArcGIS Pro and Python <a href="https://www.arcgi
 </li>
 <li>
 <p><strong>Custom ArcPy Tools</strong> 
-Developed scripts and workflows for automating geoprocessing <a href="https://github.com/estevezb/GIS-Tools/tree/main/ArcGISPro/Arcpy">Link</a> </p>
+Developed scripts and workflows for automating geoprocessing <a href="https://github.com/estevezb/GIS-Tools/tree/main/ArcGISPro/Arcpy">Link</a> 
+ETL script to process and align CSV inputs using a feature class schema with GUI-guided workflow: </p>
 </li>
+</ul>
+<p><img alt="USER PROMPT 1" src="https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/CSV_Input.png"></p>
+<p><img alt="USER PROMPT 2" src="https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/GDB_Selection.png"></p>
+<p><img alt="USER PROMPT 3" src="https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/FeatureClassSelection.png"></p>
+<p><img alt="USER PROMPT 4" src="https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/FieldMapping.png">
+<img alt="ARCGIS LOADED CSV OUTPUT" src="https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/CleanedLoadedData.png"></p>
+<p><img alt="ArcPy Data Validation and Ingestion Demo (MP4)" src="https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/ArcGIS_Pro_DataIngestion_Demo1.mp4"></p>
+<ul>
 <li>
 <p><strong>Disaster Damage Assessment</strong>
  Applied ArcGIS Deep Learning for hurricane damage mapping <a href="https://estevezb.github.io/Savage-MN-GIS/category/disasters.html">Link</a> and online map here: <a href="https://www.arcgis.com/home/item.html?id=a98ff2773b7c4e3eb36b6a1a7f1288ef">AGOL</a></p>
