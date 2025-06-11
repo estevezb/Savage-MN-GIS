@@ -44,20 +44,11 @@ Integrated state well data with ArcGIS Pro and Python [Link](https://www.arcgis.
 Developed scripts and workflows for automating geoprocessing [Link](https://github.com/estevezb/GIS-Tools/tree/main/ArcGISPro/Arcpy) 
 ETL script to process and align CSV inputs using a feature class schema with GUI-guided workflow: 
 
-![USER PROMPT 1](https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/CSV_Input.png)
+<video width="600" controls>
+<source src = "https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/ArcGIS_Pro_DataIngestion_Demo1.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
-![USER PROMPT 2](https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/GDB_Selection.png)
-
-![USER PROMPT 3](https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/FeatureClassSelection.png)
-
-![USER PROMPT 4](https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/FieldMapping.png)
-![ARCGIS LOADED CSV OUTPUT](https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/CleanedLoadedData.png)
-
-
-
-
-
-![ArcPy Data Validation and Ingestion Demo (MP4)](https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/ArcGIS_Pro_DataIngestion_Demo1.mp4)
 
 
 - **Disaster Damage Assessment**
