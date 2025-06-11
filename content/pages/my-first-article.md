@@ -8,10 +8,10 @@ Summary: Hello!
 
 Hello! My name is Brian Estevez. My background is as an academic rare blood disease cell and molecular pharmacologist. Came into Geospatial data by accident while working as a life science consultant making simple maps of medical claims volume and hospitals treating rare diseases. 
 
-I enjoy Python programming, Unmanned Aerial Vehicle (UAV) or Drone technology, and Geographical Information Systems (GIS).
+I enjoy learning Python programming, Unmanned Aerial Vehicle (UAV) / Drone technology, and Geographical Information Systems (GIS).
 This site is a place to share in the exploration of these topics.
 
-## Key projects:
+### **Key projects:**
 
 - **UAV-Based Road Mapping and Infrastructure Extraction**
 This project demonstrates how UAV imagery can be used to map and assess road conditions and adjacent infrastructure. I collected imagery with a drone, processed the imagery into a point cloud using Pix4Dmatic, then imported it into Pix4Dsurvey to automatically detect road centerlines, manholes, storm drains, and lamp posts. These features were exported as shapefiles and finalized in ArcGIS Pro, symbology added and integrated with the orthomosaic for presentation. This workflow demonstrates how UAVs and intelligent extraction tools can support efficient, repeatable infrastructure mapping for local governments. (3D animation example and map below)
