@@ -25,10 +25,10 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="../articles/real-df-copies.html">Copying Dataframes in Pandas</a></h1>
+                    <h1 class="entry-title"><a href="../articles/list-comprehensions.html">Using List comprehensions</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2025-07-09T00:00:00-05:00">
-                Published: Wed 09 July 2025
+        <abbr class="published" title="2025-07-08T00:00:00-05:00">
+                Published: Tue 08 July 2025
         </abbr>
 
         <address class="vcard author">
@@ -1194,7 +1194,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="04_Making-real-copies-of-Dataframes-in-pandas">04_Making real copies of Dataframes in pandas<a class="anchor-link" href="#04_Making-real-copies-of-Dataframes-in-pandas">&#182;</a></h1>
+<h1 id="List-comprehensions">List comprehensions<a class="anchor-link" href="#List-comprehensions">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -1203,338 +1203,27 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Examples-of-mutatble-and-non-mutable-data:">Examples of mutatble and non-mutable data:<a class="anchor-link" href="#Examples-of-mutatble-and-non-mutable-data:">&#182;</a></h3><h3 id="Lists">Lists<a class="anchor-link" href="#Lists">&#182;</a></h3><ul>
-<li>Are mutable</li>
-<li>When we add to or modify lists, the original data is changed
-### Tuples</li>
-<li>Are not mutable</li>
-<li>When we try to add to or modify tuples, we actually create a new tuple, as the original tuple cannot be changed</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># Let&#39;s start with simple example of appending to a list</span>
-<span class="n">listA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
-<span class="n">listB</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
-
-<span class="n">listA</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># we modify lists, using listName.append(value)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">listA</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">listB</span><span class="p">)</span>
-
-<span class="c1"># now we have added a value to our list</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># we can copy a list by setting it equal to a new variable</span>
-<span class="c1"># ...neat</span>
-<span class="c1"># but what will happen if you add to one of these lists?</span>
-
-<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
-<span class="n">list2</span> <span class="o">=</span> <span class="n">list1</span>
-<span class="n">list2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># Modifying list2 also modifies list1 because they reference the same list</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
-
-<span class="c1"># DataFrame in pandas</span>
-
-    <span class="c1"># A DataFrame can be created from a dictionary of lists</span>
-    <span class="c1"># Each key-value pair in the dictionary corresponds to a column in the DataFrame</span>
-    <span class="c1"># The key is the column label and the list is the column data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="c1"># column 1</span>
-    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">],</span> <span class="c1"># column 2</span>
-    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span> <span class="c1"># column 3</span>
-<span class="p">}</span>
-<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1">#convert to a pandas Dataframe</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>  <span class="c1"># lets have a look before changing anything</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># A DataFrame is like a dictionary of lists, but with additional functionality</span>
-
-<span class="c1"># Be careful when modifying DataFrames OR lists</span>
-<span class="c1"># If you create a new DataFrame OR list by referencing an existing one, they will both point to the same data</span>
-<span class="n">cleaned_tdata</span> <span class="o">=</span> <span class="n">tdata</span>
-
-<span class="c1"># So if you modify one, the other will also be modified</span>
-<span class="n">cleaned_tdata</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">)</span>
-
-<span class="c1"># we dropped mag in the cleaned tdata</span>
-<span class="c1"># But that change was also applied to the tdata!</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># Lets try dropping a single row, again notice how this change carries over to the data we &#39;copied&#39;?</span>
-
-
-
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="c1"># column 1</span>
-    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">],</span> <span class="c1"># column 2</span>
-    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span> <span class="c1"># column 3</span>
-<span class="p">}</span>
-<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="c1"># We create a &#39;copy&#39; of the data that we want to work on or clean</span>
-<span class="n">cleaned_tdata</span> <span class="o">=</span> <span class="n">tdata</span>
-
-<span class="c1"># Drop the specified rows from the DataFrame in-place</span>
-<span class="c1"># modify one, the other will also be modified</span>
-<span class="n">cleaned_tdata</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># To avoid this, create a real copy of the data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="c1"># column 1</span>
-    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">],</span> <span class="c1"># column 2</span>
-    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">]</span> <span class="c1"># column 3</span>
-<span class="p">}</span>
-<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="c1"># create a REAL copy of the data to work on or clean</span>
-<span class="n">cleaned_tdata</span> <span class="o">=</span> <span class="n">tdata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># creates a real copy of the data</span>
-
-<span class="c1"># Drop the specified rows from the DataFrame in-place</span>
-<span class="n">cleaned_tdata</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="n">cleaned_tdata</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span> <span class="c1"># The original data is unchanged</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cleaned_tdata</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># Did we really mean to also modify the original tdata?...</span>
-<span class="c1"># Why did this happen?</span>
-    <span class="c1"># we dropped rows from cleaned_tdata &#39;in-place&#39;, which modified the original data for cleaned_tdata</span>
-    <span class="c1"># since tdata and cleand_tdata both point to the same DataFrame</span>
-    <span class="c1"># modifying the orignal data frame (i.e., using inplace=True) also affects tdata</span>
-
-<span class="c1"># To avoid changing/losing the original data, best to create a REAL copy using .copy()  BEFORE making any changes to the data</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># use the tuple as a multi-index in the DataFrame. </span>
-<span class="c1"># This allows you to index the DataFrame using the values in multiple columns</span>
-
-<span class="c1"># Create a DataFrame from a dictionary of tuples</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;mag&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span>
-    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;April 10 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 11 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 12 2024&#39;</span><span class="p">,</span><span class="s1">&#39;April 13 2024&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;inj&#39;</span> <span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="n">tdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="c1"># Set &#39;mag&#39; and &#39;date&#39; as a multi-index</span>
-<span class="n">tdata</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">new_tdata</span><span class="o">=</span> <span class="n">tdata</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">new_tdata</span><span class="p">)</span>
-
-<span class="c1"># Access data for a specific &#39;mag&#39; and &#39;date&#39;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;April 11 2024&#39;</span><span class="p">)])</span>
-
-
-<span class="c1"># Access data for a specific &#39;mag&#39; and &#39;date&#39;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">new_tdata</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;April 11 2024&#39;</span><span class="p">)])</span>
-
-<span class="c1"># Try to change the &#39;mag&#39; value for a specific row in the index</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">tdata</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;April 11 2024&#39;</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TypeError: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Try to change the &#39;date&#39; value for a specific row in the index</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">tdata</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;April 12 2024&#39;</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TypeError: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># To change the mag or date values for a specific row</span>
-<span class="c1"># need to create a new tuple, which means creating a new dataframe</span>
-
-<span class="c1"># .resetindex() Creates NEW DataFrame, applied on tdata will remove the multi-index </span>
-<span class="c1"># reverts tdata back to default integer index, with mag and date as columns</span>
-<span class="n">tdata_copy</span> <span class="o">=</span> <span class="n">tdata</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>  <span class="c1"># tdata_copy is a separate object and does not reference the same data</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span> <span class="c1"># original data is maintained</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata_copy</span><span class="p">)</span> <span class="c1"># a new separate dataframe is created</span>
-
-
-<span class="c1"># Now that mag and date are not a tuple, we can change the &#39;mag&#39; and &#39;date&#39; values</span>
-<span class="n">tdata_copy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># changes mag in the first row</span>
-<span class="n">tdata_copy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;June 1 2024&#39;</span> <span class="c1"># changes date in the first row</span>
-
-<span class="c1"># Set the new multi-index</span>
-<span class="n">tdata_copy</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tdata_copy</span><span class="p">)</span> <span class="c1"># even though it is derived from tdata, it a separate object and changes to one will not affect the other</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># In this example, we&#39;re setting &#39;mag&#39; and &#39;date&#39; as a multi-index for the DataFrame</span>
-<span class="c1"># This allows us to index the DataFrame using the values in both &#39;mag&#39; and &#39;date&#39;. The tuple of (&#39;mag&#39;, &#39;date&#39;) </span>
-<span class="c1">#     acts as a single key that we can use to index the DataFrame</span>
-<span class="c1"># This is a case where the immutability of tuples is relevant to the analysis of data in a DataFrame.</span>
-    <span class="c1"># Similar to how in functional programming,</span>
-    <span class="c1"># the immutability of data structures ensures that their identity remains constant even as new data structures are created based on them</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># Say we find that we often need to change the data in our dataframe, maybe dates and mags have typos..</span>
-<span class="c1"># We need a function to simplify this re-occuring process </span>
-<span class="c1"># but our dataframe has a tuple multi index</span>
-<span class="c1"># So, our function should take a dataframe, and a tuple, then return a NEW dataframe with the updated index</span>
-
-<span class="k">def</span> <span class="nf">set_new_index</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">new_index_values</span><span class="p">):</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="c1">#input data we want to change</span>
-
-    <span class="c1"># Create a new DataFrame with the desired index</span>
-    <span class="n">df_copy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1"># reset the index and create a NEW dataframe</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">df_copy</span><span class="p">)</span> <span class="c1"># check the results of the NEW dataframe</span>
-
-    <span class="n">df_copy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_index_values</span> <span class="c1"># change the mag and date for the first row of the NEW dataframe</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">df_copy</span><span class="p">)</span>
-
-    <span class="n">df_copy</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># set the index to the tuple of mag, date for the NEW dataframe</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">df_copy</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">df_copy</span> <span class="c1"># return the NEW dataframe with the modified index</span>
-
-<span class="c1"># This pure function , it doesn&#39;t modify the original DataFrame (it has no side effects)</span>
-<span class="c1"># will always product the same output Dataframe for the same input Dataframe,index (we have no external variables in the function modifying our output)</span>
-
-<span class="n">new_tdata</span> <span class="o">=</span> <span class="n">set_new_index</span><span class="p">(</span><span class="n">tdata</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;April 12 2024&#39;</span><span class="p">))</span> <span class="c1"># creates a new DataFrame with the multi index (tuple) updated</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">new_tdata</span><span class="p">)</span>
-
-<span class="c1"># This function doesn&#39;t modify the original DataFrame (no side effects)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># A more practical case where we start with a list</span>
+    <span class="c1"># need to capitalize all letters of the city names </span>
+    <span class="c1"># We can modify data and save to a variable without altering the original data</span>
+
+<span class="k">def</span> <span class="nf">Upper_string</span><span class="p">(</span><span class="n">input_string</span><span class="p">):</span>
+    <span class="c1"># Converts each string to uppercase, returning a new string</span>
+    <span class="k">return</span> <span class="n">input_string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="c1"># we use a string method here called .upper()</span>
+
+<span class="c1"># Original list of city names we started with</span>
+<span class="n">original_strings</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Chicago&#39;</span><span class="p">,</span> <span class="s1">&#39;Philadelphia&#39;</span><span class="p">,</span> <span class="s1">&#39;Houston&#39;</span><span class="p">]</span>
+
+<span class="c1"># Use a list comprehension to modify our list of strings, creating a new list of strings</span>
+    <span class="c1"># General structure of list comprehension:</span>
+        <span class="c1"># [expression for item in iterable if condition]</span>
+        <span class="c1"># Note: We do not use the if condition in this case</span>
+
+ <span class="c1"># new list             # expression    # iterate over items in the list</span>
+<span class="n">capitalized_strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">Upper_string</span><span class="p">(</span><span class="n">city</span><span class="p">)</span> <span class="k">for</span> <span class="n">city</span> <span class="ow">in</span> <span class="n">original_strings</span><span class="p">]</span> <span class="c1"># list comprehension that applies function to each string</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New strings: &quot;</span><span class="p">,</span> <span class="n">capitalized_strings</span><span class="p">)</span>  <span class="c1">#  the list of capitalized city names</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original strings: &quot;</span><span class="p">,</span> <span class="n">original_strings</span><span class="p">)</span>  <span class="c1">#  the original list remains unchanged</span>
 </pre></div>
 
     </div>
@@ -1582,14 +1271,14 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="../articles/list-comprehensions.html" rel="bookmark"
-                           title="Permalink to Using List comprehensions">Using List comprehensions</a></h1>
+                    <h1><a href="../articles/explore-mnfire-data.html" rel="bookmark"
+                           title="Permalink to Exploring Minnesota Fire Incident Data">Exploring Minnesota Fire Incident Data</a></h1>
                 </header>
 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2025-07-08T00:00:00-05:00">
-                Published: Tue 08 July 2025
+        <abbr class="published" title="2025-06-10T00:00:00-05:00">
+                Published: Tue 10 June 2025
         </abbr>
 
         <address class="vcard author">
@@ -1601,13 +1290,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="List-comprehensions">List comprehensions<a class="anchor-link" href="#List-comprehensions">&#182;</a></h1>
+<h1 id="Exploring-Fire-incident-Data">Exploring Fire incident Data<a class="anchor-link" href="#Exploring-Fire-incident-Data">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-                <a class="readmore" href="../articles/list-comprehensions.html">read more</a>
+                <a class="readmore" href="../articles/explore-mnfire-data.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 

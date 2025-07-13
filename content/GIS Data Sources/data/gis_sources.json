@@ -54,6 +54,12 @@
       "tags": ["FEMA", "flood", "hazard", "vector"]
     },
     {
+      "name": "FEMA Geospatial Resource Center",
+      "url": "https://gis-fema.hub.arcgis.com/",
+      "description": "FEMA GIS supports the emergency management community with world-class geospatial information, services, and technologies to prepare for, protect against, respond to, recover from and mitigate against all hazards..",
+      "tags": ["FEMA", "flood", "hazard", "flooding, hurricanes, wildfires, fires, tornadoes, winter weather, radiological, earthquakes, pandemic"]
+    },
+    {
       "name": "USGS Landsat Analysis Ready Data",
       "url": "https://www.usgs.gov/land-resources/nli/landsat/us-landsat-analysis-ready-data",
       "description": "Landsat satellite imagery at 30 m resolution with 16-day revisit cycle, pre-processed for analysis-ready use.",
@@ -70,6 +76,12 @@
       "url": "https://glovis.usgs.gov/",
       "description": "Map-based browser for quickly browsing and downloading satellite imagery and aerial photography.",
       "tags": ["USGS", "satellite", "imagery", "browser"]
+    },
+    {
+      "name": "USGS Gap Analysis Project",
+      "url": "https://www.usgs.gov/programs/gap-analysis-project",
+      "description": "Consists of mapping data layers depicting both location and conservation status of protected areas. Conservation status of common species is important for decision makers, planners, researchers and others..",
+      "tags": ["USGS", "land cover", "protected areas", "gap analysis"]
     },
     {
       "name": "USGS National Hydrography Dataset (NHD)",
@@ -148,5 +160,14 @@
       "url": "https://ebird.org/data/download",
       "description": "Global avian observation database from the Cornell Lab of Ornithology, providing species occurrence data (including owl sightings) and occurrence maps accessible via download and API.",
       "tags": ["biodiversity", "avian", "observations", "API"]
-    }
+    },
+      {
+        "name": "United States Data Sources",
+        "url": "https://opensourcegisdata.com/state/index.html",
+        "description" : "Comprehensive list of GIS data sources for everyone of the fifty states",
+        "tags": ["us states", "states"]
+    } 
+      
+
+    
   ]

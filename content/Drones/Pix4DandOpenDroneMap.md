@@ -133,7 +133,7 @@ Now that you have your images of interest you will need the GCP center as x and 
 ### Custom Python application with GUI to guide extraction of GCP pixel coordinates
 If you have followed up to this point -thank you for your patience. You might be thinking, 'OK, this is fine, but how do I get the pixel coordinates now that I have all these files from ArcGIS Pro where my GCPs appear?' As mentioned earlier, you have the option to open your UAV photos with GCPs in any program that displays the image pixel coordinates as you hover over the image. Microsoft Paint is the simplest application I can think of that does this and is free. I would not recommend this approach because while we are trying to save on cost, having to go through 20 or more images in MS Paint and record those coordinates is brutally tedious and an error-prone approach.
 
-Instead I built a simple python application with a GUI that will allow you to open and view photos in your folder of UAV images. Use this app to pan, and zoom to the GCP centers. You then click on them to mark the position and repeat for all images. The GUI has specific keyboard commands to navigate to the next image and save the output. This app will save all the GCP pixel coordinates in a csv file with their corresponding file name. This is exactly what you need to feed ODM along with their real-world coordinates. Now you have built final gcp.txt file for ODM to reference during image processing as shown in the command above.
+Instead I built a simple python application with a GUI that will allow you to open and view photos in your folder of UAV images. Use this app to pan, and zoom to the GCP centers. You then click on them to mark the position and repeat for all images. The GUI has specific keyboard commands to navigate to the next image and save the output. This app will save all the GCP pixel coordinates in a csv file with their corresponding file name. This is exactly what you need to feed ODM along with their real-world coordinates. Now you have built final gcp.txt file for ODM to reference during image processing as shown in the command below.
 
 <video width="600" controls>
 <source src = "https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/ExtractPixelCoords.mp4" type="video/mp4">
@@ -148,7 +148,7 @@ run "C:\Users\beste\Desktop\DroneData\LocalRoadway4" --gcp "C:\Users\beste\Deskt
 ```
 
 ## Sources
-- 1. [OpenDroneMap Github Repository](https://github.com/OpenDroneMap/ODM)
-- 2. [WGS84 and GCPs in ODM](https://community.opendronemap.org/t/gcp-editor-pro-and-gcp-with-nad83/6902)
-- 3. [OpenDroneMap Windows Installation](https://github.com/OpenDroneMap/ODM/releases)
-- 4. [ArcGIS Pro OrthoMapping Workspace](https://pro.arcgis.com/en/pro-app/latest/help/data/imagery/create-an-ortho-mapping-workspace.htm)
+- 1 [OpenDroneMap Github Repository](https://github.com/OpenDroneMap/ODM)
+- 2 [WGS84 and GCPs in ODM](https://community.opendronemap.org/t/gcp-editor-pro-and-gcp-with-nad83/6902)
+- 3 [OpenDroneMap Windows Installation](https://github.com/OpenDroneMap/ODM/releases)
+- 4 [ArcGIS Pro OrthoMapping Workspace](https://pro.arcgis.com/en/pro-app/latest/help/data/imagery/create-an-ortho-mapping-workspace.htm)

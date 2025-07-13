@@ -336,7 +336,7 @@ ArcGIS Pro is also capable generating orthomosaics, and more relevant here, of i
 <p>Now that you have your images of interest you will need the GCP center as x and y pixel coordinates. This can be done manually by opening each file in something as simple as Microsoft Paint (Windows), hover over the GCP centers, and jot down the pixel coordinates for each photo in the correct row of your spreadsheet. Repeat for all 20-25 images. Now the gcp_list spreadsheet is complete. Paste everything into NotePad, except the headers, and save the file as gcp_list.txt within your images folder. If you have ODM installed, run ODM with it pointed to this file and your images folder, as described above, and it will process all your images into an orthomosaic with adjustments to the georeferencing of your model to account for these points.</p>
 <h3>Custom Python application with GUI to guide extraction of GCP pixel coordinates</h3>
 <p>If you have followed up to this point -thank you for your patience. You might be thinking, 'OK, this is fine, but how do I get the pixel coordinates now that I have all these files from ArcGIS Pro where my GCPs appear?' As mentioned earlier, you have the option to open your UAV photos with GCPs in any program that displays the image pixel coordinates as you hover over the image. Microsoft Paint is the simplest application I can think of that does this and is free. I would not recommend this approach because while we are trying to save on cost, having to go through 20 or more images in MS Paint and record those coordinates is brutally tedious and an error-prone approach.</p>
-<p>Instead I built a simple python application with a GUI that will allow you to open and view photos in your folder of UAV images. Use this app to pan, and zoom to the GCP centers. You then click on them to mark the position and repeat for all images. The GUI has specific keyboard commands to navigate to the next image and save the output. This app will save all the GCP pixel coordinates in a csv file with their corresponding file name. This is exactly what you need to feed ODM along with their real-world coordinates. Now you have built final gcp.txt file for ODM to reference during image processing as shown in the command above.</p>
+<p>Instead I built a simple python application with a GUI that will allow you to open and view photos in your folder of UAV images. Use this app to pan, and zoom to the GCP centers. You then click on them to mark the position and repeat for all images. The GUI has specific keyboard commands to navigate to the next image and save the output. This app will save all the GCP pixel coordinates in a csv file with their corresponding file name. This is exactly what you need to feed ODM along with their real-world coordinates. Now you have built final gcp.txt file for ODM to reference during image processing as shown in the command below.</p>
 <video width="600" controls>
 <source src = "https://github.com/estevezb/GIS-Tools/raw/main/VideoExamples/ExtractPixelCoords.mp4" type="video/mp4">
 Your browser does not support the video tag.
@@ -347,26 +347,10 @@ Your browser does not support the video tag.
 
 <h2>Sources</h2>
 <ul>
-<li>
-<ol>
-<li><a href="https://github.com/OpenDroneMap/ODM">OpenDroneMap Github Repository</a></li>
-</ol>
-</li>
-<li>
-<ol>
-<li><a href="https://community.opendronemap.org/t/gcp-editor-pro-and-gcp-with-nad83/6902">WGS84 and GCPs in ODM</a></li>
-</ol>
-</li>
-<li>
-<ol>
-<li><a href="https://github.com/OpenDroneMap/ODM/releases">OpenDroneMap Windows Installation</a></li>
-</ol>
-</li>
-<li>
-<ol>
-<li><a href="https://pro.arcgis.com/en/pro-app/latest/help/data/imagery/create-an-ortho-mapping-workspace.htm">ArcGIS Pro OrthoMapping Workspace</a></li>
-</ol>
-</li>
+<li>1 <a href="https://github.com/OpenDroneMap/ODM">OpenDroneMap Github Repository</a></li>
+<li>2 <a href="https://community.opendronemap.org/t/gcp-editor-pro-and-gcp-with-nad83/6902">WGS84 and GCPs in ODM</a></li>
+<li>3 <a href="https://github.com/OpenDroneMap/ODM/releases">OpenDroneMap Windows Installation</a></li>
+<li>4 <a href="https://pro.arcgis.com/en/pro-app/latest/help/data/imagery/create-an-ortho-mapping-workspace.htm">ArcGIS Pro OrthoMapping Workspace</a></li>
 </ul>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
