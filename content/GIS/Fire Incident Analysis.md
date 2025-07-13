@@ -46,7 +46,7 @@ Taking all these finding into consideration it is not too difficult to come up w
 This particular dashboard is likely more simple then would be needed for daily fire management admin. The focus is only on fire incidents and excludes all other incidents, which as I mentioned earlier is a fairly small portion of the first responder's actual daily workload. Still we can easily filter and focus on particular fire stations to ask which ones handle most fire incidents?, which stations have the most fire incident injuries? There are limitations that cause the appearance of odd labels , such as blank for fields where no values were populated. In real operations these would likely be removed for clarity. However, for transparency I kept the blank or null entries in the data. One critical missing piece is the number of personnel by station, which was so poorly documented it was excluded from this dashboard. Taken together, even these simplified views of fire incident activity would be able to put useful data in a format that could help prioritize resources. 
 
 
-<img src= "{static}/images/fireDashboard.svg" alt ="St. Paul Fire Incident Dashboard 2024" style= " width 350px; height: 350px;">
+<img src= "{static}/images/fireDashboard.png" alt ="St. Paul Fire Incident Dashboard 2024" style= " width 350px; height: 350px;">
 
 
 <div class="dashboard-container" style="width: 100%; height: 600px; margin: 20px 0;">
