@@ -30,14 +30,15 @@ On average fire response times across all St. Paul stations is ~ 4 minutes. This
 
 
 The St. Paul fire response area covers an area of ~ 60 square miles. Lafayette freeway and interstate highway 35 E flow through vertically south-to-north, and the I 95 runs across horizontally east-to-west. These transportation borders give the area an appearance of 5 distinct regions that enclose the 17 or so unique neighborhoods.
+<img src= "{static}/images/stpaul.png" alt ="City of St. Paul Minnesota, showing roads and fire stations" style= " width 500px; height: 500px;">
 
 
-<img src= "{static}/images/spfirestations.svg" alt ="Close of of Near analysis showing attribute table of one incident within 1 mile of Fire Station" style= " width 350px; height: 350px;">
+<img src= "{static}/images/spfirestations.svg" alt ="Close of of Near analysis showing attribute table of one incident within 1 mile of Fire Station" style= " width 500px; height: 500px;">
 
  Understanding the personnel and population size is also important to track any gaps in service. For example, each city has a dedicated fire department assigned to that response area, and within that area there are multiple fire stations. According to the USFA registry, the Saint Paul Fire Department has 15 fire stations not including HQ, which appears to be located at Randolph Ave in Saint Paul, MN. The population in St. Paul is ~400,000 lives, and there are about 400 registered career fire fighters. How this plays out on a station-by-station basis operationally is unclear but the proportion is within range of best practices: 1 fire fighter per 1000 residents.
 
 
-<img src= "{static}/images/fireActivity_byCensusTract.svg" alt ="Close of of Near analysis showing attribute table of one incident within 1 mile of Fire Station" style= " width 350px; height: 350px;">
+<img src= "{static}/images/fireActivity_byCensusTract.svg" alt ="Close of of Near analysis showing attribute table of one incident within 1 mile of Fire Station" style= " width 500px; height: 500px;">
 
 ### ***St. Paul 2024 Fire Incident Dashboard***
 
